@@ -75,9 +75,9 @@ export default function AuditAreaGrid({ areas, dispatch }: AuditAreaGridProps) {
           <AuditAreaCard
             key={area.id}
             area={area}
-            onViewDetails={(a) => setSelectedAreaForDetails(a)}
-            onChangeStatus={(a) => setSelectedAreaForStatus(a)}
-            onAssignAuditor={(a) => setSelectedAreaForAssign(a)}
+            onViewDetails={(a: AuditArea) => setSelectedAreaForDetails(a)}
+            onChangeStatus={(a: AuditArea) => setSelectedAreaForStatus(a)}
+            onAssignAuditor={(a: AuditArea) => setSelectedAreaForAssign(a)}
             onMarkComplete={handleMarkComplete}
           />
         ))}
