@@ -11,7 +11,7 @@ export interface AuditArea {
   id: string;
   name: string;
   risk: RiskLevel;
-  progress: number;
+  progress: number; // 0-100
   assignedAuditor: Auditor | null;
   openTasks: number;
   evidenceRequested: number;

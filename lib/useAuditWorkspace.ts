@@ -5,6 +5,7 @@ import {
   workspaceReducer,
   initialState,
   WorkspaceState,
+  WorkspaceAction,
 } from "./workspaceReducer";
 
 export function useAuditWorkspace() {

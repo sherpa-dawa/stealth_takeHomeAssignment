@@ -43,7 +43,30 @@ export type WorkspaceAction =
         activityItems: ActivityItem[];
       };
     }
-  | { type: "FETCH_ERROR"; payload: string };
+  | { type: "FETCH_ERROR"; payload: string }
+  | {
+      type: "ASSIGN_AUDITOR";
+      payload: { areaId: string; auditor: Auditor; userName: string };
+    }
+  | {
+      type: "CHANGE_STATUS";
+      payload: { areaId: string; status: AreaStatus; userName: string };
+    }
+  | { type: "MARK_COMPLETE"; payload: { areaId: string; userName: string } };
+
+const generateActivityId = (activity: ActivityItem[]): number => {
+  return activity.length > 0
+    ? Math.max(...activity.map((a) => a.id)) + 1
+    : 1;
+};
+
+const prependActivity = (
+  activity: ActivityItem[],
+  newItem: Omit<ActivityItem, "id">
+): ActivityItem[] => {
+  const id = generateActivityId(activity);
+  return [{ ...newItem, id }, ...activity];
+};
 
 export function workspaceReducer(
   state: WorkspaceState,
@@ -75,6 +98,74 @@ export function workspaceReducer(
         loading: false,
         error: action.payload,
       };
+
+    case "ASSIGN_AUDITOR": {
+      const updatedAreas = state.areas.map((area) =>
+        area.id === action.payload.areaId
+          ? { ...area, assignedAuditor: action.payload.auditor }
+          : area
+      );
+
+      const newActivity = prependActivity(state.activity, {
+        user: action.payload.userName,
+        action: `Assigned ${action.payload.auditor.name} to ${state.areas.find((a) => a.id === action.payload.areaId)?.name || "audit area"}`,
+        time: "just now",
+      });
+
+      return {
+        ...state,
+        areas: updatedAreas,
+        activity: newActivity,
+      };
+    }
+
+    case "CHANGE_STATUS": {
+      const areaName =
+        state.areas.find((a) => a.id === action.payload.areaId)?.name ||
+        "audit area";
+
+      const updatedAreas = state.areas.map((area) =>
+        area.id === action.payload.areaId
+          ? { ...area, status: action.payload.status }
+          : area
+      );
+
+      const newActivity = prependActivity(state.activity, {
+        user: action.payload.userName,
+        action: `Changed ${areaName} status to ${action.payload.status}`,
+        time: "just now",
+      });
+
+      return {
+        ...state,
+        areas: updatedAreas,
+        activity: newActivity,
+      };
+    }
+
+    case "MARK_COMPLETE": {
+      const areaName =
+        state.areas.find((a) => a.id === action.payload.areaId)?.name ||
+        "audit area";
+
+      const updatedAreas = state.areas.map((area) =>
+        area.id === action.payload.areaId
+          ? { ...area, status: "Complete" as const, progress: 100 }
+          : area
+      );
+
+      const newActivity = prependActivity(state.activity, {
+        user: action.payload.userName,
+        action: `Marked ${areaName} as complete`,
+        time: "just now",
+      });
+
+      return {
+        ...state,
+        areas: updatedAreas,
+        activity: newActivity,
+      };
+    }
 
     default:
       return state;

@@ -12,6 +12,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const shouldFail = searchParams.get("fail") === "true";
 
+  // Simulate artificial delay (600-1200ms)
   const delay = Math.random() * 600 + 600;
   await new Promise((resolve) => setTimeout(resolve, delay));
 
