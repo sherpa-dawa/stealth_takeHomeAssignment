@@ -1,19 +1,23 @@
-name: CI/CD Pipeline
+name: CI/CD
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
     tags:
       - "v*"
+  pull_request:
+    branches: [main, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build & Test
+  test-build:
+    name: Test & Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -23,89 +27,87 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run linter
+      - name: Lint
         run: npm run lint
 
       - name: Type check
         run: npm run type-check
 
       - name: Run tests
-        run: npm run test -- --coverage
+        run: npm run test -- --coverage --passWithNoTests
 
-      - name: Build application
+      - name: Build
         run: npm run build
 
-      - name: Upload coverage reports
+      - name: Upload coverage
         uses: codecov/codecov-action@v3
         with:
           files: ./coverage/lcov.info
-          flags: unittests
           fail_ci_if_error: false
 
-      - name: Upload build artifacts
+      - name: Archive build
+        if: success() && github.event_name == 'push'
         uses: actions/upload-artifact@v3
         with:
-          name: next-build
+          name: build-artifact
           path: .next
-          retention-days: 7
+          retention-days: 5
 
   deploy-staging:
-    name: Deploy to Staging
-    needs: build
+    name: Deploy Staging
+    needs: test-build
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+    environment: staging
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download build artifacts
+      - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: next-build
+          name: build-artifact
           path: .next
 
       - name: Deploy to staging
         env:
-          DEPLOY_TOKEN: ${{ secrets.STAGING_DEPLOY_TOKEN }}
           STAGING_URL: ${{ secrets.STAGING_URL }}
+          STAGING_TOKEN: ${{ secrets.STAGING_TOKEN }}
         run: |
-          echo "Deploying to staging environment..."
-          # Add your staging deployment commands here
-          # Example: curl -X POST $STAGING_URL -H "Authorization: Bearer $DEPLOY_TOKEN" --data-binary @.next
+          echo "Deploying to staging..."
+          # curl -X POST $STAGING_URL -H "Authorization: Bearer $STAGING_TOKEN"
 
-  release:
-    name: Create Release
-    needs: build
+  deploy-production:
+    name: Deploy Production
+    needs: test-build
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    environment: production
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download build artifacts
+      - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: next-build
+          name: build-artifact
           path: .next
 
       - name: Extract version
         id: version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
-      - name: Create Release
+      - name: Create release
         uses: softprops/action-gh-release@v1
         with:
-          name: Release ${{ steps.version.outputs.VERSION }}
+          name: ${{ steps.version.outputs.VERSION }}
           draft: false
           prerelease: false
-          files: |
-            .next/**/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to production
         env:
-          DEPLOY_TOKEN: ${{ secrets.PROD_DEPLOY_TOKEN }}
           PROD_URL: ${{ secrets.PROD_URL }}
+          PROD_TOKEN: ${{ secrets.PROD_TOKEN }}
         run: |
-          echo "Deploying version ${{ steps.version.outputs.VERSION }} to production..."
-          # Add your production deployment commands here
-          # Example: curl -X POST $PROD_URL -H "Authorization: Bearer $DEPLOY_TOKEN" --data-binary @.next
+          echo "Deploying ${{ steps.version.outputs.VERSION }} to production..."
+          # curl -X POST $PROD_URL -H "Authorization: Bearer $PROD_TOKEN"

@@ -36,83 +36,189 @@ All jobs must pass before PR can be merged.
 
 ## CI/CD Pipeline (`.github/workflows/cicd.yml`)
 
-**Triggers:**
-- Push to `main` branch
+**Trigger Events:**
+- Push to `main` or `develop` branches
+- Pull request on `main` or `develop`
 - Push of semantic version tags (`v*`)
 
 **Purpose:** Automated build, test, and deployment pipeline
 
-**Jobs:**
-
-### 1. Build & Test (runs on all triggers)
-- Install dependencies
-- Run linter
-- Type checking
-- Unit tests with coverage
-- Production build
-- Upload coverage to Codecov
-- Archive build artifacts (.next)
-
-### 2. Deploy to Staging (runs on push to main)
-- Downloads build artifacts
-- Deploys to staging environment
-- Requires `STAGING_DEPLOY_TOKEN` and `STAGING_URL` secrets
-
-### 3. Release & Deploy Production (runs on version tags)
-- Downloads build artifacts
-- Creates GitHub Release
-- Deploys to production
-- Requires `PROD_DEPLOY_TOKEN` and `PROD_URL` secrets
+**Concurrency:**
+- Groups by workflow and ref
+- Cancels in-progress runs on new pushes
 
 ---
 
-## Environment Variables & Secrets
+### Job: Test & Build
 
-For CI/CD deployment to work, configure these in GitHub repository settings:
+**Runs on:** All trigger events
+
+**Steps:**
+1. Checkout code
+2. Setup Node.js 20 with npm cache
+3. Install dependencies (`npm ci`)
+4. Lint code (`npm run lint`)
+5. Type check (`npm run type-check`)
+6. Run tests with coverage (`npm run test -- --coverage`)
+7. Build application (`npm run build`)
+8. Upload coverage to Codecov
+9. Archive `.next` build artifacts (if push event)
+
+**Artifacts:**
+- Retained for 5 days
+- Used by deployment jobs
+
+---
+
+### Job: Deploy Staging
+
+**Trigger:** Push to `develop` branch (after Test & Build succeeds)
+
+**Environment:** `staging` (configured in repository settings)
+
+**Requirements:**
+- `STAGING_URL` — Staging deployment endpoint
+- `STAGING_TOKEN` — Authentication token
+
+**Steps:**
+1. Checkout code
+2. Download build artifact
+3. Execute staging deployment
+
+---
+
+### Job: Deploy Production
+
+**Trigger:** Push of version tag `v*` (after Test & Build succeeds)
+
+**Environment:** `production` (configured in repository settings)
+
+**Requirements:**
+- `PROD_URL` — Production deployment endpoint
+- `PROD_TOKEN` — Authentication token
+- `GITHUB_TOKEN` — GitHub API access (auto-provided)
+
+**Steps:**
+1. Checkout code
+2. Download build artifact
+3. Extract version from tag
+4. Create GitHub Release
+5. Execute production deployment
+
+---
+
+## Secrets Configuration
+
+Configure these in repository Settings → Secrets and variables → Actions:
 
 ### Staging Deployment
-- `STAGING_DEPLOY_TOKEN` — Authentication token for staging
-- `STAGING_URL` — Staging environment URL
+```
+STAGING_URL=https://staging.example.com/deploy
+STAGING_TOKEN=your-staging-token
+```
 
 ### Production Deployment
-- `PROD_DEPLOY_TOKEN` — Authentication token for production
-- `PROD_URL` — Production environment URL
-
----
-
-## Workflow Status
-
-Current project status:
-- ✅ PR validation: Lint, test, build checks
-- ✅ CI/CD build: Compile and artifact generation
-- ⚠️ Staging deployment: Placeholder (configure secrets)
-- ⚠️ Production deployment: Placeholder (configure secrets)
+```
+PROD_URL=https://api.example.com/deploy
+PROD_TOKEN=your-production-token
+```
 
 ---
 
 ## Local Development
 
-All workflow checks can be run locally:
+Run workflow checks locally:
 
 ```bash
-npm run lint          # ESLint checks
-npm run type-check    # TypeScript validation
-npm run test          # Unit tests
+npm run lint          # ESLint validation
+npm run type-check    # TypeScript compilation
+npm run test          # Jest unit tests
 npm run build         # Production build
 ```
 
 ---
 
-## Creating a Release
+## Deployment Workflows
 
-To trigger production deployment:
+### Automatic Staging Deployment
+
+Push to `develop` branch triggers automatic staging deployment:
 
 ```bash
-git tag -a v1.0.0 -m "Release version 1.0.0"
+git push origin develop
+```
+
+GitHub Actions will:
+1. Run full test & build suite
+2. Deploy to staging if all checks pass
+
+### Production Release
+
+Create a version tag to trigger production deployment:
+
+```bash
+# Create annotated tag
+git tag -a v1.0.0 -m "Release v1.0.0"
+
+# Push tag to trigger workflow
 git push origin v1.0.0
 ```
 
-This will:
-1. Run full build & test suite
-2. Create GitHub Release
-3. Deploy to production (if secrets configured)
+GitHub Actions will:
+1. Run full test & build suite
+2. Create GitHub Release with tag name
+3. Deploy to production if all checks pass
+
+---
+
+## Environment Management
+
+### Development → Staging → Production
+
+**develop** branch → Tests pass → Auto-deploy to staging
+
+**version tag** (v*) → Tests pass → Manual review → Deploy to production
+
+---
+
+## Workflow Status Page
+
+View workflow runs: https://github.com/yourusername/audit-workspace/actions
+
+Each commit/PR shows:
+- ✅ Passing jobs (green)
+- ❌ Failed jobs (red)
+- ⏳ In-progress jobs (yellow)
+
+---
+
+## Troubleshooting
+
+### Workflow Fails at Deploy Step
+
+Check that secrets are configured:
+
+```bash
+# View available secrets (GitHub CLI)
+gh secret list
+```
+
+### Build Artifacts Missing
+
+Ensure previous job succeeded before deployment job runs:
+
+```yaml
+needs: test-build  # Depends on previous job
+```
+
+### Concurrent Runs Cancelled
+
+Concurrency settings cancel older runs on new push:
+
+```yaml
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+```
+
+To disable, remove the `concurrency` section from workflow file.
