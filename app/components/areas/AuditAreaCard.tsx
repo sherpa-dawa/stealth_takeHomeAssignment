@@ -1,29 +1,34 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  Box,
-  Typography,
-  Avatar,
-  LinearProgress,
-  Button,
-} from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { AuditArea } from "@/lib/types";
+import { Card, CardContent } from "../ui/Card";
+import { Button } from "../ui/Button";
+import { Avatar } from "../ui/Avatar";
+import { Eye, UserPlus } from "lucide-react";
+import { AuditArea, AreaStatus } from "@/lib/types";
 import RiskChip from "../shared/RiskChip";
 import StatusChip from "../shared/StatusChip";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/Select";
 
 interface AuditAreaCardProps {
   area: AuditArea;
   onViewDetails: (area: AuditArea) => void;
-  onChangeStatus: (area: AuditArea) => void;
+  onChangeStatus: (area: AuditArea, status: AreaStatus) => void;
   onAssignAuditor: (area: AuditArea) => void;
   onMarkComplete: (area: AuditArea) => void;
 }
+
+const statuses: AreaStatus[] = [
+  "Planning",
+  "In Progress",
+  "Review",
+  "Complete",
+];
 
 export default function AuditAreaCard({
   area,
@@ -32,163 +37,118 @@ export default function AuditAreaCard({
   onAssignAuditor,
   onMarkComplete,
 }: AuditAreaCardProps) {
+  const handleStatusChange = (newStatus: AreaStatus) => {
+    onChangeStatus(area, newStatus);
+  };
+
   return (
-    <Card
-      sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        border: "1px solid #e0e0e0",
-        "&:hover": {
-          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-          transition: "box-shadow 0.3s ease",
-        },
-      }}
-    >
-      <CardContent sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h6" sx={{ fontWeight: 700, flex: 1 }}>
+    <Card className="hover:shadow-md transition-shadow duration-300 bg-white">
+      <CardContent className="p-5 space-y-4">
+        {/* Header: Name & Risk */}
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-sm font-semibold text-neutral-900">
             {area.name}
-          </Typography>
-          <RiskChip risk={area.risk} />
-        </Box>
+          </h3>
+          <RiskChip risk={area.risk} size="sm" />
+        </div>
 
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: "0.5rem",
-            }}
-          >
-            <Typography variant="caption" sx={{ color: "#666" }}>
-              Progress
-            </Typography>
-            <Typography variant="caption" sx={{ fontWeight: 600 }}>
+        {/* Progress */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between">
+            <div className="flex-1 bg-neutral-200 rounded-full h-1.5 overflow-hidden">
+              <div
+                className="bg-blue-500 h-full rounded-full transition-all duration-300"
+                style={{ width: `${area.progress}%` }}
+              />
+            </div>
+            <span className="text-xs font-semibold text-neutral-900 ml-2 min-w-fit">
               {area.progress}%
-            </Typography>
-          </Box>
-          <LinearProgress
-            variant="determinate"
-            value={area.progress}
-            sx={{
-              height: 6,
-              borderRadius: 3,
-              backgroundColor: "#e0e0e0",
-              "& .MuiLinearProgress-bar": {
-                borderRadius: 3,
-                backgroundColor: "#1976d2",
-              },
-            }}
+            </span>
+          </div>
+        </div>
+
+        {/* Auditor */}
+        <div className="flex items-center gap-2">
+          <Avatar
+            initials={area.assignedAuditor?.avatar || "?"}
+            size="sm"
+            className="w-7 h-7"
           />
-        </Box>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-medium text-neutral-900 truncate">
+              {area.assignedAuditor?.name || "Unassigned"}
+            </p>
+          </div>
+        </div>
 
-        <Box>
-          <Typography variant="caption" sx={{ color: "#666" }}>
-            Assigned Auditor
-          </Typography>
-          {area.assignedAuditor ? (
-            <Box
-              sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}
-            >
-              <Avatar
-                sx={{
-                  width: 32,
-                  height: 32,
-                  backgroundColor: "#1976d2",
-                  fontSize: "0.75rem",
-                  fontWeight: 600,
-                }}
-              >
-                {area.assignedAuditor.avatar}
-              </Avatar>
-              <Typography variant="body2">
-                {area.assignedAuditor.name}
-              </Typography>
-            </Box>
-          ) : (
-            <Typography
-              variant="body2"
-              sx={{ color: "#999", fontStyle: "italic", mt: 0.5 }}
-            >
-              Unassigned
-            </Typography>
-          )}
-        </Box>
-
-        <Box sx={{ display: "flex", gap: 2 }}>
-          <Box>
-            <Typography variant="caption" sx={{ color: "#666" }}>
-              Open Tasks
-            </Typography>
-            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+        {/* Tasks & Evidence - Compact */}
+        <div className="grid grid-cols-2 gap-3 py-2 border-t border-b border-neutral-100">
+          <div>
+            <span className="text-xs text-neutral-600 block">Tasks</span>
+            <span className="text-sm font-semibold text-neutral-900">
               {area.openTasks}
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant="caption" sx={{ color: "#666" }}>
-              Evidence Requested
-            </Typography>
-            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+            </span>
+          </div>
+          <div>
+            <span className="text-xs text-neutral-600 block">Evidence</span>
+            <span className="text-sm font-semibold text-neutral-900">
               {area.evidenceRequested}
-            </Typography>
-          </Box>
-        </Box>
+            </span>
+          </div>
+        </div>
 
-        <Box>
-          <Typography variant="caption" sx={{ color: "#666" }}>
-            Status
-          </Typography>
-          <Box sx={{ mt: 0.5 }}>
-            <StatusChip status={area.status} />
-          </Box>
-        </Box>
+        {/* Status with Dropdown */}
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-medium text-neutral-600">Status</span>
+          <Select
+            value={area.status}
+            onValueChange={(value) => handleStatusChange(value as AreaStatus)}
+          >
+            <SelectTrigger className="w-auto border-0 bg-transparent p-0 h-auto text-xs font-medium hover:bg-neutral-100">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent align="end">
+              {statuses.map((status) => (
+                <SelectItem key={status} value={status}>
+                  <StatusChip status={status} size="sm" />
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-        <Box
-          sx={{
-            display: "flex",
-            gap: 1,
-            marginTop: "auto",
-            flexWrap: "wrap",
-          }}
-        >
+        {/* Action Buttons - Refined */}
+        <div className="flex gap-1.5 pt-2">
           <Button
-            variant="outlined"
-            size="small"
-            startIcon={<VisibilityIcon />}
+            variant="ghost"
+            size="xs"
             onClick={() => onViewDetails(area)}
-            sx={{ flex: 1 }}
+            className="h-7 px-2 text-xs"
+            title="View details"
           >
-            Details
+            <Eye className="w-3.5 h-3.5 mr-1" />
+            View
           </Button>
           <Button
-            variant="outlined"
-            size="small"
-            startIcon={<EditIcon />}
-            onClick={() => onChangeStatus(area)}
-            sx={{ flex: 1 }}
-          >
-            Status
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            startIcon={<PersonAddIcon />}
+            variant="ghost"
+            size="xs"
             onClick={() => onAssignAuditor(area)}
-            sx={{ flex: 1 }}
+            className="h-7 px-2 text-xs"
+            title="Assign auditor"
           >
+            <UserPlus className="w-3.5 h-3.5 mr-1" />
             Assign
           </Button>
           <Button
-            variant="outlined"
-            size="small"
-            startIcon={<CheckCircleIcon />}
+            variant="ghost"
+            size="xs"
             onClick={() => onMarkComplete(area)}
-            sx={{ flex: 1 }}
+            className="h-7 px-2 text-xs text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800"
+            title="Mark complete"
           >
             Complete
           </Button>
-        </Box>
+        </div>
       </CardContent>
     </Card>
   );

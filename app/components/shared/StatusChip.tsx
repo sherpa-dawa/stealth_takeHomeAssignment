@@ -1,36 +1,25 @@
-import { Chip } from "@mui/material";
+import { Badge } from "../ui/Badge";
 import { AreaStatus } from "@/lib/types";
 
 interface StatusChipProps {
   status: AreaStatus;
-  size?: "small" | "medium";
+  size?: "sm" | "md" | "lg";
 }
 
-const statusColors = {
-  Planning: "#e3f2fd",
-  "In Progress": "#fff3e0",
-  Review: "#f3e5f5",
-  Complete: "#e8f5e9",
+const statusVariants: Record<
+  AreaStatus,
+  "primary" | "warning" | "secondary" | "success"
+> = {
+  Planning: "secondary",
+  "In Progress": "primary",
+  Review: "warning",
+  Complete: "success",
 };
 
-const statusTextColors = {
-  Planning: "#1976d2",
-  "In Progress": "#f57c00",
-  Review: "#7b1fa2",
-  Complete: "#388e3c",
-};
-
-export default function StatusChip({ status, size = "small" }: StatusChipProps) {
+export default function StatusChip({ status, size = "sm" }: StatusChipProps) {
   return (
-    <Chip
-      label={status}
-      size={size}
-      sx={{
-        backgroundColor: statusColors[status],
-        color: statusTextColors[status],
-        fontWeight: 600,
-        border: `1px solid ${statusTextColors[status]}`,
-      }}
-    />
+    <Badge variant={statusVariants[status]} size={size}>
+      {status}
+    </Badge>
   );
 }

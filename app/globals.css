@@ -1,5 +1,21 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  html,
+  body {
+    @apply m-0 p-0 h-screen bg-neutral-50 text-neutral-900;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  * {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  [role="dialog"] {
+    @apply fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 border border-neutral-200 bg-white p-6 rounded-lg shadow-xl;
+  }
 }

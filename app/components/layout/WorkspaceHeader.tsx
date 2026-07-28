@@ -1,35 +1,23 @@
-import { Box, Button, Typography } from "@mui/material";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import SaveIcon from "@mui/icons-material/Save";
+import { Button } from "../ui/Button";
+import { Download, Save } from "lucide-react";
 
 export default function WorkspaceHeader() {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "1.5rem 2rem",
-        borderBottom: "1px solid #e0e0e0",
-        backgroundColor: "#fff",
-      }}
-    >
-      <Typography variant="h5" sx={{ fontWeight: 700 }}>
+    <div className="flex justify-between items-center px-8 py-6 border-b border-neutral-200 bg-white">
+      <h1 className="text-2xl font-bold text-neutral-900">
         Audit Planning Workspace
-      </Typography>
+      </h1>
 
-      <Box sx={{ display: "flex", gap: 1 }}>
-        <Button
-          variant="outlined"
-          startIcon={<FileDownloadIcon />}
-          size="small"
-        >
+      <div className="flex gap-3">
+        <Button variant="outline" size="md">
+          <Download className="w-4 h-4" />
           Export
         </Button>
-        <Button variant="contained" startIcon={<SaveIcon />} size="small">
+        <Button variant="primary" size="md">
+          <Save className="w-4 h-4" />
           Save
         </Button>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

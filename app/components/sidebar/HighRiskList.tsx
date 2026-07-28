@@ -1,13 +1,4 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Chip,
-} from "@mui/material";
+import { Card, CardContent } from "../ui/Card";
 import { AuditArea } from "@/lib/types";
 import RiskChip from "../shared/RiskChip";
 
@@ -19,53 +10,28 @@ export default function HighRiskList({ areas }: HighRiskListProps) {
   if (areas.length === 0) return null;
 
   return (
-    <Card sx={{ border: "1px solid #e0e0e0" }}>
+    <Card>
       <CardContent>
-        <Typography variant="h6" sx={{ fontWeight: 700, marginBottom: 2 }}>
-          High-Risk Areas
-        </Typography>
+        <h3 className="text-lg font-bold mb-4">High-Risk Areas</h3>
 
-        <List sx={{ padding: 0 }}>
+        <div className="space-y-3">
           {areas.map((area) => (
-            <ListItem
+            <div
               key={area.id}
-              sx={{
-                padding: "0.75rem 0",
-                borderBottom: "1px solid #f0f0f0",
-                "&:last-child": {
-                  borderBottom: "none",
-                },
-              }}
+              className="pb-3 border-b border-neutral-100 last:border-b-0"
             >
-              <ListItemText
-                primary={
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 600, flex: 1 }}
-                    >
-                      {area.name}
-                    </Typography>
-                    <RiskChip risk={area.risk} size="small" />
-                  </Box>
-                }
-                secondary={
-                  <Box sx={{ marginTop: "0.5rem" }}>
-                    <Typography variant="caption" sx={{ color: "#666" }}>
-                      Progress: {area.progress}%
-                    </Typography>
-                  </Box>
-                }
-              />
-            </ListItem>
+              <div className="flex justify-between items-center gap-2 mb-1">
+                <p className="text-sm font-semibold text-neutral-900 flex-1">
+                  {area.name}
+                </p>
+                <RiskChip risk={area.risk} size="sm" />
+              </div>
+              <p className="text-xs text-neutral-600">
+                Progress: {area.progress}%
+              </p>
+            </div>
           ))}
-        </List>
+        </div>
       </CardContent>
     </Card>
   );

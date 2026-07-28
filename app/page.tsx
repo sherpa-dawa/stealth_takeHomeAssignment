@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Box } from "@mui/material";
 import { RiskLevel, AreaStatus } from "@/lib/types";
 import { useAuditWorkspace } from "@/lib/useAuditWorkspace";
 import WorkspaceHeader from "./components/layout/WorkspaceHeader";
@@ -40,7 +39,7 @@ export default function Home() {
   const hasNoFilteredResults = filteredAreas.length === 0;
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <div className="flex flex-col min-h-screen bg-neutral-50">
       {/* Header */}
       <WorkspaceHeader />
 
@@ -66,67 +65,36 @@ export default function Home() {
       {state.loading ? (
         <LoadingState />
       ) : hasNoAreas ? (
-        <Box sx={{ display: "flex", flex: 1 }}>
-          <Box sx={{ flex: 1, backgroundColor: "#fafafa" }}>
+        <div className="flex flex-1">
+          <div className="flex-1 bg-neutral-50">
             <EmptyState variant="no-data" />
-          </Box>
-          <Box
-            sx={{
-              width: 360,
-              padding: "2rem",
-              overflowY: "auto",
-              borderLeft: "1px solid #e0e0e0",
-              backgroundColor: "#fff",
-            }}
-          >
+          </div>
+          <div className="w-96 border-l border-neutral-200 bg-neutral-50 overflow-y-auto">
             <Sidebar state={state} />
-          </Box>
-        </Box>
+          </div>
+        </div>
       ) : hasNoFilteredResults ? (
-        <Box sx={{ display: "flex", flex: 1 }}>
-          <Box sx={{ flex: 1, backgroundColor: "#fafafa" }}>
+        <div className="flex flex-1">
+          <div className="flex-1 bg-neutral-50">
             <EmptyState variant="no-results" />
-          </Box>
-          <Box
-            sx={{
-              width: 360,
-              padding: "2rem",
-              overflowY: "auto",
-              borderLeft: "1px solid #e0e0e0",
-              backgroundColor: "#fff",
-            }}
-          >
+          </div>
+          <div className="w-96 border-l border-neutral-200 bg-neutral-50 overflow-y-auto">
             <Sidebar state={state} />
-          </Box>
-        </Box>
+          </div>
+        </div>
       ) : (
-        <Box sx={{ display: "flex", flex: 1 }}>
+        <div className="flex flex-1">
           {/* Left: Audit Areas Grid */}
-          <Box
-            sx={{
-              flex: 1,
-              padding: "2rem",
-              overflowY: "auto",
-              backgroundColor: "#fafafa",
-            }}
-          >
+          <div className="flex-1 overflow-y-auto bg-neutral-50 p-6">
             <AuditAreaGrid areas={filteredAreas} dispatch={dispatch} />
-          </Box>
+          </div>
 
           {/* Right: Sidebar */}
-          <Box
-            sx={{
-              width: 360,
-              padding: "2rem",
-              overflowY: "auto",
-              borderLeft: "1px solid #e0e0e0",
-              backgroundColor: "#fff",
-            }}
-          >
+          <div className="w-96 border-l border-neutral-200 bg-neutral-50 overflow-y-auto">
             <Sidebar state={state} />
-          </Box>
-        </Box>
+          </div>
+        </div>
       )}
-    </Box>
+    </div>
   );
 }

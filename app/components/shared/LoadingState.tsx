@@ -1,170 +1,103 @@
 "use client";
 
-import { Box, Card, CardContent, Skeleton } from "@mui/material";
+import { Card, CardContent } from "../ui/Card";
+
+const Skeleton = ({
+  width = "100%",
+  height = "16px",
+}: {
+  width?: string;
+  height?: string;
+}) => (
+  <div
+    className="bg-neutral-300 rounded animate-pulse"
+    style={{ width, height }}
+  />
+);
 
 export default function LoadingState() {
   return (
-    <Box sx={{ display: "flex", flex: 1 }}>
+    <div className="flex flex-1">
       {/* Left: Loading Skeleton Cards */}
-      <Box
-        sx={{
-          flex: 1,
-          padding: "2rem",
-          overflowY: "auto",
-          backgroundColor: "#fafafa",
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "1fr",
-            sm: "repeat(2, 1fr)",
-            lg: "repeat(3, 1fr)",
-          },
-          gap: 2,
-        }}
-      >
+      <div className="flex-1 p-8 overflow-y-auto bg-neutral-50 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {[1, 2, 3, 4, 5, 6].map((key) => (
-          <Box key={key}>
-            <Card
-              sx={{
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                border: "1px solid #e0e0e0",
-              }}
-            >
-              <CardContent
-                sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-              >
+          <div key={key}>
+            <Card className="h-full flex flex-col">
+              <CardContent className="flex flex-col gap-4">
                 {/* Title and Risk Chip */}
-                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                  <Skeleton variant="text" width="60%" height={28} />
-                  <Skeleton variant="rectangular" width={60} height={24} />
-                </Box>
+                <div className="flex justify-between">
+                  <Skeleton width="60%" height="28px" />
+                  <Skeleton width="60px" height="24px" />
+                </div>
 
                 {/* Progress Section */}
-                <Box>
-                  <Skeleton
-                    variant="text"
-                    width="30%"
-                    height={16}
-                    sx={{ mb: 1 }}
-                  />
-                  <Skeleton variant="rectangular" height={6} />
-                </Box>
+                <div>
+                  <Skeleton width="30%" height="16px" />
+                  <Skeleton width="100%" height="6px" />
+                </div>
 
                 {/* Assigned Auditor Section */}
-                <Box>
-                  <Skeleton
-                    variant="text"
-                    width="40%"
-                    height={16}
-                    sx={{ mb: 0.5 }}
-                  />
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      mt: 0.5,
-                    }}
-                  >
-                    <Skeleton variant="circular" width={32} height={32} />
-                    <Skeleton variant="text" width="50%" height={16} />
-                  </Box>
-                </Box>
+                <div>
+                  <Skeleton width="40%" height="16px" />
+                  <div className="flex items-center gap-2 mt-2">
+                    <Skeleton width="32px" height="32px" />
+                    <Skeleton width="50%" height="16px" />
+                  </div>
+                </div>
 
                 {/* Open Tasks and Evidence Section */}
-                <Box sx={{ display: "flex", gap: 2 }}>
-                  <Box sx={{ flex: 1 }}>
-                    <Skeleton variant="text" width="50%" height={16} />
-                    <Skeleton variant="text" width="30%" height={16} />
-                  </Box>
-                  <Box sx={{ flex: 1 }}>
-                    <Skeleton variant="text" width="60%" height={16} />
-                    <Skeleton variant="text" width="30%" height={16} />
-                  </Box>
-                </Box>
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <Skeleton width="50%" height="16px" />
+                    <Skeleton width="30%" height="16px" />
+                  </div>
+                  <div className="flex-1">
+                    <Skeleton width="60%" height="16px" />
+                    <Skeleton width="30%" height="16px" />
+                  </div>
+                </div>
 
                 {/* Status Section */}
-                <Box>
-                  <Skeleton variant="text" width="25%" height={16} />
-                  <Skeleton
-                    variant="text"
-                    width="40%"
-                    height={24}
-                    sx={{ mt: 0.5 }}
-                  />
-                </Box>
+                <div>
+                  <Skeleton width="25%" height="16px" />
+                  <Skeleton width="40%" height="24px" />
+                </div>
 
                 {/* Buttons */}
-                <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                <div className="flex gap-2 flex-wrap">
                   {[1, 2, 3, 4].map((btn) => (
-                    <Skeleton
-                      key={btn}
-                      variant="rectangular"
-                      width="23%"
-                      height={32}
-                      sx={{ flex: 1, minWidth: "45px" }}
-                    />
+                    <Skeleton key={btn} width="calc(25% - 6px)" height="32px" />
                   ))}
-                </Box>
+                </div>
               </CardContent>
             </Card>
-          </Box>
+          </div>
         ))}
-      </Box>
+      </div>
 
       {/* Right: Loading Sidebar */}
-      <Box
-        sx={{
-          width: 360,
-          padding: "2rem",
-          overflowY: "auto",
-          borderLeft: "1px solid #e0e0e0",
-          backgroundColor: "#fff",
-        }}
-      >
-        <Card sx={{ border: "1px solid #e0e0e0" }}>
+      <div className="w-80 p-8 overflow-y-auto border-l border-neutral-200 bg-white">
+        <Card>
           <CardContent>
-            <Skeleton variant="text" width="50%" height={28} sx={{ mb: 2 }} />
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+            <Skeleton width="50%" height="28px" />
+            <div className="flex flex-col gap-3 mt-4">
               {[1, 2, 3, 4, 5].map((item) => (
-                <Box
+                <div
                   key={item}
-                  sx={{
-                    display: "flex",
-                    gap: 1,
-                    paddingBottom: 1.5,
-                    borderBottom: "1px solid #f0f0f0",
-                    "&:last-child": { borderBottom: "none" },
-                  }}
+                  className="flex gap-2 pb-3 border-b border-neutral-100 last:border-b-0"
                 >
-                  <Skeleton
-                    variant="circular"
-                    width={32}
-                    height={32}
-                    sx={{ flexShrink: 0 }}
-                  />
-                  <Box sx={{ flex: 1 }}>
-                    <Skeleton variant="text" width="70%" height={16} />
-                    <Skeleton
-                      variant="text"
-                      width="100%"
-                      height={14}
-                      sx={{ mt: 0.5 }}
-                    />
-                    <Skeleton
-                      variant="text"
-                      width="40%"
-                      height={12}
-                      sx={{ mt: 0.5 }}
-                    />
-                  </Box>
-                </Box>
+                  <Skeleton width="32px" height="32px" />
+                  <div className="flex-1">
+                    <Skeleton width="70%" height="16px" />
+                    <Skeleton width="100%" height="14px" />
+                    <Skeleton width="40%" height="12px" />
+                  </div>
+                </div>
               ))}
-            </Box>
+            </div>
           </CardContent>
         </Card>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

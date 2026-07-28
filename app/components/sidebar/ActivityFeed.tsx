@@ -1,12 +1,5 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  List,
-  ListItem,
-  Avatar,
-} from "@mui/material";
+import { Card, CardContent } from "../ui/Card";
+import { Avatar } from "../ui/Avatar";
 import { ActivityItem } from "@/lib/types";
 
 interface ActivityFeedProps {
@@ -17,59 +10,34 @@ export default function ActivityFeed({ items }: ActivityFeedProps) {
   if (items.length === 0) return null;
 
   return (
-    <Card sx={{ border: "1px solid #e0e0e0" }}>
+    <Card>
       <CardContent>
-        <Typography variant="h6" sx={{ fontWeight: 700, marginBottom: 2 }}>
-          Recent Activity
-        </Typography>
+        <h3 className="text-lg font-bold mb-4">Recent Activity</h3>
 
-        <List sx={{ padding: 0 }}>
+        <div className="space-y-3">
           {items.map((item) => (
-            <ListItem
+            <div
               key={item.id}
-              sx={{
-                padding: "0.75rem 0",
-                borderBottom: "1px solid #f0f0f0",
-                "&:last-child": {
-                  borderBottom: "none",
-                },
-                display: "flex",
-                gap: 1,
-                alignItems: "flex-start",
-              }}
+              className="flex gap-3 items-start pb-3 border-b border-neutral-100 last:border-b-0"
             >
               <Avatar
-                sx={{
-                  width: 32,
-                  height: 32,
-                  backgroundColor: "#1976d2",
-                  fontSize: "0.75rem",
-                  fontWeight: 600,
-                  flexShrink: 0,
-                }}
-              >
-                {item.user
+                initials={item.user
                   .split(" ")
                   .map((n) => n[0])
                   .join("")}
-              </Avatar>
-              <Box sx={{ flex: 1 }}>
-                <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                size="sm"
+                className="flex-shrink-0"
+              />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-neutral-900">
                   {item.user}
-                </Typography>
-                <Typography variant="caption" sx={{ display: "block" }}>
-                  {item.action}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  sx={{ color: "#999", fontSize: "0.7rem" }}
-                >
-                  {item.time}
-                </Typography>
-              </Box>
-            </ListItem>
+                </p>
+                <p className="text-xs text-neutral-600">{item.action}</p>
+                <p className="text-xs text-neutral-400 mt-0.5">{item.time}</p>
+              </div>
+            </div>
           ))}
-        </List>
+        </div>
       </CardContent>
     </Card>
   );

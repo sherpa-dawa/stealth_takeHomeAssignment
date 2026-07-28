@@ -1,21 +1,23 @@
 "use client";
 
+import { Button } from "../ui/Button";
 import {
   Dialog,
-  DialogTitle,
   DialogContent,
-  DialogActions,
-  Button,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Chip,
-} from "@mui/material";
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from "../ui/Dialog";
 import { AreaStatus } from "@/lib/types";
 import StatusChip from "../shared/StatusChip";
 
-const statuses: AreaStatus[] = ["Planning", "In Progress", "Review", "Complete"];
+const statuses: AreaStatus[] = [
+  "Planning",
+  "In Progress",
+  "Review",
+  "Complete",
+];
 
 interface ChangeStatusDialogProps {
   open: boolean;
@@ -31,29 +33,39 @@ export default function ChangeStatusDialog({
   currentStatus,
 }: ChangeStatusDialogProps) {
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Change Status</DialogTitle>
-      <DialogContent>
-        <List sx={{ pt: 0 }}>
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>Change Status</DialogTitle>
+          <DialogClose />
+        </DialogHeader>
+
+        <div className="space-y-2 py-4">
           {statuses.map((status) => (
-            <ListItem key={status} disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  onChangeStatus(status);
-                  onClose();
-                }}
-                selected={currentStatus === status}
-              >
-                <ListItemText primary={status} />
-                <StatusChip status={status} size="small" />
-              </ListItemButton>
-            </ListItem>
+            <button
+              key={status}
+              onClick={() => {
+                onChangeStatus(status);
+                onClose();
+              }}
+              className={`w-full flex items-center justify-between p-3 rounded-md text-left transition-colors ${
+                currentStatus === status
+                  ? "bg-primary-100 border border-primary-300"
+                  : "hover:bg-neutral-100 border border-neutral-200"
+              }`}
+            >
+              <span className="font-medium text-neutral-900">{status}</span>
+              <StatusChip status={status} size="sm" />
+            </button>
           ))}
-        </List>
+        </div>
+
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+        </DialogFooter>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-      </DialogActions>
     </Dialog>
   );
 }

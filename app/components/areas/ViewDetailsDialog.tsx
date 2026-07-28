@@ -1,17 +1,15 @@
 "use client";
 
+import { Button } from "../ui/Button";
+import { Avatar } from "../ui/Avatar";
 import {
   Dialog,
-  DialogTitle,
   DialogContent,
-  DialogActions,
-  Button,
-  Box,
-  Typography,
-  Avatar,
-  LinearProgress,
-  Divider,
-} from "@mui/material";
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from "../ui/Dialog";
 import { AuditArea } from "@/lib/types";
 import RiskChip from "../shared/RiskChip";
 import StatusChip from "../shared/StatusChip";
@@ -30,100 +28,88 @@ export default function ViewDetailsDialog({
   if (!area) return null;
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>{area.name}</DialogTitle>
-      <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        {/* Risk and Status */}
-        <Box sx={{ display: "flex", gap: 1 }}>
-          <RiskChip risk={area.risk} />
-          <StatusChip status={area.status} />
-        </Box>
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>{area.name}</DialogTitle>
+          <DialogClose />
+        </DialogHeader>
 
-        <Divider />
+        <div className="space-y-4 py-4">
+          {/* Risk and Status */}
+          <div className="flex gap-2">
+            <RiskChip risk={area.risk} size="md" />
+            <StatusChip status={area.status} size="md" />
+          </div>
 
-        {/* Progress */}
-        <Box>
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
-            <Typography variant="body2" sx={{ fontWeight: 600 }}>
-              Progress
-            </Typography>
-            <Typography variant="body2" sx={{ fontWeight: 600 }}>
-              {area.progress}%
-            </Typography>
-          </Box>
-          <LinearProgress
-            variant="determinate"
-            value={area.progress}
-            sx={{
-              height: 8,
-              borderRadius: 4,
-              backgroundColor: "#e0e0e0",
-              "& .MuiLinearProgress-bar": {
-                borderRadius: 4,
-                backgroundColor: "#1976d2",
-              },
-            }}
-          />
-        </Box>
+          <div className="border-t border-neutral-200" />
 
-        <Divider />
+          {/* Progress */}
+          <div>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-semibold text-neutral-900">
+                Progress
+              </span>
+              <span className="text-sm font-semibold text-neutral-900">
+                {area.progress}%
+              </span>
+            </div>
+            <div className="w-full bg-neutral-300 rounded-full h-2 overflow-hidden">
+              <div
+                className="bg-gradient-to-r from-primary-500 to-accent-500 h-full rounded-full transition-all duration-500"
+                style={{ width: `${area.progress}%` }}
+              />
+            </div>
+          </div>
 
-        {/* Assigned Auditor */}
-        <Box>
-          <Typography variant="caption" sx={{ color: "#666", fontWeight: 600 }}>
-            Assigned Auditor
-          </Typography>
-          {area.assignedAuditor ? (
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
-              <Avatar
-                sx={{
-                  width: 40,
-                  height: 40,
-                  backgroundColor: "#1976d2",
-                  fontWeight: 600,
-                }}
-              >
-                {area.assignedAuditor.avatar}
-              </Avatar>
-              <Typography variant="body2">{area.assignedAuditor.name}</Typography>
-            </Box>
-          ) : (
-            <Typography
-              variant="body2"
-              sx={{ color: "#999", fontStyle: "italic", mt: 1 }}
-            >
-              Unassigned
-            </Typography>
-          )}
-        </Box>
+          <div className="border-t border-neutral-200" />
 
-        <Divider />
+          {/* Assigned Auditor */}
+          <div>
+            <p className="text-xs font-semibold text-neutral-700 mb-2">
+              Assigned Auditor
+            </p>
+            {area.assignedAuditor ? (
+              <div className="flex items-center gap-2">
+                <Avatar initials={area.assignedAuditor.avatar} size="md" />
+                <p className="text-sm text-neutral-900">
+                  {area.assignedAuditor.name}
+                </p>
+              </div>
+            ) : (
+              <p className="text-sm text-neutral-500 italic">Unassigned</p>
+            )}
+          </div>
 
-        {/* Tasks and Evidence */}
-        <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
-          <Box>
-            <Typography variant="caption" sx={{ color: "#666", fontWeight: 600 }}>
-              Open Tasks
-            </Typography>
-            <Typography variant="h6" sx={{ fontWeight: 700, mt: 0.5 }}>
-              {area.openTasks}
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant="caption" sx={{ color: "#666", fontWeight: 600 }}>
-              Evidence Requested
-            </Typography>
-            <Typography variant="h6" sx={{ fontWeight: 700, mt: 0.5 }}>
-              {area.evidenceRequested}
-            </Typography>
-          </Box>
-        </Box>
+          <div className="border-t border-neutral-200" />
+
+          {/* Tasks and Evidence */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="text-xs font-semibold text-neutral-700 mb-2">
+                Open Tasks
+              </p>
+              <p className="text-2xl font-bold text-neutral-900">
+                {area.openTasks}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-neutral-700 mb-2">
+                Evidence Requested
+              </p>
+              <p className="text-2xl font-bold text-neutral-900">
+                {area.evidenceRequested}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <DialogFooter>
+          <Button variant="primary" onClick={onClose}>
+            Close
+          </Button>
+        </DialogFooter>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} variant="contained">
-          Close
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 }

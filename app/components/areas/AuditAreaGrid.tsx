@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Box } from "@mui/material";
 import { AuditArea, Auditor, AreaStatus } from "@/lib/types";
-import { WorkspaceState, WorkspaceAction } from "@/lib/workspaceReducer";
+import { WorkspaceAction } from "@/lib/workspaceReducer";
 import AuditAreaCard from "./AuditAreaCard";
 import AssignAuditorDialog from "./AssignAuditorDialog";
 import ChangeStatusDialog from "./ChangeStatusDialog";
@@ -60,28 +59,27 @@ export default function AuditAreaGrid({ areas, dispatch }: AuditAreaGridProps) {
 
   return (
     <>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "1fr",
-            sm: "repeat(2, 1fr)",
-            lg: "repeat(3, 1fr)",
-          },
-          gap: 2,
-        }}
-      >
+      <div className="grid grid-cols-3 gap-4">
         {areas.map((area) => (
           <AuditAreaCard
             key={area.id}
             area={area}
             onViewDetails={(a: AuditArea) => setSelectedAreaForDetails(a)}
-            onChangeStatus={(a: AuditArea) => setSelectedAreaForStatus(a)}
+            onChangeStatus={(a: AuditArea, status) => {
+              dispatch({
+                type: "CHANGE_STATUS",
+                payload: {
+                  areaId: a.id,
+                  status,
+                  userName: "Current User",
+                },
+              });
+            }}
             onAssignAuditor={(a: AuditArea) => setSelectedAreaForAssign(a)}
             onMarkComplete={handleMarkComplete}
           />
         ))}
-      </Box>
+      </div>
 
       {/* Dialogs */}
       <ViewDetailsDialog
