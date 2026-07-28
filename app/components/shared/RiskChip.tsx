@@ -12,12 +12,6 @@ const riskColors = {
   High: "#f44336",
 };
 
-const riskTextColors = {
-  Low: "#fff",
-  Medium: "#fff",
-  High: "#fff",
-};
-
 export default function RiskChip({ risk, size = "small" }: RiskChipProps) {
   return (
     <Chip
@@ -25,7 +19,7 @@ export default function RiskChip({ risk, size = "small" }: RiskChipProps) {
       size={size}
       sx={{
         backgroundColor: riskColors[risk],
-        color: riskTextColors[risk],
+        color: "#fff",
         fontWeight: 600,
       }}
     />

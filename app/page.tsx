@@ -8,7 +8,7 @@ import AuditAreaGrid from "./components/areas/AuditAreaGrid";
 import Sidebar from "./components/sidebar/Sidebar";
 
 export default function Home() {
-  const { state, refetch } = useAuditWorkspace();
+  const { state, dispatch, refetch } = useAuditWorkspace();
 
   if (state.loading) {
     return (
@@ -63,7 +63,7 @@ export default function Home() {
             backgroundColor: "#fafafa",
           }}
         >
-          <AuditAreaGrid areas={state.areas} />
+          <AuditAreaGrid areas={state.areas} dispatch={dispatch} />
         </Box>
 
         {/* Right: Sidebar */}

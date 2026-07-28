@@ -8,7 +8,6 @@ import {
   Avatar,
   LinearProgress,
   Button,
-  Chip,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
@@ -20,9 +19,19 @@ import StatusChip from "../shared/StatusChip";
 
 interface AuditAreaCardProps {
   area: AuditArea;
+  onViewDetails: (area: AuditArea) => void;
+  onChangeStatus: (area: AuditArea) => void;
+  onAssignAuditor: (area: AuditArea) => void;
+  onMarkComplete: (area: AuditArea) => void;
 }
 
-export default function AuditAreaCard({ area }: AuditAreaCardProps) {
+export default function AuditAreaCard({
+  area,
+  onViewDetails,
+  onChangeStatus,
+  onAssignAuditor,
+  onMarkComplete,
+}: AuditAreaCardProps) {
   return (
     <Card
       sx={{
@@ -37,7 +46,6 @@ export default function AuditAreaCard({ area }: AuditAreaCardProps) {
       }}
     >
       <CardContent sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        {/* Header with title and risk */}
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h6" sx={{ fontWeight: 700, flex: 1 }}>
             {area.name}
@@ -45,7 +53,6 @@ export default function AuditAreaCard({ area }: AuditAreaCardProps) {
           <RiskChip risk={area.risk} />
         </Box>
 
-        {/* Progress bar */}
         <Box>
           <Box
             sx={{
@@ -76,13 +83,14 @@ export default function AuditAreaCard({ area }: AuditAreaCardProps) {
           />
         </Box>
 
-        {/* Assigned auditor */}
         <Box>
           <Typography variant="caption" sx={{ color: "#666" }}>
             Assigned Auditor
           </Typography>
           {area.assignedAuditor ? (
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
+            <Box
+              sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}
+            >
               <Avatar
                 sx={{
                   width: 32,
@@ -94,7 +102,9 @@ export default function AuditAreaCard({ area }: AuditAreaCardProps) {
               >
                 {area.assignedAuditor.avatar}
               </Avatar>
-              <Typography variant="body2">{area.assignedAuditor.name}</Typography>
+              <Typography variant="body2">
+                {area.assignedAuditor.name}
+              </Typography>
             </Box>
           ) : (
             <Typography
@@ -106,7 +116,6 @@ export default function AuditAreaCard({ area }: AuditAreaCardProps) {
           )}
         </Box>
 
-        {/* Stats */}
         <Box sx={{ display: "flex", gap: 2 }}>
           <Box>
             <Typography variant="caption" sx={{ color: "#666" }}>
@@ -126,7 +135,6 @@ export default function AuditAreaCard({ area }: AuditAreaCardProps) {
           </Box>
         </Box>
 
-        {/* Status */}
         <Box>
           <Typography variant="caption" sx={{ color: "#666" }}>
             Status
@@ -136,7 +144,6 @@ export default function AuditAreaCard({ area }: AuditAreaCardProps) {
           </Box>
         </Box>
 
-        {/* Action buttons */}
         <Box
           sx={{
             display: "flex",
@@ -149,6 +156,7 @@ export default function AuditAreaCard({ area }: AuditAreaCardProps) {
             variant="outlined"
             size="small"
             startIcon={<VisibilityIcon />}
+            onClick={() => onViewDetails(area)}
             sx={{ flex: 1 }}
           >
             Details
@@ -157,6 +165,7 @@ export default function AuditAreaCard({ area }: AuditAreaCardProps) {
             variant="outlined"
             size="small"
             startIcon={<EditIcon />}
+            onClick={() => onChangeStatus(area)}
             sx={{ flex: 1 }}
           >
             Status
@@ -165,6 +174,7 @@ export default function AuditAreaCard({ area }: AuditAreaCardProps) {
             variant="outlined"
             size="small"
             startIcon={<PersonAddIcon />}
+            onClick={() => onAssignAuditor(area)}
             sx={{ flex: 1 }}
           >
             Assign
@@ -173,6 +183,7 @@ export default function AuditAreaCard({ area }: AuditAreaCardProps) {
             variant="outlined"
             size="small"
             startIcon={<CheckCircleIcon />}
+            onClick={() => onMarkComplete(area)}
             sx={{ flex: 1 }}
           >
             Complete

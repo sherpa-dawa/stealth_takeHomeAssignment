@@ -106,9 +106,13 @@ export function workspaceReducer(
           : area
       );
 
+      const areaName =
+        state.areas.find((a) => a.id === action.payload.areaId)?.name ||
+        "audit area";
+
       const newActivity = prependActivity(state.activity, {
         user: action.payload.userName,
-        action: `Assigned ${action.payload.auditor.name} to ${state.areas.find((a) => a.id === action.payload.areaId)?.name || "audit area"}`,
+        action: `Assigned ${action.payload.auditor.name} to ${areaName}`,
         time: "just now",
       });
 
@@ -120,15 +124,15 @@ export function workspaceReducer(
     }
 
     case "CHANGE_STATUS": {
-      const areaName =
-        state.areas.find((a) => a.id === action.payload.areaId)?.name ||
-        "audit area";
-
       const updatedAreas = state.areas.map((area) =>
         area.id === action.payload.areaId
           ? { ...area, status: action.payload.status }
           : area
       );
+
+      const areaName =
+        state.areas.find((a) => a.id === action.payload.areaId)?.name ||
+        "audit area";
 
       const newActivity = prependActivity(state.activity, {
         user: action.payload.userName,
@@ -144,15 +148,15 @@ export function workspaceReducer(
     }
 
     case "MARK_COMPLETE": {
-      const areaName =
-        state.areas.find((a) => a.id === action.payload.areaId)?.name ||
-        "audit area";
-
       const updatedAreas = state.areas.map((area) =>
         area.id === action.payload.areaId
           ? { ...area, status: "Complete" as const, progress: 100 }
           : area
       );
+
+      const areaName =
+        state.areas.find((a) => a.id === action.payload.areaId)?.name ||
+        "audit area";
 
       const newActivity = prependActivity(state.activity, {
         user: action.payload.userName,
