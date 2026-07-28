@@ -1,0 +1,24 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Validate commit message format
+COMMIT_MSG=$(cat "$1")
+
+# Allow merge commits
+if echo "$COMMIT_MSG" | grep -q "^Merge"; then
+  exit 0
+fi
+
+# Require commit messages to have meaningful content
+if ! echo "$COMMIT_MSG" | grep -q "^[a-zA-Z]"; then
+  echo "❌ Commit message must start with a letter"
+  exit 1
+fi
+
+# Check minimum length
+if [ ${#COMMIT_MSG} -lt 10 ]; then
+  echo "❌ Commit message must be at least 10 characters"
+  exit 1
+fi
+
+echo "✅ Commit message validated"

@@ -8,6 +8,7 @@ import {
   Avatar,
   LinearProgress,
   Button,
+  Chip,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
@@ -19,19 +20,9 @@ import StatusChip from "../shared/StatusChip";
 
 interface AuditAreaCardProps {
   area: AuditArea;
-  onViewDetails: (area: AuditArea) => void;
-  onChangeStatus: (area: AuditArea) => void;
-  onAssignAuditor: (area: AuditArea) => void;
-  onMarkComplete: (area: AuditArea) => void;
 }
 
-export default function AuditAreaCard({
-  area,
-  onViewDetails,
-  onChangeStatus,
-  onAssignAuditor,
-  onMarkComplete,
-}: AuditAreaCardProps) {
+export default function AuditAreaCard({ area }: AuditAreaCardProps) {
   return (
     <Card
       sx={{
@@ -167,7 +158,6 @@ export default function AuditAreaCard({
             variant="outlined"
             size="small"
             startIcon={<EditIcon />}
-            onClick={() => onChangeStatus(area)}
             sx={{ flex: 1 }}
           >
             Status
