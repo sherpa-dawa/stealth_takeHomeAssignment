@@ -1,11 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Providers } from "./providers";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+  maximumScale: 5.0,
+  userScalable: true,
+};
 
 export const metadata: Metadata = {
   title: "Audit Planning Workspace",
   description: "Enterprise frontend for audit engagement planning",
-  viewport: "width=device-width, initial-scale=1.0",
 };
 
 export default function RootLayout({
