@@ -22,6 +22,7 @@ interface FilterBarProps {
   onRiskChange: (risk: RiskLevel | "All") => void;
   selectedStatus: AreaStatus | "All";
   onStatusChange: (status: AreaStatus | "All") => void;
+  isLoading?: boolean;
 }
 
 export default function FilterBar({
@@ -33,6 +34,7 @@ export default function FilterBar({
   onRiskChange,
   selectedStatus,
   onStatusChange,
+  isLoading = false,
 }: FilterBarProps) {
   const [inputValue, setInputValue] = useState(searchQuery);
   const debouncedSearch = useDebounce(onSearchChange, 300);
@@ -43,8 +45,14 @@ export default function FilterBar({
         <label className="block text-xs font-medium text-neutral-700 mb-1">
           Client
         </label>
-        <Select value={selectedClient} onValueChange={onClientChange}>
-          <SelectTrigger className="w-full">
+        <Select
+          value={selectedClient}
+          onValueChange={onClientChange}
+          disabled={isLoading}
+        >
+          <SelectTrigger
+            className={`w-full ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+          >
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

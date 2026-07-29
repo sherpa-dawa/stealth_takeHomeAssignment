@@ -72,24 +72,27 @@ export default function Home() {
       <WorkspaceHeader />
 
       {/* Overview Bar */}
-      <OverviewBar overview={state.overview} selectedClient={selectedClient} />
+      <OverviewBar
+        overview={state.overview}
+        selectedClient={selectedClient}
+        isLoading={shouldShowLoading}
+      />
 
       {/* Error State - shown at top if present */}
       {state.error && <ErrorState error={state.error} onRetry={refetch} />}
 
-      {/* Filter Bar - hidden during loading */}
-      {!shouldShowLoading && (
-        <FilterBar
-          selectedClient={selectedClient}
-          onClientChange={setSelectedClient}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          selectedRisk={selectedRisk}
-          onRiskChange={setSelectedRisk}
-          selectedStatus={selectedStatus}
-          onStatusChange={setSelectedStatus}
-        />
-      )}
+      {/* Filter Bar */}
+      <FilterBar
+        selectedClient={selectedClient}
+        onClientChange={setSelectedClient}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        selectedRisk={selectedRisk}
+        onRiskChange={setSelectedRisk}
+        selectedStatus={selectedStatus}
+        onStatusChange={setSelectedStatus}
+        isLoading={state.loading}
+      />
 
       {/* Main Content Area */}
       {shouldShowLoading ? (
