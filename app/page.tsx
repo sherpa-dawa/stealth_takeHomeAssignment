@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { RiskLevel, AreaStatus } from "@/lib/types";
 import { useAuditWorkspace } from "@/lib/useAuditWorkspace";
 import { clients } from "@/lib/mockData";
@@ -15,7 +15,7 @@ import ErrorState from "./components/shared/ErrorState";
 
 export default function Home() {
   const { state, dispatch, refetch } = useAuditWorkspace();
-  const [selectedClient, setSelectedClient] = useState(clients[0]);
+  const [selectedClient, setSelectedClient] = useState(clients[0]!);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRisk, setSelectedRisk] = useState<RiskLevel | "All">("All");
   const [selectedStatus, setSelectedStatus] = useState<AreaStatus | "All">(
@@ -24,6 +24,25 @@ export default function Home() {
   const [highlightedAreaId, setHighlightedAreaId] = useState<string | null>(
     null
   );
+  const highlightTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
+
+  const handleHighlightArea = (areaId: string) => {
+    if (highlightTimeoutRef.current) {
+      clearTimeout(highlightTimeoutRef.current);
+    }
+    setHighlightedAreaId(areaId);
+    highlightTimeoutRef.current = setTimeout(() => {
+      setHighlightedAreaId(null);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (highlightTimeoutRef.current) {
+        clearTimeout(highlightTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const filteredAreas = useMemo(() => {
     return state.areas.filter((area) => {
@@ -44,13 +63,6 @@ export default function Home() {
 
   const hasNoAreas = state.areas.length === 0;
   const hasNoFilteredResults = filteredAreas.length === 0;
-
-  const handleHighlightArea = (areaId: string) => {
-    setHighlightedAreaId(areaId);
-    setTimeout(() => {
-      setHighlightedAreaId(null);
-    }, 1000);
-  };
 
   return (
     <div className="flex flex-col min-h-screen bg-neutral-50">

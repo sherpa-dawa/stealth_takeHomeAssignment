@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { AuditArea, Auditor, AreaStatus } from "@/lib/types";
+import { AuditArea, Auditor } from "@/lib/types";
 import { WorkspaceAction } from "@/lib/workspaceReducer";
 import AuditAreaCard from "./AuditAreaCard";
 import AssignAuditorDialog from "./AssignAuditorDialog";
-import ChangeStatusDialog from "./ChangeStatusDialog";
 import ViewDetailsDialog from "./ViewDetailsDialog";
 
 interface AuditAreaGridProps {
@@ -23,8 +22,6 @@ export default function AuditAreaGrid({
     useState<AuditArea | null>(null);
   const [selectedAreaForAssign, setSelectedAreaForAssign] =
     useState<AuditArea | null>(null);
-  const [selectedAreaForStatus, setSelectedAreaForStatus] =
-    useState<AuditArea | null>(null);
 
   const handleAssignAuditor = (auditor: Auditor) => {
     if (selectedAreaForAssign) {
@@ -33,19 +30,6 @@ export default function AuditAreaGrid({
         payload: {
           areaId: selectedAreaForAssign.id,
           auditor,
-          userName: "Current User",
-        },
-      });
-    }
-  };
-
-  const handleChangeStatus = (status: AreaStatus) => {
-    if (selectedAreaForStatus) {
-      dispatch({
-        type: "CHANGE_STATUS",
-        payload: {
-          areaId: selectedAreaForStatus.id,
-          status,
           userName: "Current User",
         },
       });
@@ -99,13 +83,6 @@ export default function AuditAreaGrid({
         onClose={() => setSelectedAreaForAssign(null)}
         onAssign={handleAssignAuditor}
         currentAuditor={selectedAreaForAssign?.assignedAuditor}
-      />
-
-      <ChangeStatusDialog
-        open={selectedAreaForStatus !== null}
-        onClose={() => setSelectedAreaForStatus(null)}
-        onChangeStatus={handleChangeStatus}
-        currentStatus={selectedAreaForStatus?.status || "Planning"}
       />
     </>
   );

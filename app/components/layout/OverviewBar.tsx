@@ -6,7 +6,12 @@ interface OverviewBarProps {
 }
 
 function formatDate(dateString: string): string {
-  const date = new Date(dateString);
+  const [y, m, d] = dateString.split("-").map(Number) as [
+    number,
+    number,
+    number,
+  ];
+  const date = new Date(y, m - 1, d);
   return date.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",

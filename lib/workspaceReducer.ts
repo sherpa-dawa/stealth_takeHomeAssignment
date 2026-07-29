@@ -26,7 +26,7 @@ export const initialState: WorkspaceState = {
   highRiskAreas: [],
   deadlines: [],
   activity: [],
-  loading: false,
+  loading: true,
   error: null,
 };
 
@@ -55,9 +55,7 @@ export type WorkspaceAction =
   | { type: "MARK_COMPLETE"; payload: { areaId: string; userName: string } };
 
 const generateActivityId = (activity: ActivityItem[]): number => {
-  return activity.length > 0
-    ? Math.max(...activity.map((a) => a.id)) + 1
-    : 1;
+  return activity.length > 0 ? Math.max(...activity.map((a) => a.id)) + 1 : 1;
 };
 
 const prependActivity = (
@@ -126,7 +124,12 @@ export function workspaceReducer(
     case "CHANGE_STATUS": {
       const updatedAreas = state.areas.map((area) =>
         area.id === action.payload.areaId
-          ? { ...area, status: action.payload.status }
+          ? {
+              ...area,
+              status: action.payload.status,
+              progress:
+                action.payload.status === "Complete" ? 100 : area.progress,
+            }
           : area
       );
 
