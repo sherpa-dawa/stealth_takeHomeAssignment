@@ -1,4 +1,4 @@
-import { Badge } from "@/shared/components/Badge";
+import { Badge } from "@/components/common/Badge";
 import { AreaStatus } from "@/features/audit-planning/types";
 
 interface StatusChipProps {

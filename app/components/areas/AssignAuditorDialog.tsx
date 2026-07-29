@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/shared/components/Button";
-import { Avatar } from "@/shared/components/Avatar";
+import { Button } from "@/components/common/Button";
+import { Avatar } from "@/components/common/Avatar";
 import {
   Dialog,
   DialogContent,
@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogClose,
-} from "@/shared/components/Dialog";
+} from "@/components/common/Dialog";
 import { Auditor } from "@/features/audit-planning/types";
 
 const mockAuditors: Auditor[] = [

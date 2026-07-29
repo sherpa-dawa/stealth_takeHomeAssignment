@@ -1,21 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/shared/components/Card";
-import { Button } from "@/shared/components/Button";
-import { Avatar } from "@/shared/components/Avatar";
+import { Card, CardContent } from "@/components/common/Card";
+import { Button } from "@/components/common/Button";
+import { Avatar } from "@/components/common/Avatar";
 import { Eye, UserPlus, CheckSquare, FileText, Loader } from "lucide-react";
 import { AuditArea, AreaStatus } from "@/features/audit-planning/types";
-import RiskChip from "@/shared/components/RiskChip";
-import StatusChip from "@/shared/components/StatusChip";
-import { componentColors, getColorClass } from "@/theme/colorTokens";
+import RiskChip from "@/components/common/RiskChip";
+import StatusChip from "@/components/common/StatusChip";
+import { componentColors, getColorClass } from "@/lib/theme/colorTokens";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/components/Select";
+} from "@/components/common/Select";
 
 interface AuditAreaCardProps {
   area: AuditArea;

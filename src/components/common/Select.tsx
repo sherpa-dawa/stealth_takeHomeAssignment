@@ -1,7 +1,7 @@
 import React from "react";
 import * as RadixSelect from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
-import { cn } from "@/shared/utils";
+import { cn } from "@/lib/utils";
 
 const Select = RadixSelect.Root;
 const SelectGroup = RadixSelect.Group;

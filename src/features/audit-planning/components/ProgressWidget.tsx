@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/shared/components/Card";
+import { Card, CardContent } from "@/components/common/Card";
 import { ProgressBreakdown } from "@/features/audit-planning/types";
 
 interface ProgressWidgetProps {

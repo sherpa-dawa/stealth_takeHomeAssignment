@@ -9,13 +9,13 @@ import {
   OverviewBar,
   WorkspaceHeader,
 } from "@/features/audit-planning";
-import { useMinimumLoadingDelay } from "@/shared/hooks";
+import { useMinimumLoadingDelay } from "@/hooks";
 import {
   LoadingState,
   EmptyState,
   ErrorState,
   ErrorBoundary,
-} from "@/shared/components";
+} from "@/components/common";
 import { CLIENTS } from "@/features/audit-planning/constants";
 import type { RiskLevel, AreaStatus } from "@/features/audit-planning";
 
@@ -90,13 +90,15 @@ export default function Home() {
         {/* Filter Bar */}
         <FilterBar
           selectedClient={selectedClient}
-          onClientChange={(client) => setSelectedClient(client)}
+          onClientChange={(client: string) => setSelectedClient(client)}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           selectedRisk={selectedRisk}
-          onRiskChange={(risk) => setSelectedRisk(risk)}
+          onRiskChange={(risk: RiskLevel | "All") => setSelectedRisk(risk)}
           selectedStatus={selectedStatus}
-          onStatusChange={(status) => setSelectedStatus(status)}
+          onStatusChange={(status: AreaStatus | "All") =>
+            setSelectedStatus(status)
+          }
           isLoading={state.loading}
         />
 

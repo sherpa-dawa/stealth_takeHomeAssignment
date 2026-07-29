@@ -3,7 +3,7 @@
  * This is the only file external code should import from
  */
 
-// Components (re-export from index in components folder)
+// Components (re-export from feature components folder)
 export { default as AuditAreaCard } from "./components/AuditAreaCard";
 export { default as AuditAreaGrid } from "./components/AuditAreaGrid";
 export { default as FilterBar } from "./components/FilterBar";

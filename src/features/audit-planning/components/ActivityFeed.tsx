@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/shared/components/Card";
-import { Avatar } from "@/shared/components/Avatar";
+import { Card, CardContent } from "@/components/common/Card";
+import { Avatar } from "@/components/common/Avatar";
 import { ActivityItem } from "@/features/audit-planning/types";
 
 interface ActivityFeedProps {

@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useDebounce } from "@/shared/hooks/useDebounce";
-import { Input } from "@/shared/components/Input";
+import { useDebounce } from "@/hooks/useDebounce";
+import { Input } from "@/components/common/Input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/components/Select";
+} from "@/components/common/Select";
 import { RiskLevel, AreaStatus } from "@/features/audit-planning/types";
 import { clients } from "@/features/audit-planning/constants/mockData";
 

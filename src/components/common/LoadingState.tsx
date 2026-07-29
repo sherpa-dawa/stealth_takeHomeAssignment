@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent } from "@/shared/components/Card";
+import { Card, CardContent } from "@/components/common/Card";
 
 const Skeleton = ({
   width = "100%",

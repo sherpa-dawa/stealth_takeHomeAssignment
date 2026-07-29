@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/shared/components/Button";
+import { Button } from "@/components/common/Button";
 import {
   Dialog,
   DialogContent,
@@ -8,9 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogClose,
-} from "@/shared/components/Dialog";
+} from "@/components/common/Dialog";
 import { AreaStatus } from "@/features/audit-planning/types";
-import StatusChip from "@/shared/components/StatusChip";
+import StatusChip from "@/components/common/StatusChip";
 
 const statuses: AreaStatus[] = [
   "Planning",

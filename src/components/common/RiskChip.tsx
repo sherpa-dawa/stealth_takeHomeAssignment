@@ -1,6 +1,6 @@
 import { AlertCircle, Shield, Info } from "lucide-react";
 import { RiskLevel } from "@/features/audit-planning/types";
-import { riskBadgeColorMap } from "@/theme/colorMap";
+import { riskBadgeColorMap } from "@/lib/theme/colorMap";
 
 interface RiskChipProps {
   risk: RiskLevel;

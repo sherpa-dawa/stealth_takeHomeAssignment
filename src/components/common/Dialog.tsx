@@ -1,7 +1,7 @@
 import React from "react";
 import * as RadixDialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
-import { cn } from "@/shared/utils";
+import { cn } from "@/lib/utils";
 
 const Dialog = RadixDialog.Root;
 

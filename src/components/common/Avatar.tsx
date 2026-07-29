@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import { cn } from "@/shared/utils";
-import { getAvatarColors, getInitials } from "@/theme/avatarColors";
+import { cn } from "@/lib/utils";
+import { getAvatarColors, getInitials } from "@/lib/theme/avatarColors";
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   initials?: string;

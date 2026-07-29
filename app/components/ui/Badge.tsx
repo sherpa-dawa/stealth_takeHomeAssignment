@@ -1,7 +1,7 @@
 import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/shared/utils";
-import { badgeColorMap } from "@/theme/colorMap";
+import { cn } from "@/lib/utils";
+import { badgeColorMap } from "@/lib/theme/colorMap";
 
 const badgeVariants = cva(
   "inline-flex items-center gap-1.5 font-semibold border transition-colors duration-200",

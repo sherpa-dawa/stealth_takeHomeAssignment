@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/shared/components/Button";
+import { Button } from "@/components/common/Button";
 import { Download, Save, Loader2 } from "lucide-react";
-import { useToast } from "@/shared/components/Toast";
+import { useToast } from "@/components/common/Toast";
 
 export default function WorkspaceHeader() {
   const { addToast } = useToast();

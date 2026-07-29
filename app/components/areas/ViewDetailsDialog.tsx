@@ -1,17 +1,17 @@
 "use client";
 
-import { Avatar } from "@/shared/components/Avatar";
+import { Avatar } from "@/components/common/Avatar";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogClose,
-} from "@/shared/components/Dialog";
+} from "@/components/common/Dialog";
 import { AuditArea } from "@/features/audit-planning/types";
-import RiskChip from "@/shared/components/RiskChip";
-import StatusChip from "@/shared/components/StatusChip";
-import { componentColors, getColorClass } from "@/theme/colorTokens";
+import RiskChip from "@/components/common/RiskChip";
+import StatusChip from "@/components/common/StatusChip";
+import { componentColors, getColorClass } from "@/lib/theme/colorTokens";
 import { CheckSquare, FileText } from "lucide-react";
 
 interface ViewDetailsDialogProps {

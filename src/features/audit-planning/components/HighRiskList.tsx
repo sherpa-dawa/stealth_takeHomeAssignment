@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/shared/components/Card";
+import { Card, CardContent } from "@/components/common/Card";
 import { AuditArea } from "@/features/audit-planning/types";
-import RiskChip from "@/shared/components/RiskChip";
+import RiskChip from "@/components/common/RiskChip";
 
 interface HighRiskListProps {
   areas: AuditArea[];

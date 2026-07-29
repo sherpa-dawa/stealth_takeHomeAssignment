@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/shared/components/Card";
-import { Badge } from "@/shared/components/Badge";
+import { Card, CardContent } from "@/components/common/Card";
+import { Badge } from "@/components/common/Badge";
 import { Calendar } from "lucide-react";
 import { Deadline } from "@/features/audit-planning/types";
 
