@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/common/Button";
 import { Download, Save, Loader2 } from "lucide-react";
 import { useToast } from "@/components/common/Toast";
+import { ThemeToggle } from "./ThemeToggle";
 
 export default function WorkspaceHeader() {
   const { addToast } = useToast();
@@ -40,7 +41,8 @@ export default function WorkspaceHeader() {
         Audit Planning Workspace
       </h1>
 
-      <div className="flex gap-2 sm:gap-3 flex-shrink-0">
+      <div className="flex gap-2 sm:gap-3 flex-shrink-0 items-center">
+        <ThemeToggle />
         <Button
           variant="outline"
           size="sm"
