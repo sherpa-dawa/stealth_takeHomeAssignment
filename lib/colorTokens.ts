@@ -118,30 +118,37 @@ export const componentColors = {
     primary: {
       bg: colorTokens.primary.light,
       text: colorTokens.primary.dark,
+      border: colorTokens.primary.base,
     },
     secondary: {
       bg: colorTokens.secondary.light,
       text: colorTokens.secondary.dark,
+      border: colorTokens.secondary.base,
     },
     accent: {
       bg: colorTokens.accent.light,
       text: colorTokens.accent.dark,
+      border: colorTokens.accent.base,
     },
     success: {
       bg: colorTokens.semantic.success.light,
       text: colorTokens.semantic.success.dark,
+      border: colorTokens.semantic.success.base,
     },
     warning: {
       bg: colorTokens.semantic.warning.light,
       text: colorTokens.semantic.warning.dark,
+      border: colorTokens.semantic.warning.base,
     },
     danger: {
       bg: colorTokens.semantic.danger.light,
       text: colorTokens.semantic.danger.dark,
+      border: colorTokens.semantic.danger.base,
     },
     neutral: {
       bg: colorTokens.semantic.neutral.lighter,
       text: colorTokens.semantic.neutral.darker,
+      border: colorTokens.semantic.neutral.medium,
     },
     outline: {
       bg: "white",
@@ -166,6 +173,29 @@ export const componentColors = {
     neutral: {
       text: colorTokens.semantic.neutral.dark,
       hover: colorTokens.semantic.neutral.light,
+    },
+  },
+
+  status: {
+    Planning: {
+      bg: colorTokens.secondary.light,
+      text: colorTokens.secondary.dark,
+      border: colorTokens.secondary.base,
+    },
+    "In Progress": {
+      bg: colorTokens.primary.light,
+      text: colorTokens.primary.dark,
+      border: colorTokens.primary.base,
+    },
+    Review: {
+      bg: colorTokens.semantic.warning.light,
+      text: colorTokens.semantic.warning.dark,
+      border: colorTokens.semantic.warning.base,
+    },
+    Complete: {
+      bg: colorTokens.semantic.success.light,
+      text: colorTokens.semantic.success.dark,
+      border: colorTokens.semantic.success.base,
     },
   },
 

@@ -3,6 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { RiskLevel, AreaStatus } from "@/lib/types";
 import { useAuditWorkspace } from "@/lib/useAuditWorkspace";
+import { useMinimumLoadingDelay } from "@/lib/hooks/useMinimumLoadingDelay";
 import { clients } from "@/lib/mockData";
 import WorkspaceHeader from "./components/layout/WorkspaceHeader";
 import OverviewBar from "./components/layout/OverviewBar";
@@ -14,8 +15,9 @@ import EmptyState from "./components/shared/EmptyState";
 import ErrorState from "./components/shared/ErrorState";
 
 export default function Home() {
-  const { state, dispatch, refetch } = useAuditWorkspace();
   const [selectedClient, setSelectedClient] = useState(clients[0]!);
+  const { state, dispatch, refetch } = useAuditWorkspace(selectedClient);
+  const shouldShowLoading = useMinimumLoadingDelay(state.loading, 1000);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRisk, setSelectedRisk] = useState<RiskLevel | "All">("All");
   const [selectedStatus, setSelectedStatus] = useState<AreaStatus | "All">(
@@ -76,7 +78,7 @@ export default function Home() {
       {state.error && <ErrorState error={state.error} onRetry={refetch} />}
 
       {/* Filter Bar - hidden during loading */}
-      {!state.loading && (
+      {!shouldShowLoading && (
         <FilterBar
           selectedClient={selectedClient}
           onClientChange={setSelectedClient}
@@ -90,7 +92,7 @@ export default function Home() {
       )}
 
       {/* Main Content Area */}
-      {state.loading ? (
+      {shouldShowLoading ? (
         <LoadingState />
       ) : hasNoAreas ? (
         <div className="flex flex-1">

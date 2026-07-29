@@ -36,16 +36,6 @@ export default function AuditAreaGrid({
     }
   };
 
-  const handleMarkComplete = (area: AuditArea) => {
-    dispatch({
-      type: "MARK_COMPLETE",
-      payload: {
-        areaId: area.id,
-        userName: "Current User",
-      },
-    });
-  };
-
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
@@ -66,7 +56,6 @@ export default function AuditAreaGrid({
               });
             }}
             onAssignAuditor={(a: AuditArea) => setSelectedAreaForAssign(a)}
-            onMarkComplete={handleMarkComplete}
           />
         ))}
       </div>

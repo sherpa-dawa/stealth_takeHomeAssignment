@@ -1,10 +1,10 @@
 import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { componentColors, getColorClass } from "@/lib/colorTokens";
+import { badgeColorMap } from "@/lib/colorMap";
 
 const badgeVariants = cva(
-  "inline-flex items-center gap-1.5 font-medium transition-colors duration-200",
+  "inline-flex items-center gap-1.5 font-semibold border transition-colors duration-200",
   {
     variants: {
       size: {
@@ -23,23 +23,23 @@ export interface BadgeProps
   extends
     React.HTMLAttributes<HTMLDivElement>,
     Omit<VariantProps<typeof badgeVariants>, "variant"> {
-  variant?: keyof typeof componentColors.badge;
+  variant?: keyof typeof badgeColorMap;
 }
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-  ({ className, variant = "neutral", size, ...props }, ref) => {
-    const colors = componentColors.badge[variant];
-    const colorClasses = cn(
-      getColorClass("bg", colors.bg),
-      getColorClass("text", colors.text),
-      variant === "outline" &&
-        getColorClass("border", componentColors.badge.outline.border)
-    );
+  ({ className, variant = "neutral", size, style, ...props }, ref) => {
+    const colors = badgeColorMap[variant] || badgeColorMap["neutral"]!;
 
     return (
       <div
         ref={ref}
-        className={cn(badgeVariants({ size }), colorClasses, className)}
+        className={cn(badgeVariants({ size }), className)}
+        style={{
+          backgroundColor: colors.backgroundColor,
+          color: colors.textColor,
+          borderColor: colors.borderColor,
+          ...style,
+        }}
         {...props}
       />
     );
