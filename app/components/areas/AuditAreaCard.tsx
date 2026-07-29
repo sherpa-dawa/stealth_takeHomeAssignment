@@ -1,9 +1,10 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "../ui/Card";
 import { Button } from "../ui/Button";
 import { Avatar } from "../ui/Avatar";
-import { Eye, UserPlus, CheckSquare, FileText } from "lucide-react";
+import { Eye, UserPlus, CheckSquare, FileText, Loader } from "lucide-react";
 import { AuditArea, AreaStatus } from "@/lib/types";
 import RiskChip from "../shared/RiskChip";
 import StatusChip from "../shared/StatusChip";
@@ -38,12 +39,24 @@ export default function AuditAreaCard({
   onChangeStatus,
   onAssignAuditor,
 }: AuditAreaCardProps) {
+  const [updatingStatus, setUpdatingStatus] = useState(false);
+
   const openTasksCount = area.tasks.filter((t) => t.status === "Open").length;
   const evidenceRequestedCount = area.evidence.filter(
     (e) => e.status === "Open"
   ).length;
 
+  useEffect(() => {
+    if (updatingStatus) {
+      const timer = setTimeout(() => {
+        setUpdatingStatus(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [updatingStatus]);
+
   const handleStatusChange = (newStatus: AreaStatus) => {
+    setUpdatingStatus(true);
     onChangeStatus(area, newStatus);
   };
 
@@ -144,23 +157,29 @@ export default function AuditAreaCard({
           >
             Status
           </span>
-          <Select
-            value={area.status}
-            onValueChange={(value) => handleStatusChange(value as AreaStatus)}
-          >
-            <SelectTrigger
-              className={`w-auto border-0 bg-transparent p-0 h-auto text-xs font-medium hover:${getColorClass("bg", componentColors.background.tertiary)}`}
+          <div className="flex items-center gap-2">
+            <Select
+              value={area.status}
+              onValueChange={(value) => handleStatusChange(value as AreaStatus)}
+              disabled={updatingStatus}
             >
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent align="end">
-              {statuses.map((status) => (
-                <SelectItem key={status} value={status}>
-                  <StatusChip status={status} size="sm" />
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+              <SelectTrigger
+                className={`w-auto border-0 bg-transparent p-0 h-auto text-xs font-medium hover:${getColorClass("bg", componentColors.background.tertiary)} ${updatingStatus ? "opacity-50 cursor-not-allowed" : ""}`}
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent align="end">
+                {statuses.map((status) => (
+                  <SelectItem key={status} value={status}>
+                    <StatusChip status={status} size="sm" />
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Loading spinner during update */}
+            {updatingStatus && <Loader className="w-3 h-3 animate-spin" />}
+          </div>
         </div>
 
         {/* Action Buttons - View & Assign Only */}
