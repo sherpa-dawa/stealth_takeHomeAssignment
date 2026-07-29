@@ -1,9 +1,12 @@
+import { workspaceReducer, initialState } from "@/lib/workspaceReducer";
 import {
-  workspaceReducer,
-  initialState,
-  WorkspaceState,
-} from "@/lib/workspaceReducer";
-import { auditAreas, auditOverview, progressBreakdown, highRiskAreas, deadlines, activityItems } from "@/lib/mockData";
+  auditAreas,
+  auditOverview,
+  progressBreakdown,
+  highRiskAreas,
+  deadlines,
+  activityItems,
+} from "@/lib/mockData";
 
 describe("workspaceReducer", () => {
   describe("FETCH_START", () => {
@@ -75,8 +78,8 @@ describe("workspaceReducer", () => {
       expect(revenueArea?.assignedAuditor).toEqual(newAuditor);
 
       expect(state.activity.length).toBe(initialWithData.activity.length + 1);
-      expect(state.activity[0].user).toBe("Test User");
-      expect(state.activity[0].action).toContain("Assigned");
+      expect(state.activity[0]!.user).toBe("Test User");
+      expect(state.activity[0]!.action).toContain("Assigned");
     });
   });
 
@@ -101,8 +104,8 @@ describe("workspaceReducer", () => {
       expect(inventoryArea?.status).toBe("Review");
 
       expect(state.activity.length).toBe(initialWithData.activity.length + 1);
-      expect(state.activity[0].user).toBe("Test User");
-      expect(state.activity[0].action).toContain("status");
+      expect(state.activity[0]!.user).toBe("Test User");
+      expect(state.activity[0]!.action).toContain("status");
     });
   });
 
@@ -127,8 +130,8 @@ describe("workspaceReducer", () => {
       expect(payrollArea?.progress).toBe(100);
 
       expect(state.activity.length).toBe(initialWithData.activity.length + 1);
-      expect(state.activity[0].user).toBe("Test User");
-      expect(state.activity[0].action).toContain("complete");
+      expect(state.activity[0]!.user).toBe("Test User");
+      expect(state.activity[0]!.action).toContain("complete");
     });
   });
 
@@ -152,9 +155,9 @@ describe("workspaceReducer", () => {
         payload: { areaId: "cash-bank", userName: "User 2" },
       });
 
-      expect(state.activity[0].user).toBe("User 2");
-      expect(state.activity[1].user).toBe("User 1");
-      expect(state.activity[2].user).toBe(initialWithData.activity[0].user);
+      expect(state.activity[0]!.user).toBe("User 2");
+      expect(state.activity[1]!.user).toBe("User 1");
+      expect(state.activity[2]!.user).toBe(initialWithData.activity[0]!.user);
     });
   });
 });

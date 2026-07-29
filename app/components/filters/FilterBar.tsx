@@ -1,17 +1,20 @@
 "use client";
 
 import { useState, useCallback, useRef } from "react";
+import { Input } from "../ui/Input";
 import {
-  Box,
-  TextField,
   Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/Select";
 import { RiskLevel, AreaStatus } from "@/lib/types";
+import { clients } from "@/lib/mockData";
 
 interface FilterBarProps {
+  selectedClient: string;
+  onClientChange: (client: string) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
   selectedRisk: RiskLevel | "All";
@@ -21,6 +24,8 @@ interface FilterBarProps {
 }
 
 export default function FilterBar({
+  selectedClient,
+  onClientChange,
   searchQuery,
   onSearchChange,
   selectedRisk,
@@ -47,54 +52,77 @@ export default function FilterBar({
   );
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        gap: 2,
-        padding: "1rem 2rem",
-        backgroundColor: "#fff",
-        borderBottom: "1px solid #e0e0e0",
-        alignItems: "flex-end",
-        flexWrap: "wrap",
-      }}
-    >
-      <TextField
-        label="Search by area name"
-        variant="outlined"
-        size="small"
-        value={inputValue}
-        onChange={(e) => handleSearchInput(e.target.value)}
-        sx={{ minWidth: "250px" }}
-      />
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 px-4 sm:px-6 lg:px-8 py-4 bg-white border-b border-neutral-200 sm:items-end">
+      <div className="w-48 sm:w-48">
+        <label className="block text-xs font-medium text-neutral-700 mb-1">
+          Client
+        </label>
+        <Select value={selectedClient} onValueChange={onClientChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {clients.map((client) => (
+              <SelectItem key={client} value={client}>
+                {client}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
-      <FormControl size="small" sx={{ minWidth: "150px" }}>
-        <InputLabel>Risk Level</InputLabel>
+      <div className="w-full sm:flex-1 sm:min-w-40">
+        <label className="block text-xs font-medium text-neutral-700 mb-1">
+          Search by area name
+        </label>
+        <Input
+          placeholder="Search..."
+          value={inputValue}
+          onChange={(e) => handleSearchInput(e.target.value)}
+          className="w-full"
+        />
+      </div>
+
+      <div className="w-full sm:w-auto sm:min-w-40">
+        <label className="block text-xs font-medium text-neutral-700 mb-1">
+          Risk Level
+        </label>
         <Select
           value={selectedRisk}
-          label="Risk Level"
-          onChange={(e) => onRiskChange(e.target.value as RiskLevel | "All")}
+          onValueChange={(value) => onRiskChange(value as RiskLevel | "All")}
         >
-          <MenuItem value="All">All</MenuItem>
-          <MenuItem value="Low">Low</MenuItem>
-          <MenuItem value="Medium">Medium</MenuItem>
-          <MenuItem value="High">High</MenuItem>
+          <SelectTrigger className="w-full">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="All">All</SelectItem>
+            <SelectItem value="Low">Low</SelectItem>
+            <SelectItem value="Medium">Medium</SelectItem>
+            <SelectItem value="High">High</SelectItem>
+          </SelectContent>
         </Select>
-      </FormControl>
+      </div>
 
-      <FormControl size="small" sx={{ minWidth: "150px" }}>
-        <InputLabel>Status</InputLabel>
+      <div className="w-full sm:w-auto sm:min-w-40">
+        <label className="block text-xs font-medium text-neutral-700 mb-1">
+          Status
+        </label>
         <Select
           value={selectedStatus}
-          label="Status"
-          onChange={(e) => onStatusChange(e.target.value as AreaStatus | "All")}
+          onValueChange={(value) => onStatusChange(value as AreaStatus | "All")}
         >
-          <MenuItem value="All">All</MenuItem>
-          <MenuItem value="Planning">Planning</MenuItem>
-          <MenuItem value="In Progress">In Progress</MenuItem>
-          <MenuItem value="Review">Review</MenuItem>
-          <MenuItem value="Complete">Complete</MenuItem>
+          <SelectTrigger className="w-full">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="All">All</SelectItem>
+            <SelectItem value="Planning">Planning</SelectItem>
+            <SelectItem value="In Progress">In Progress</SelectItem>
+            <SelectItem value="Review">Review</SelectItem>
+            <SelectItem value="Complete">Complete</SelectItem>
+          </SelectContent>
         </Select>
-      </FormControl>
-    </Box>
+      </div>
+    </div>
   );
 }

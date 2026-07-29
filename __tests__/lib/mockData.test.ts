@@ -13,12 +13,12 @@ describe("Mock Data", () => {
       expect(auditOverview.clientName).toBe("Acme Corporation");
       expect(auditOverview.financialYear).toBe("2024");
       expect(auditOverview.engagementStatus).toBe("Active");
-      expect(auditOverview.overallProgress).toBe(58);
+      expect(auditOverview.overallProgress).toBe(42);
     });
 
     it("should have valid dates", () => {
-      expect(auditOverview.startDate).toBe("2024-01-15");
-      expect(auditOverview.dueDate).toBe("2024-12-31");
+      expect(auditOverview.startDate).toBe("2026-07-01");
+      expect(auditOverview.dueDate).toBe("2026-08-15");
     });
   });
 
@@ -72,8 +72,12 @@ describe("Mock Data", () => {
 
     it("should track open tasks and evidence requests", () => {
       auditAreas.forEach((area) => {
-        expect(area.openTasks).toBeGreaterThanOrEqual(0);
-        expect(area.evidenceRequested).toBeGreaterThanOrEqual(0);
+        const openTasks = area.tasks.filter((t) => t.status === "Open").length;
+        const openEvidence = area.evidence.filter(
+          (e) => e.status === "Open"
+        ).length;
+        expect(openTasks).toBeGreaterThanOrEqual(0);
+        expect(openEvidence).toBeGreaterThanOrEqual(0);
       });
     });
   });

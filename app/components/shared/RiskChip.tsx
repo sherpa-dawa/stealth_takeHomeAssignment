@@ -1,27 +1,21 @@
-import { Chip } from "@mui/material";
+import { Badge } from "../ui/Badge";
 import { RiskLevel } from "@/lib/types";
 
 interface RiskChipProps {
   risk: RiskLevel;
-  size?: "small" | "medium";
+  size?: "sm" | "md" | "lg";
 }
 
-const riskColors = {
-  Low: "#4caf50",
-  Medium: "#ff9800",
-  High: "#f44336",
+const riskVariants: Record<RiskLevel, "success" | "warning" | "danger"> = {
+  Low: "success",
+  Medium: "warning",
+  High: "danger",
 };
 
-export default function RiskChip({ risk, size = "small" }: RiskChipProps) {
+export default function RiskChip({ risk, size = "sm" }: RiskChipProps) {
   return (
-    <Chip
-      label={risk}
-      size={size}
-      sx={{
-        backgroundColor: riskColors[risk],
-        color: "#fff",
-        fontWeight: 600,
-      }}
-    />
+    <Badge variant={riskVariants[risk]} size={size}>
+      {risk}
+    </Badge>
   );
 }

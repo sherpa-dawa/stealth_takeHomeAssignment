@@ -1,83 +1,55 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  List,
-  ListItem,
-  Chip,
-} from "@mui/material";
-import EventIcon from "@mui/icons-material/Event";
+import { Card, CardContent } from "../ui/Card";
+import { Badge } from "../ui/Badge";
+import { Calendar } from "lucide-react";
 import { Deadline } from "@/lib/types";
 
 interface DeadlinesListProps {
   deadlines: Deadline[];
 }
 
-const getUrgencyColor = (daysRemaining: number) => {
-  if (daysRemaining <= 7) return "#f44336";
-  if (daysRemaining <= 14) return "#ff9800";
-  return "#4caf50";
+const getUrgencyVariant = (
+  daysRemaining: number
+): "danger" | "warning" | "success" => {
+  if (daysRemaining <= 7) return "danger";
+  if (daysRemaining <= 14) return "warning";
+  return "success";
 };
 
 export default function DeadlinesList({ deadlines }: DeadlinesListProps) {
   if (deadlines.length === 0) return null;
 
   return (
-    <Card sx={{ border: "1px solid #e0e0e0" }}>
+    <Card>
       <CardContent>
-        <Typography variant="h6" sx={{ fontWeight: 700, marginBottom: 2 }}>
-          Upcoming Deadlines
-        </Typography>
+        <h3 className="text-lg font-bold mb-4">Upcoming Deadlines</h3>
 
-        <List sx={{ padding: 0 }}>
+        <div className="space-y-3">
           {deadlines.map((deadline) => (
-            <ListItem
+            <div
               key={deadline.id}
-              sx={{
-                padding: "0.75rem 0",
-                borderBottom: "1px solid #f0f0f0",
-                "&:last-child": {
-                  borderBottom: "none",
-                },
-                display: "flex",
-                flexDirection: "column",
-                gap: 0.5,
-              }}
+              className="pb-3 border-b border-neutral-100 last:border-b-0"
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                }}
-              >
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  {deadline.title}
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-                <EventIcon sx={{ fontSize: "1rem", color: "#666" }} />
-                <Typography variant="caption" sx={{ color: "#666" }}>
+              <h4 className="text-sm font-semibold text-neutral-900 mb-1">
+                {deadline.title}
+              </h4>
+              <div className="flex gap-1 items-center mb-2">
+                <Calendar className="w-4 h-4 text-neutral-600" />
+                <span className="text-xs text-neutral-600">
                   {new Date(deadline.date).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
                   })}
-                </Typography>
-              </Box>
-              <Chip
-                label={`${deadline.daysRemaining} days remaining`}
-                size="small"
-                sx={{
-                  backgroundColor: getUrgencyColor(deadline.daysRemaining),
-                  color: "#fff",
-                  fontWeight: 600,
-                  width: "fit-content",
-                }}
-              />
-            </ListItem>
+                </span>
+              </div>
+              <Badge
+                variant={getUrgencyVariant(deadline.daysRemaining)}
+                size="sm"
+              >
+                {deadline.daysRemaining} days remaining
+              </Badge>
+            </div>
           ))}
-        </List>
+        </div>
       </CardContent>
     </Card>
   );

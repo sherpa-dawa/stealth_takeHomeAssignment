@@ -1,18 +1,15 @@
 "use client";
 
+import { Button } from "../ui/Button";
+import { Avatar } from "../ui/Avatar";
 import {
   Dialog,
-  DialogTitle,
   DialogContent,
-  DialogActions,
-  Button,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemAvatar,
-  ListItemText,
-  Avatar,
-} from "@mui/material";
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from "../ui/Dialog";
 import { Auditor } from "@/lib/types";
 
 const mockAuditors: Auditor[] = [
@@ -37,42 +34,42 @@ export default function AssignAuditorDialog({
   currentAuditor,
 }: AssignAuditorDialogProps) {
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Assign Auditor</DialogTitle>
-      <DialogContent>
-        <List sx={{ pt: 0 }}>
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>Assign Auditor</DialogTitle>
+          <DialogClose />
+        </DialogHeader>
+
+        <div className="space-y-2 py-4">
           {mockAuditors.map((auditor) => (
-            <ListItem key={auditor.id} disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  onAssign(auditor);
-                  onClose();
-                }}
-                selected={currentAuditor?.id === auditor.id}
-              >
-                <ListItemAvatar>
-                  <Avatar
-                    sx={{
-                      backgroundColor: "#1976d2",
-                      fontWeight: 600,
-                      fontSize: "0.75rem",
-                    }}
-                  >
-                    {auditor.avatar}
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={auditor.name}
-                  secondary={`ID: ${auditor.id}`}
-                />
-              </ListItemButton>
-            </ListItem>
+            <button
+              key={auditor.id}
+              onClick={() => {
+                onAssign(auditor);
+                onClose();
+              }}
+              className={`w-full flex items-center gap-3 p-3 rounded-md text-left transition-colors ${
+                currentAuditor?.id === auditor.id
+                  ? "bg-primary-100 border border-primary-300"
+                  : "hover:bg-neutral-100 border border-neutral-200"
+              }`}
+            >
+              <Avatar initials={auditor.avatar} size="md" />
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-neutral-900">{auditor.name}</p>
+                <p className="text-xs text-neutral-600">ID: {auditor.id}</p>
+              </div>
+            </button>
           ))}
-        </List>
+        </div>
+
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+        </DialogFooter>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-      </DialogActions>
     </Dialog>
   );
 }
