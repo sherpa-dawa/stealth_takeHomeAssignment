@@ -3,7 +3,7 @@
 import { Card, CardContent } from "../ui/Card";
 import { Button } from "../ui/Button";
 import { Avatar } from "../ui/Avatar";
-import { Eye, UserPlus } from "lucide-react";
+import { Eye, UserPlus, CheckSquare, FileText } from "lucide-react";
 import { AuditArea, AreaStatus } from "@/lib/types";
 import RiskChip from "../shared/RiskChip";
 import StatusChip from "../shared/StatusChip";
@@ -106,11 +106,14 @@ export default function AuditAreaCard({
           className={`grid grid-cols-2 gap-2 sm:gap-3 py-2 border-t border-b ${getColorClass("border", componentColors.border.light)}`}
         >
           <div>
-            <span
-              className={`text-xs ${getColorClass("text", componentColors.text.secondary)} block`}
-            >
-              Tasks
-            </span>
+            <div className="flex items-center gap-1 mb-1">
+              <CheckSquare className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <span
+                className={`text-xs ${getColorClass("text", componentColors.text.secondary)}`}
+              >
+                Tasks
+              </span>
+            </div>
             <span
               className={`text-xs sm:text-sm font-semibold ${getColorClass("text", componentColors.text.primary)}`}
             >
@@ -118,11 +121,14 @@ export default function AuditAreaCard({
             </span>
           </div>
           <div>
-            <span
-              className={`text-xs ${getColorClass("text", componentColors.text.secondary)} block`}
-            >
-              Evidence
-            </span>
+            <div className="flex items-center gap-1 mb-1">
+              <FileText className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <span
+                className={`text-xs ${getColorClass("text", componentColors.text.secondary)}`}
+              >
+                Evidence
+              </span>
+            </div>
             <span
               className={`text-xs sm:text-sm font-semibold ${getColorClass("text", componentColors.text.primary)}`}
             >

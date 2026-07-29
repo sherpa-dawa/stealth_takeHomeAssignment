@@ -12,6 +12,7 @@ import { AuditArea } from "@/lib/types";
 import RiskChip from "../shared/RiskChip";
 import StatusChip from "../shared/StatusChip";
 import { componentColors, getColorClass } from "@/lib/colorTokens";
+import { CheckSquare, FileText } from "lucide-react";
 
 interface ViewDetailsDialogProps {
   open: boolean;
@@ -110,11 +111,14 @@ export default function ViewDetailsDialog({
           {/* Tasks and Evidence */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p
-                className={`text-xs font-semibold ${getColorClass("text", componentColors.text.secondary)} mb-2`}
-              >
-                Open Tasks
-              </p>
+              <div className="flex items-center gap-1.5 mb-2">
+                <CheckSquare className="w-4 h-4" />
+                <p
+                  className={`text-xs font-semibold ${getColorClass("text", componentColors.text.secondary)}`}
+                >
+                  Open Tasks
+                </p>
+              </div>
               <p
                 className={`text-2xl font-bold ${getColorClass("text", componentColors.text.primary)}`}
               >
@@ -122,11 +126,14 @@ export default function ViewDetailsDialog({
               </p>
             </div>
             <div>
-              <p
-                className={`text-xs font-semibold ${getColorClass("text", componentColors.text.secondary)} mb-2`}
-              >
-                Evidence Requested
-              </p>
+              <div className="flex items-center gap-1.5 mb-2">
+                <FileText className="w-4 h-4" />
+                <p
+                  className={`text-xs font-semibold ${getColorClass("text", componentColors.text.secondary)}`}
+                >
+                  Evidence Requested
+                </p>
+              </div>
               <p
                 className={`text-2xl font-bold ${getColorClass("text", componentColors.text.primary)}`}
               >
