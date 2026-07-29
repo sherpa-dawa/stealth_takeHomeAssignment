@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "preinstall": "node -e \"if(/yarn|pnpm/.test(process.env.npm_config_user_agent||''))throw new Error('This project only supports npm. Please use npm instead of yarn or pnpm.')\"",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
