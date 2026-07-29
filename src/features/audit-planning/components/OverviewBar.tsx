@@ -66,44 +66,36 @@ export default function OverviewBar({
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-5 lg:py-6 bg-neutral-100 border-b border-neutral-200">
-      {/* Mobile: Stack vertically */}
-      <div className="flex flex-col gap-4 md:gap-6 md:flex-row md:h-16">
+      {/* Mobile: Stack vertically, Tablet: 2 rows, Desktop: Single row */}
+      <div className="flex flex-col gap-4 md:gap-3 md:flex-wrap md:flex-row lg:gap-6 lg:h-16 lg:flex-nowrap">
         {/* Client */}
-        <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
-          <p className="text-xs font-medium text-neutral-600 truncate">
-            Client
-          </p>
-          <p className="text-xs sm:text-sm font-semibold text-neutral-900 truncate">
+        <div className="flex-1 flex flex-col justify-between py-1 min-w-0 md:w-1/3 lg:w-auto">
+          <p className="text-xs font-medium text-neutral-600">Client</p>
+          <p className="text-xs sm:text-sm font-semibold text-neutral-900 line-clamp-1">
             {clientName}
           </p>
         </div>
 
         {/* FY / Status */}
-        <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
-          <p className="text-xs font-medium text-neutral-600 truncate">
-            FY / Status
-          </p>
-          <p className="text-xs sm:text-sm font-semibold text-neutral-900 truncate">
+        <div className="flex-1 flex flex-col justify-between py-1 min-w-0 md:w-1/3 lg:w-auto">
+          <p className="text-xs font-medium text-neutral-600">FY / Status</p>
+          <p className="text-xs sm:text-sm font-semibold text-neutral-900">
             {overview.financialYear} / {overview.engagementStatus}
           </p>
         </div>
 
         {/* Partner / Manager */}
-        <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
-          <p className="text-xs font-medium text-neutral-600 truncate">
-            Partner / Manager
-          </p>
-          <p className="text-xs sm:text-sm font-semibold text-neutral-900 truncate">
+        <div className="flex-1 flex flex-col justify-between py-1 min-w-0 md:w-1/3 lg:w-auto">
+          <p className="text-xs font-medium text-neutral-600">Partner / Mgr</p>
+          <p className="text-xs sm:text-sm font-semibold text-neutral-900 line-clamp-1">
             {overview.engagementPartner} / {overview.auditManager}
           </p>
         </div>
 
         {/* Start / Due */}
-        <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
-          <p className="text-xs font-medium text-neutral-600 truncate">
-            Start / Due
-          </p>
-          <p className="text-xs sm:text-sm font-semibold text-neutral-900 truncate">
+        <div className="flex-1 flex flex-col justify-between py-1 min-w-0 md:w-1/3 lg:w-auto">
+          <p className="text-xs font-medium text-neutral-600">Start / Due</p>
+          <p className="text-xs sm:text-sm font-semibold text-neutral-900 line-clamp-1">
             <span className="hidden sm:inline">
               {startDate} → {dueDate}
             </span>
@@ -114,11 +106,9 @@ export default function OverviewBar({
         </div>
 
         {/* Overall Progress */}
-        <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
+        <div className="flex-1 flex flex-col justify-between py-1 min-w-0 md:w-1/3 lg:w-auto">
           <div className="flex justify-between items-center gap-2">
-            <p className="text-xs font-medium text-neutral-600 truncate">
-              Overall Progress
-            </p>
+            <p className="text-xs font-medium text-neutral-600">Progress</p>
             <p className="text-xs font-semibold text-neutral-600 whitespace-nowrap">
               {overview.overallProgress}%
             </p>
