@@ -1,210 +1,278 @@
 # Audit Planning Workspace
 
-A professional enterprise audit planning frontend application built with Next.js, TypeScript, Material-UI, and TanStack Query.
-
-## 📚 Documentation
-
-**Start here:** [Documentation Index](docs/README.md)
-
-Key guides:
-
-- 🏗️ [Folder Structure](docs/architecture/folder-structure.md) — Enterprise organization patterns
-- 📖 [Project Conventions](CLAUDE.md) — Coding standards and patterns
-- 🚀 [TanStack Query Guide](docs/guides/tanstack-query.md) — Data fetching patterns
-- 📋 [Deployment Checklist](docs/guides/deployment-checklist.md) — Production readiness
+A modern, professional audit planning application for enterprise auditors. Displays audit areas, risk assessments, progress tracking, deadlines, and recent activity with a focus on clean design and intuitive UX.
 
 ---
 
-## 🚀 Quick Start
+## Setup
 
 ### Prerequisites
 
-- Node.js 18+
-- npm or yarn
+- **Node.js** 18+ (npm required, yarn/pnpm blocked)
+- **npm** only (project enforces npm-only usage)
 
-### Installation & Development
+### Installation
 
 ```bash
-# Install dependencies
+# Clone and install
 npm install
 
-# Start development server
+# Run development server
 npm run dev
 
-# Open browser
-# → http://localhost:3000
+# Open http://localhost:3000
 ```
 
-### Build & Deploy
+### Available Commands
 
 ```bash
-# Type check
-npm run type-check
+npm run dev         # Start Next.js dev server
+npm run build       # Production build
+npm run start       # Run production server
+npm run lint        # Run ESLint
+npm run format      # Format code with Prettier
+npm run type-check  # Type-check with tsc --noEmit
+npm test            # Run Jest tests
+npm test:watch      # Run tests in watch mode
+```
 
-# Production build
-npm run build
+### Package Manager Enforcement
 
-# Start production server
-npm start
+This project **only supports npm**. If you try to use yarn or pnpm:
+
+```bash
+yarn install  # ❌ Error: This project only supports npm
+pnpm install  # ❌ Error: This project only supports npm
 ```
 
 ---
 
-## 🏛️ Project Architecture
+## Architecture Overview
 
-### Stack
+### Technology Stack
 
 - **Framework:** Next.js 16+ (App Router)
 - **Language:** TypeScript (strict mode)
-- **Styling:** Material-UI v6
-- **State Management:** TanStack Query v5 + Reducer pattern
-- **Package Manager:** npm
-
-### Key Features
-
-✅ **Scalable folder structure** — Feature-based organization for teams up to 100+  
-✅ **Professional data fetching** — TanStack Query with automatic caching & invalidation  
-✅ **Type-safe** — Strict TypeScript for reliability  
-✅ **Enterprise UI** — Material-UI components with consistent theming  
-✅ **Code quality** — ESLint, Prettier, pre-commit hooks  
-✅ **Async patterns** — Proper loading/error states
+- **UI:** Radix UI + Tailwind CSS
+- **State Management:** TanStack Query v5 + React Context
+- **Styling:** CSS custom properties (CSS variables)
+- **Testing:** Jest + React Testing Library
+- **Code Quality:** ESLint + Prettier + Husky
 
 ### Folder Structure
 
 ```
-project/
-├── src/
-│   ├── app/                    # Next.js App Router
-│   ├── components/common/      # Shared UI components
-│   ├── features/audit-planning/ # Self-contained feature
-│   ├── hooks/                  # Shared hooks
-│   ├── lib/                    # Utilities & config
-│   ├── services/               # Global services
-│   ├── stores/                 # Global state
-│   └── types/                  # Shared types
-├── docs/                       # 📚 Documentation
-├── CLAUDE.md                   # Project conventions
-└── README.md                   # This file
-```
+src/features/audit-planning/     # Feature-based organization
+├── components/                   # React components
+│   ├── AuditAreaCard.tsx        # Individual audit area card
+│   ├── AuditAreaGrid.tsx        # Grid of audit areas
+│   ├── WorkspaceHeader.tsx      # Header with export/save
+│   ├── ThemeToggle.tsx          # Dark/light mode toggle
+│   └── layout/                  # Header, sidebar, layout
+├── hooks/
+│   ├── queries/                 # TanStack Query hooks
+│   ├── mutations/               # TanStack Query mutations
+│   └── useAuditWorkspace.ts     # Domain logic hook
+├── context/
+│   └── ThemeContext.tsx         # Global theme state
+├── lib/
+│   ├── queryClient.ts           # TanStack Query setup
+│   ├── queryKeys.ts             # Query key factory
+│   └── types.ts                 # Domain types
+├── constants/
+│   └── mockData.ts              # Mock API data
+└── services/
+    └── auditService.ts          # API abstraction layer
 
-See [Folder Structure Guide](docs/architecture/folder-structure.md) for complete details.
+app/                             # Next.js App Router
+├── page.tsx                     # Root page
+├── layout.tsx                   # Root layout
+├── globals.css                  # Global styles
+├── theme.css                    # CSS custom properties
+├── providers.tsx                # Provider hierarchy
+└── api/audit/route.ts           # Mock API endpoint
+
+lib/
+├── theme/                       # Theme definitions
+│   ├── lightTheme.ts
+│   └── darkTheme.ts
+└── utils.ts                     # Utility functions
+```
 
 ---
 
-## 🛠️ Commands
+## State Management
 
-```bash
-# Development
-npm run dev              # Start dev server (hot reload)
+### 4-Layer State Architecture
 
-# Quality assurance
-npm run type-check      # TypeScript verification
-npm run lint            # ESLint + Prettier check
-npm run lint:fix        # Auto-fix linting issues
+1. **URL State** → Search params, filters, pagination
+2. **Local UI State** → Dialog open/close, form inputs via `useState`
+3. **Domain State** → Async data via TanStack Query
+4. **Derived State** → Computed values via `useMemo`
 
-# Build
-npm run build           # Production build
-npm start               # Start production server
+### TanStack Query v5
 
-# Git & CI/CD
-git commit              # Pre-commit hooks run automatically
-                        # (type-check, lint, prettier)
-```
+Professional async state management with:
 
----
+- ✅ Automatic caching and background refetching
+- ✅ Query key factory pattern (`queryKeys.ts`)
+- ✅ Mutations with cache invalidation
+- ✅ Loading/error states via `useQuery` hook
 
-## 📖 Key Patterns
-
-### Component Usage
+**Query Hooks:**
 
 ```typescript
-import { Button, Dialog } from "@/components/common";
-import { AuditAreaCard } from "@/features/audit-planning";
+useAuditAreasQuery(); // Fetch all audit areas
+useAuditAreaQuery(id); // Fetch single area
+useHighRiskAreasQuery(); // Fetch high-risk areas
+useAuditProgressQuery(); // Overall progress
 
-function MyComponent() {
-  return (
-    <div>
-      <Button>Click me</Button>
-      <AuditAreaCard />
-    </div>
-  );
-}
+useMutateAssignAuditor(); // Assign auditor
+useMutateChangeStatus(); // Change area status
+useMutateMarkComplete(); // Mark area complete
 ```
 
-### Data Fetching
+### React Context (Theme)
 
-```typescript
-import { useAuditsQuery } from "@/features/audit-planning";
+Global theme state managed via Context API:
 
-function MyComponent() {
-  const { data, isLoading, isError, error } = useAuditsQuery(client);
-
-  if (isLoading) return <LoadingState />;
-  if (isError) return <ErrorState error={error?.message} />;
-
-  return <div>{data?.map(...)}</div>;
-}
-```
-
-### Adding Features
-
-1. Create `src/features/my-feature/` folder
-2. Add `components/`, `hooks/`, `services/`, `types/`, `constants/`, `lib/`
-3. Create `index.ts` for public API
-4. Follow conventions in `CLAUDE.md`
-
-See [Audit Planning Feature](docs/guides/audit-planning-feature.md) for reference.
+- Light mode: `#f5f5f5` background, `#212121` text
+- Dark mode: `#1a1f36` background (navy), `#ffffff` text
+- Persisted to localStorage
+- CSS variables applied via `data-theme` attribute
 
 ---
 
-## 🚢 Deployment
+## UI / UX Decisions
 
-### Vercel (Recommended)
+### Component Design
 
-1. Connect repository to Vercel
-2. Follow [Vercel Setup Guide](docs/guides/vercel-setup.md)
-3. Check [Deployment Checklist](docs/guides/deployment-checklist.md)
+- **Presentational Components:** Receive props/callbacks, never dispatch
+- **Container Components:** Hold state, dispatch actions, pass callbacks down
+- **Callback Props Pattern:** `onAssign`, `onStatusChange`, `onMarkComplete`
 
-### Other Platforms
+### Color System
 
-1. Run `npm run build`
-2. Deploy `.next` folder
-3. See [Next.js Deployment Docs](https://nextjs.org/docs/app/building-your-application/deploying)
+| Mode      | Background | Card    | Border      | Text    |
+| --------- | ---------- | ------- | ----------- | ------- |
+| **Light** | #f5f5f5    | #ffffff | #e0e0e0     | #212121 |
+| **Dark**  | #1a1f36    | #1e2847 | Transparent | #ffffff |
 
----
+- **Theme Tokens:** Centralized in CSS custom properties
+- **Automatic Switching:** Smooth 0.3s transitions
 
-## 📚 Learn More
+### Cards & Borders
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Material-UI v6](https://mui.com/)
-- [TanStack Query](https://tanstack.com/query/latest)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- **AuditAreaCard:** Transparent outer borders
+- **Internal Dividers:** Blue-gray borders in light mode, transparent in dark mode
+- **Consistent Styling:** Via CSS variables for theme adaptation
 
----
+### Export Button
 
-## 🤝 Contributing
+- **Dark Mode:** White background (#ffffff) for visibility
+- **Icon + Label:** Responsive (icon only on mobile)
+- **Loading State:** Spinner during export
 
-Follow conventions in:
+### Responsive Design
 
-- `CLAUDE.md` — Coding standards & patterns
-- [Folder Structure Guide](docs/architecture/folder-structure.md) — Code organization
-- Pre-commit hooks verify quality automatically
-
----
-
-## 📄 License
-
-This project is proprietary.
+- Mobile-first approach
+- Breakpoints: sm (640px), lg (1024px)
+- Truncation and responsive spacing
+- Touch-friendly button sizes (48px minimum)
 
 ---
 
-## ✨ Built with Professional Patterns
+## Assumptions & Tradeoffs
 
-This project uses industry-standard practices from:
+### Assumptions
 
-- Vercel (Next.js creators)
-- Stripe Engineering
-- GitHub
-- Netflix
+1. **No Backend Authentication** → Mocked API data with mock user context
+2. **Single Client Workspace** → Default to ABC Manufacturing Ltd.
+3. **No Persistence** → Data resets on page reload (by design)
+4. **No Real Export** → Export button triggers toast notification
+5. **Standard Audit Areas** → 8 predefined areas (Revenue, Inventory, Payroll, etc.)
+6. **Team Members Pre-Assigned** → Auditors have pre-set names and initials
 
-Perfect for scaling to large teams while maintaining code quality.
+### Tradeoffs
+
+| Decision                            | Rationale                                   | Consequence                              |
+| ----------------------------------- | ------------------------------------------- | ---------------------------------------- |
+| TanStack Query over Redux           | Better for async state, less boilerplate    | Requires familiarity with Query patterns |
+| CSS Variables over Tailwind theming | Runtime switching, no build-time generation | Custom CSS needed for dynamic themes     |
+| Callbacks over direct dispatch      | Cleaner component API, easier testing       | Extra prop drilling in deep trees        |
+| Feature-based folder structure      | Scales with teams, self-contained features  | More folders, less file-type grouping    |
+| Radix UI + Tailwind                 | Accessible, unstyled + utility CSS          | Learning curve for both libraries        |
+| No custom hooks beyond domain       | Simpler codebase, less abstraction          | Repeated logic in some components        |
+
+---
+
+## Screenshots
+
+### Light Mode
+
+- Clean, professional appearance
+- High contrast gray borders (#e0e0e0)
+- Blue progress bars (#1976d2)
+- Clear visual separation
+
+### Dark Mode
+
+- Deep navy background (#1a1f36)
+- Subtle blue-gray card backgrounds (#1e2847)
+- White text (#ffffff) for comfortable viewing
+- White export button for emphasis
+- Transparent internal dividers
+- Smooth 0.3s transitions
+
+**Key UI Elements:**
+
+- Header with theme toggle, export, and save buttons
+- Client/financial year/status overview bar
+- Search and filter controls
+- Audit area cards in responsive grid
+- Risk chip badges (High/Medium/Low)
+- Status dropdowns with visual indicators
+- Avatar initials for assigned auditors
+- Task and evidence counters
+
+---
+
+## What I Would Do Next
+
+### Performance Optimizations
+
+- [ ] Image optimization (avatar backgrounds)
+- [ ] Code splitting for audit area details dialog
+- [ ] Skeleton loading states for all queries
+- [ ] Virtual scrolling for large audit area lists
+
+### Features
+
+- [ ] Real backend API integration (replace mock)
+- [ ] Audit area details dialog with full task list
+- [ ] Drag-and-drop task management
+- [ ] Email notifications for overdue items
+- [ ] Audit engagement timeline view
+- [ ] Evidence upload and tracking
+- [ ] Audit workpaper collaboration
+
+### Testing & Quality
+
+- [ ] E2E tests with Playwright
+- [ ] Visual regression testing
+- [ ] Performance benchmarks
+- [ ] Accessibility audit (axe-core)
+- [ ] Security audit (OWASP Top 10)
+
+### Deployment & DevOps
+
+- [ ] GitHub Actions CI/CD pipeline
+- [ ] Automated testing on PR
+- [ ] Vercel deployment with preview URLs
+- [ ] Error tracking (Sentry)
+- [ ] Analytics (Mixpanel/PostHog)
+
+---
+
+**Stack:** Next.js 16 • TypeScript • TanStack Query v5 • Tailwind CSS • Radix UI  
+**Last Updated:** July 29, 2026
