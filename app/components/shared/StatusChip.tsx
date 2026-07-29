@@ -1,14 +1,15 @@
 import { Badge } from "../ui/Badge";
 import { AreaStatus } from "@/lib/types";
+import type { componentColors } from "@/lib/colorTokens";
 
 interface StatusChipProps {
   status: AreaStatus;
   size?: "sm" | "md" | "lg";
 }
 
-const statusVariants: Record<
+const statusToBadgeVariant: Record<
   AreaStatus,
-  "primary" | "warning" | "secondary" | "success"
+  keyof typeof componentColors.badge
 > = {
   Planning: "secondary",
   "In Progress": "primary",
@@ -18,7 +19,7 @@ const statusVariants: Record<
 
 export default function StatusChip({ status, size = "sm" }: StatusChipProps) {
   return (
-    <Badge variant={statusVariants[status]} size={size}>
+    <Badge variant={statusToBadgeVariant[status]} size={size}>
       {status}
     </Badge>
   );

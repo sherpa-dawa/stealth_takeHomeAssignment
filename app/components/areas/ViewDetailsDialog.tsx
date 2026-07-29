@@ -11,6 +11,7 @@ import {
 import { AuditArea } from "@/lib/types";
 import RiskChip from "../shared/RiskChip";
 import StatusChip from "../shared/StatusChip";
+import { componentColors, getColorClass } from "@/lib/colorTokens";
 
 interface ViewDetailsDialogProps {
   open: boolean;
@@ -45,62 +46,90 @@ export default function ViewDetailsDialog({
             <StatusChip status={area.status} size="md" />
           </div>
 
-          <div className="border-t border-neutral-200" />
+          <div
+            className={`border-t ${getColorClass("border", componentColors.border.light)}`}
+          />
 
           {/* Progress */}
           <div>
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-semibold text-neutral-900">
+              <span
+                className={`text-sm font-semibold ${getColorClass("text", componentColors.text.primary)}`}
+              >
                 Progress
               </span>
-              <span className="text-sm font-semibold text-neutral-900">
+              <span
+                className={`text-sm font-semibold ${getColorClass("text", componentColors.text.primary)}`}
+              >
                 {area.progress}%
               </span>
             </div>
-            <div className="w-full bg-neutral-300 rounded-full h-2 overflow-hidden">
+            <div
+              className={`w-full ${getColorClass("bg", componentColors.progress.background)} rounded-full h-2 overflow-hidden`}
+            >
               <div
-                className="bg-blue-500 h-full rounded-full transition-all duration-500"
+                className={`${getColorClass("bg", componentColors.progress.bar)} h-full rounded-full transition-all duration-500`}
                 style={{ width: `${area.progress}%` }}
               />
             </div>
           </div>
 
-          <div className="border-t border-neutral-200" />
+          <div
+            className={`border-t ${getColorClass("border", componentColors.border.light)}`}
+          />
 
           {/* Assigned Auditor */}
           <div>
-            <p className="text-xs font-semibold text-neutral-700 mb-2">
+            <p
+              className={`text-xs font-semibold ${getColorClass("text", componentColors.text.secondary)} mb-2`}
+            >
               Assigned Auditor
             </p>
             {area.assignedAuditor ? (
               <div className="flex items-center gap-2">
                 <Avatar initials={area.assignedAuditor.avatar} size="md" />
-                <p className="text-sm text-neutral-900">
+                <p
+                  className={`text-sm ${getColorClass("text", componentColors.text.primary)}`}
+                >
                   {area.assignedAuditor.name}
                 </p>
               </div>
             ) : (
-              <p className="text-sm text-neutral-500 italic">Unassigned</p>
+              <p
+                className={`text-sm ${getColorClass("text", componentColors.text.tertiary)} italic`}
+              >
+                Unassigned
+              </p>
             )}
           </div>
 
-          <div className="border-t border-neutral-200" />
+          <div
+            className={`border-t ${getColorClass("border", componentColors.border.light)}`}
+          />
 
           {/* Tasks and Evidence */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-xs font-semibold text-neutral-700 mb-2">
+              <p
+                className={`text-xs font-semibold ${getColorClass("text", componentColors.text.secondary)} mb-2`}
+              >
                 Open Tasks
               </p>
-              <p className="text-2xl font-bold text-neutral-900">
+              <p
+                className={`text-2xl font-bold ${getColorClass("text", componentColors.text.primary)}`}
+              >
                 {openTasksCount}
               </p>
             </div>
             <div>
-              <p className="text-xs font-semibold text-neutral-700 mb-2">
+              <p
+                className={`text-xs font-semibold ${getColorClass("text", componentColors.text.secondary)} mb-2`}
+              >
                 Evidence Requested
               </p>
-              <p className="text-2xl font-bold text-neutral-900">
+              <p
+                className={`text-2xl font-bold ${getColorClass("text", componentColors.text.primary)}`}
+              >
                 {evidenceRequestedCount}
               </p>
             </div>

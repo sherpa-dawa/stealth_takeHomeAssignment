@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState } from "react";
+import { useDebounce } from "@/lib/hooks/useDebounce";
 import { Input } from "../ui/Input";
 import {
   Select,
@@ -34,22 +35,7 @@ export default function FilterBar({
   onStatusChange,
 }: FilterBarProps) {
   const [inputValue, setInputValue] = useState(searchQuery);
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleSearchInput = useCallback(
-    (value: string) => {
-      setInputValue(value);
-
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-
-      debounceTimerRef.current = setTimeout(() => {
-        onSearchChange(value);
-      }, 300);
-    },
-    [onSearchChange]
-  );
+  const debouncedSearch = useDebounce(onSearchChange, 300);
 
   return (
     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 px-4 sm:px-6 lg:px-8 py-4 bg-white border-b border-neutral-200 sm:items-end">
@@ -78,7 +64,10 @@ export default function FilterBar({
         <Input
           placeholder="Search..."
           value={inputValue}
-          onChange={(e) => handleSearchInput(e.target.value)}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            debouncedSearch(e.target.value);
+          }}
           className="w-full"
         />
       </div>
