@@ -1,6 +1,6 @@
 /* Light Theme (Default) */
-:root[data-theme="light"],
-:root {
+:root,
+:root[data-theme="light"] {
   --bg-primary: #f5f5f5;
   --bg-paper: #ffffff;
   --text-primary: #212121;
@@ -15,47 +15,66 @@
 
 /* Dark Theme */
 :root[data-theme="dark"] {
-  --bg-primary: #121212;
-  --bg-paper: #1e1e1e;
-  --text-primary: #ffffff;
-  --text-secondary: #b0b0b0;
-  --border-color: #424242;
-  --hover-bg: rgba(255, 255, 255, 0.08);
-  --neutral-50: #1a1a1a;
-  --neutral-100: #262626;
-  --neutral-200: #303030;
-  --neutral-300: #424242;
+  --bg-primary: #0d1117;
+  --bg-paper: #161b22;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --border-color: #30363d;
+  --hover-bg: rgba(48, 54, 61, 0.4);
+  --neutral-50: #010409;
+  --neutral-100: #0d1117;
+  --neutral-200: #161b22;
+  --neutral-300: #21262d;
 }
 
-/* Apply theme to body */
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Apply theme to common elements */
-.bg-neutral-50 {
-  background-color: var(--neutral-50);
-}
-
-.border-neutral-200 {
-  border-color: var(--border-color);
-}
-
-.text-neutral-900 {
-  color: var(--text-primary);
-}
-
-.bg-white {
-  background-color: var(--bg-paper);
-}
-
-/* Ensure theme persists during page transitions */
+/* Apply theme to body and html */
 html {
   color-scheme: light;
 }
 
 html[data-theme="dark"] {
   color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Override Tailwind base colors with CSS variables */
+.bg-neutral-50 {
+  background-color: var(--neutral-50) !important;
+}
+
+.bg-neutral-100 {
+  background-color: var(--neutral-100) !important;
+}
+
+.bg-white,
+.bg-neutral-0 {
+  background-color: var(--bg-paper) !important;
+}
+
+.text-neutral-900,
+.text-neutral-primary {
+  color: var(--text-primary) !important;
+}
+
+.text-neutral-600,
+.text-neutral-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.border-neutral-200 {
+  border-color: var(--border-color) !important;
+}
+
+.border-neutral-300 {
+  border-color: var(--border-color) !important;
+}
+
+/* Ensure transitions work smoothly */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }

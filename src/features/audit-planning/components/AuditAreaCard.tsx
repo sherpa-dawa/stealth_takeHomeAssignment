@@ -62,11 +62,12 @@ export default function AuditAreaCard({
 
   return (
     <Card
-      className={`hover:shadow-md transition-all duration-300 bg-white h-full ${
+      className={`hover:shadow-md transition-all duration-300 h-full ${
         isHighlighted
           ? `border-2 ${getColorClass("border", componentColors.highlight.border)} shadow-lg`
           : `border ${getColorClass("border", componentColors.border.light)}`
       }`}
+      style={{ backgroundColor: "var(--bg-paper)" }}
     >
       <CardContent className="p-3 sm:p-4 lg:p-5 space-y-3 sm:space-y-4 flex flex-col h-full">
         {/* Header: Name & Risk */}

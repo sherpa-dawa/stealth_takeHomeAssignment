@@ -4,13 +4,14 @@ import { cn } from "@/lib/utils";
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+>(({ className, style, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      "rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow",
+      "rounded-lg shadow-sm hover:shadow-md transition-shadow",
       className
     )}
+    style={{ backgroundColor: "var(--bg-paper)", ...style }}
     {...props}
   />
 ));
@@ -23,7 +24,8 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("p-6 border-b border-neutral-200", className)}
+    className={cn("p-6 border-b", className)}
+    style={{ borderColor: "var(--border-color)" }}
     {...props}
   />
 ));
@@ -45,7 +47,8 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("p-6 border-t border-neutral-200", className)}
+    className={cn("p-6 border-t", className)}
+    style={{ borderColor: "var(--border-color)" }}
     {...props}
   />
 ));
