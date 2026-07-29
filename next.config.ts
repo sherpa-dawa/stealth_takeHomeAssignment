@@ -1,10 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Turbopack configuration
-  turbopack: {
-    root: ".",
-  },
+  // Turbopack is auto-configured in dev mode
 
   // Performance & Optimization
   compress: true,
@@ -58,16 +55,16 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   experimental: {
     optimizePackageImports: ["lucide-react", "@radix-ui/react-*"],
+    optimizeCss: true,
   },
 
-  // Webpack Configuration
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@": ["./"],
-    };
-    return config;
+  // Code Splitting & Bundle Optimization
+  onDemandEntries: {
+    maxInactiveAge: 60 * 1000,
+    pagesBufferLength: 5,
   },
+
+  // Path aliases are handled by tsconfig paths, no webpack config needed
 };
 
 export default nextConfig;

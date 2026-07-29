@@ -4,8 +4,7 @@ import { useState } from "react";
 import { AuditArea, Auditor } from "@/features/audit-planning/types";
 import { WorkspaceAction } from "@/features/audit-planning/state/reducer";
 import AuditAreaCard from "./AuditAreaCard";
-import AssignAuditorDialog from "./AssignAuditorDialog";
-import ViewDetailsDialog from "./ViewDetailsDialog";
+import { AssignAuditorDialog, ViewDetailsDialog } from "./dynamic";
 
 interface AuditAreaGridProps {
   areas: AuditArea[];

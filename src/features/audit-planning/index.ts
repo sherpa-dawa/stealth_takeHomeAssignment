@@ -7,9 +7,19 @@
 export { default as AuditAreaCard } from "./components/AuditAreaCard";
 export { default as AuditAreaGrid } from "./components/AuditAreaGrid";
 export { default as FilterBar } from "./components/FilterBar";
-export { default as Sidebar } from "./components/Sidebar";
 export { default as OverviewBar } from "./components/OverviewBar";
 export { default as WorkspaceHeader } from "./components/WorkspaceHeader";
+
+// Dynamic imports for code splitting (dialogs and sidebar)
+export {
+  Sidebar,
+  ViewDetailsDialog,
+  AssignAuditorDialog,
+  ChangeStatusDialog,
+  HighRiskList,
+  DeadlinesList,
+  ActivityFeed,
+} from "./components/dynamic";
 
 // Hooks
 export { useAuditWorkspace } from "./hooks/useAuditWorkspace";
