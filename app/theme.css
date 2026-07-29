@@ -15,16 +15,16 @@
 
 /* Dark Theme */
 :root[data-theme="dark"] {
-  --bg-primary: #0d1117;
-  --bg-paper: #161b22;
-  --text-primary: #e6edf3;
-  --text-secondary: #8b949e;
-  --border-color: #ffffff;
-  --hover-bg: rgba(48, 54, 61, 0.4);
-  --neutral-50: #010409;
-  --neutral-100: #0d1117;
-  --neutral-200: #161b22;
-  --neutral-300: #21262d;
+  --bg-primary: #1a1f36;
+  --bg-paper: #1e2847;
+  --text-primary: #ffffff;
+  --text-secondary: #a0aec0;
+  --border-color: #2d3e5f;
+  --hover-bg: rgba(45, 62, 95, 0.5);
+  --neutral-50: #131829;
+  --neutral-100: #1a1f36;
+  --neutral-200: #1e2847;
+  --neutral-300: #2d3e5f;
 }
 
 /* Apply theme to body and html */
