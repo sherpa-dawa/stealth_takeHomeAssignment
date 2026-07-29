@@ -43,9 +43,12 @@ export default function OverviewBar({
   if (isLoading) {
     return (
       <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-5 lg:py-6 bg-neutral-100 border-b border-neutral-200">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
+        <div className="flex flex-col gap-4 md:gap-6 md:flex-row md:h-16">
           {[1, 2, 3, 4, 5].map((key) => (
-            <div key={key} className="flex flex-col justify-between py-1 gap-2">
+            <div
+              key={key}
+              className="flex-1 flex flex-col justify-between py-1 min-w-0 gap-2"
+            >
               <Skeleton width="40%" height="14px" />
               <Skeleton width="70%" height="16px" />
             </div>
@@ -63,55 +66,59 @@ export default function OverviewBar({
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-5 lg:py-6 bg-neutral-100 border-b border-neutral-200">
-      {/* Mobile: Stack vertically, Tablet: 2-3 columns, Desktop: 5 columns */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
+      {/* Mobile: Stack vertically */}
+      <div className="flex flex-col gap-4 md:gap-6 md:flex-row md:h-16">
         {/* Client */}
-        <div className="flex flex-col justify-between py-1 min-w-0">
-          <p className="text-xs font-medium text-neutral-600">Client</p>
-          <p className="text-xs sm:text-sm font-semibold text-neutral-900 line-clamp-2">
+        <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
+          <p className="text-xs font-medium text-neutral-600 truncate">
+            Client
+          </p>
+          <p className="text-xs sm:text-sm font-semibold text-neutral-900 truncate">
             {clientName}
           </p>
         </div>
 
         {/* FY / Status */}
-        <div className="flex flex-col justify-between py-1 min-w-0">
-          <p className="text-xs font-medium text-neutral-600">FY / Status</p>
-          <p className="text-xs sm:text-sm font-semibold text-neutral-900">
-            <span className="block">{overview.financialYear}</span>
-            <span className="block text-xs">{overview.engagementStatus}</span>
+        <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
+          <p className="text-xs font-medium text-neutral-600 truncate">
+            FY / Status
+          </p>
+          <p className="text-xs sm:text-sm font-semibold text-neutral-900 truncate">
+            {overview.financialYear} / {overview.engagementStatus}
           </p>
         </div>
 
         {/* Partner / Manager */}
-        <div className="flex flex-col justify-between py-1 min-w-0 sm:col-span-2 lg:col-span-1">
-          <p className="text-xs font-medium text-neutral-600">
+        <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
+          <p className="text-xs font-medium text-neutral-600 truncate">
             Partner / Manager
           </p>
-          <p className="text-xs sm:text-sm font-semibold text-neutral-900 line-clamp-2">
-            <span className="block">{overview.engagementPartner}</span>
-            <span className="block text-xs text-neutral-700">
-              {overview.auditManager}
-            </span>
+          <p className="text-xs sm:text-sm font-semibold text-neutral-900 truncate">
+            {overview.engagementPartner} / {overview.auditManager}
           </p>
         </div>
 
         {/* Start / Due */}
-        <div className="flex flex-col justify-between py-1 min-w-0 sm:col-span-2 lg:col-span-1">
-          <p className="text-xs font-medium text-neutral-600">Start / Due</p>
-          <p className="text-xs sm:text-sm font-semibold text-neutral-900 line-clamp-2">
-            <span className="hidden sm:block text-xs">
-              {startDate} →<br /> {dueDate}
+        <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
+          <p className="text-xs font-medium text-neutral-600 truncate">
+            Start / Due
+          </p>
+          <p className="text-xs sm:text-sm font-semibold text-neutral-900 truncate">
+            <span className="hidden sm:inline">
+              {startDate} → {dueDate}
             </span>
-            <span className="sm:hidden text-xs">
-              {startDate.split(" ")[0]} →<br /> {dueDate.split(" ")[0]}
+            <span className="sm:hidden">
+              {startDate.split(" ")[0]} → {dueDate.split(" ")[0]}
             </span>
           </p>
         </div>
 
         {/* Overall Progress */}
-        <div className="flex flex-col justify-between py-1 min-w-0 sm:col-span-2 lg:col-span-1">
+        <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
           <div className="flex justify-between items-center gap-2">
-            <p className="text-xs font-medium text-neutral-600">Progress</p>
+            <p className="text-xs font-medium text-neutral-600 truncate">
+              Overall Progress
+            </p>
             <p className="text-xs font-semibold text-neutral-600 whitespace-nowrap">
               {overview.overallProgress}%
             </p>
