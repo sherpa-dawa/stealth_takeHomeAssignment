@@ -55,10 +55,9 @@ export default function AssignAuditorDialog({
                   : "hover:bg-neutral-100 border border-neutral-200"
               }`}
             >
-              <Avatar initials={auditor.avatar} size="md" />
+              <Avatar name={auditor.name} size="md" />
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-neutral-900">{auditor.name}</p>
-                <p className="text-xs text-neutral-600">ID: {auditor.id}</p>
               </div>
             </button>
           ))}

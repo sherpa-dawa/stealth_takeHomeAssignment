@@ -87,7 +87,7 @@ export default function ViewDetailsDialog({
             </p>
             {area.assignedAuditor ? (
               <div className="flex items-center gap-2">
-                <Avatar initials={area.assignedAuditor.avatar} size="md" />
+                <Avatar name={area.assignedAuditor.name} size="md" />
                 <p
                   className={`text-sm ${getColorClass("text", componentColors.text.primary)}`}
                 >

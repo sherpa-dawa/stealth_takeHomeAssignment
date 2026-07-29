@@ -20,14 +20,7 @@ export default function ActivityFeed({ items }: ActivityFeedProps) {
               key={item.id}
               className="flex gap-3 items-start pb-3 border-b border-neutral-100 last:border-b-0"
             >
-              <Avatar
-                initials={item.user
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
-                size="sm"
-                className="flex-shrink-0"
-              />
+              <Avatar name={item.user} size="sm" className="flex-shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-neutral-900">
                   {item.user}

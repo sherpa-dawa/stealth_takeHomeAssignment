@@ -88,7 +88,7 @@ export default function AuditAreaCard({
         {/* Auditor */}
         <div className="flex items-center gap-2 min-w-0">
           <Avatar
-            initials={area.assignedAuditor?.avatar || "?"}
+            name={area.assignedAuditor?.name || "Unknown"}
             size="sm"
             className="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0"
           />

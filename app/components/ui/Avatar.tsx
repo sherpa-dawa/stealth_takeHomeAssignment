@@ -1,12 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { getAvatarColors, getInitials } from "@/lib/avatarColors";
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   initials?: string;
   src?: string;
   alt?: string;
   size?: "sm" | "md" | "lg";
+  name?: string; // Name to generate colors from
 }
 
 const sizeClasses = {
@@ -23,31 +25,53 @@ const sizePixels = {
 
 const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
   (
-    { className, initials, src, alt = "Avatar", size = "md", ...props },
+    {
+      className,
+      initials,
+      src,
+      alt = "Avatar",
+      size = "md",
+      name,
+      style,
+      ...props
+    },
     ref
-  ) => (
-    <div
-      ref={ref}
-      className={cn(
-        "flex items-center justify-center rounded-full font-semibold bg-gradient-to-br from-primary-400 to-secondary-500 text-white",
-        sizeClasses[size],
-        className
-      )}
-      {...props}
-    >
-      {src ? (
-        <Image
-          src={src}
-          alt={alt}
-          width={sizePixels[size]}
-          height={sizePixels[size]}
-          className="w-full h-full rounded-full object-cover"
-        />
-      ) : (
-        initials
-      )}
-    </div>
-  )
+  ) => {
+    // Generate colors from name if provided
+    const colors = name ? getAvatarColors(name) : undefined;
+
+    // Generate initials from name if not provided
+    const displayInitials = initials || (name ? getInitials(name) : undefined);
+
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "flex items-center justify-center rounded-full font-semibold",
+          sizeClasses[size],
+          className
+        )}
+        style={{
+          backgroundColor: colors?.backgroundColor,
+          color: colors?.textColor,
+          ...style,
+        }}
+        {...props}
+      >
+        {src ? (
+          <Image
+            src={src}
+            alt={alt}
+            width={sizePixels[size]}
+            height={sizePixels[size]}
+            className="w-full h-full rounded-full object-cover"
+          />
+        ) : (
+          displayInitials
+        )}
+      </div>
+    );
+  }
 );
 
 Avatar.displayName = "Avatar";

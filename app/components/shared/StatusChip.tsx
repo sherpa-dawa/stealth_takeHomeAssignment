@@ -3,10 +3,10 @@ import { AreaStatus } from "@/lib/types";
 
 interface StatusChipProps {
   status: AreaStatus;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
 }
 
-export default function StatusChip({ status, size = "sm" }: StatusChipProps) {
+export default function StatusChip({ status, size = "xs" }: StatusChipProps) {
   return (
     <Badge variant="outline" size={size}>
       {status}

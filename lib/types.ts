@@ -25,6 +25,7 @@ export interface AuditArea {
   name: string;
   risk: RiskLevel;
   progress: number;
+  progressBeforeComplete?: number;
   assignedAuditor: Auditor | null;
   tasks: Task[];
   evidence: Evidence[];
