@@ -1,7 +1,12 @@
 "use client";
 
 import { ToastProvider } from "@/shared/components/Toast";
+import { QueryProvider } from "@/features/audit-planning/lib/QueryProvider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <ToastProvider>{children}</ToastProvider>;
+  return (
+    <QueryProvider>
+      <ToastProvider>{children}</ToastProvider>
+    </QueryProvider>
+  );
 }

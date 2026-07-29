@@ -14,6 +14,20 @@ export { default as WorkspaceHeader } from "./components/WorkspaceHeader";
 // Hooks
 export { useAuditWorkspace } from "./hooks/useAuditWorkspace";
 
+// TanStack Query Hooks
+export {
+  useAuditsQuery,
+  useOverviewQuery,
+  useProgressQuery,
+  useHighRiskAreasQuery,
+  useDeadlinesQuery,
+  useActivityQuery,
+} from "./hooks/queries";
+export {
+  useAssignAuditorMutation,
+  useChangeStatusMutation,
+} from "./hooks/mutations";
+
 // Services
 export { auditService } from "./services/auditService";
 

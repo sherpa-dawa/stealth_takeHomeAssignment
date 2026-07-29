@@ -6,6 +6,18 @@ import {
   initialState,
 } from "@/features/audit-planning/state/reducer";
 
+/**
+ * @deprecated Use individual query hooks instead:
+ * - useAuditsQuery
+ * - useOverviewQuery
+ * - useProgressQuery
+ * - useHighRiskAreasQuery
+ * - useDeadlinesQuery
+ * - useActivityQuery
+ *
+ * This hook is maintained for backward compatibility but should be phased out.
+ * The reducer pattern is still used internally for domain state mutations.
+ */
 export function useAuditWorkspace(client?: string) {
   const [state, dispatch] = useReducer(workspaceReducer, initialState);
 

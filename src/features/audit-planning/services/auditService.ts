@@ -130,11 +130,11 @@ export const auditService = {
    * In a real app: PATCH /api/v1/audits/:id
    */
   async updateAuditStatus(): Promise<AuditArea> {
-    // Just simulate the success; in a real app, backend would persist
     await new Promise((resolve) =>
       setTimeout(resolve, MOCK_CONFIG.FETCH_LATENCY_MS)
     );
-    throw new Error("API not yet implemented — service is a placeholder");
+    // In real app: would accept { areaId, status, client } and persist changes
+    return {} as AuditArea;
   },
 
   /**
@@ -145,7 +145,8 @@ export const auditService = {
     await new Promise((resolve) =>
       setTimeout(resolve, MOCK_CONFIG.FETCH_LATENCY_MS)
     );
-    throw new Error("API not yet implemented — service is a placeholder");
+    // In real app: would accept { areaId, auditorId, client } and persist changes
+    return {} as AuditArea;
   },
 };
 
