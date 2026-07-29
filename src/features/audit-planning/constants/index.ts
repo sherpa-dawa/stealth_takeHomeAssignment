@@ -45,6 +45,7 @@ export const MOCK_CONFIG = {
 
 // Client names (for multi-tenancy demo)
 export const CLIENTS = [
+  "Acme Corporation",
   "ABC Manufacturing Ltd.",
   "Tech Innovations Inc",
   "Global Finance Ltd",

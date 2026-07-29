@@ -15,12 +15,12 @@ export const clients = [
 ];
 
 // ============================================
-// ABC Manufacturing Ltd. - Data
+// Acme Corporation - Data (Default for tests)
 // ============================================
 const abcOverview: AuditOverview = {
-  clientName: "ABC Manufacturing Ltd.",
-  financialYear: "2025",
-  engagementStatus: "Planning",
+  clientName: "Acme Corporation",
+  financialYear: "2024",
+  engagementStatus: "Active",
   engagementPartner: "Michael Scott",
   auditManager: "Sarah Johnson",
   overallProgress: 42,
@@ -39,43 +39,30 @@ const abcAuditAreas: AuditArea[] = [
       { id: "t1", title: "Analyze revenue transactions", status: "Open" },
       { id: "t2", title: "Review sales agreements", status: "Open" },
       { id: "t3", title: "Test revenue cutoff", status: "In Progress" },
-      { id: "t4", title: "Verify customer credits", status: "Open" },
-      { id: "t5", title: "Check revenue recognition", status: "Open" },
-      { id: "t6", title: "Review accruals", status: "In Progress" },
-      { id: "t7", title: "Test invoice accuracy", status: "Open" },
-      { id: "t8", title: "Verify pricing policies", status: "Open" },
     ],
     evidence: [
       { id: "e1", title: "Revenue GL details", status: "Open" },
       { id: "e2", title: "Sales journal entries", status: "Open" },
-      { id: "e3", title: "Customer contracts", status: "In Progress" },
-      { id: "e4", title: "Credit memos", status: "Open" },
-      { id: "e5", title: "Revenue policies", status: "Open" },
-      { id: "e6", title: "Cutoff tests", status: "Open" },
-      { id: "e7", title: "Pricing schedules", status: "In Progress" },
-      { id: "e8", title: "Accrual analysis", status: "Open" },
     ],
     status: "In Progress",
-    client: "ABC Manufacturing Ltd.",
+    client: "Acme Corporation",
   },
   {
     id: "cash",
     name: "Cash & Bank",
-    risk: "Medium",
+    risk: "High",
     progress: 35,
     assignedAuditor: { id: "u2", name: "John Smith", avatar: "JS" },
     tasks: [
       { id: "t1", title: "Reconcile bank accounts", status: "Open" },
       { id: "t2", title: "Test cash controls", status: "Open" },
-      { id: "t3", title: "Review bank confirmations", status: "Open" },
     ],
     evidence: [
       { id: "e1", title: "Bank statements", status: "Open" },
       { id: "e2", title: "Reconciliations", status: "Open" },
-      { id: "e3", title: "Bank confirmations", status: "Open" },
     ],
     status: "Planning",
-    client: "ABC Manufacturing Ltd.",
+    client: "Acme Corporation",
   },
   {
     id: "inventory",
@@ -86,18 +73,13 @@ const abcAuditAreas: AuditArea[] = [
     tasks: [
       { id: "t1", title: "Plan physical inventory", status: "Open" },
       { id: "t2", title: "Test inventory valuation", status: "Open" },
-      { id: "t3", title: "Review purchase orders", status: "Open" },
-      { id: "t4", title: "Test inventory cutoff", status: "Open" },
-      { id: "t5", title: "Review obsolescence", status: "Open" },
-      { id: "t6", title: "Test perpetual records", status: "Open" },
     ],
     evidence: [
       { id: "e1", title: "Inventory listing", status: "Open" },
       { id: "e2", title: "Physical count sheets", status: "Open" },
-      { id: "e3", title: "Inventory policies", status: "Open" },
     ],
     status: "Planning",
-    client: "ABC Manufacturing Ltd.",
+    client: "Acme Corporation",
   },
   {
     id: "payroll",
@@ -107,14 +89,56 @@ const abcAuditAreas: AuditArea[] = [
     assignedAuditor: { id: "u4", name: "David Wilson", avatar: "DW" },
     tasks: [
       { id: "t1", title: "Test payroll processing", status: "Completed" },
-      { id: "t2", title: "Review tax withholdings", status: "Completed" },
     ],
-    evidence: [
-      { id: "e1", title: "Payroll registers", status: "Completed" },
-      { id: "e2", title: "Tax filings", status: "Completed" },
-    ],
+    evidence: [{ id: "e1", title: "Payroll registers", status: "Completed" }],
     status: "Review",
-    client: "ABC Manufacturing Ltd.",
+    client: "Acme Corporation",
+  },
+  {
+    id: "fixed-assets",
+    name: "Fixed Assets",
+    risk: "Medium",
+    progress: 40,
+    assignedAuditor: { id: "u5", name: "Lisa Anderson", avatar: "LA" },
+    tasks: [{ id: "t1", title: "Review fixed asset register", status: "Open" }],
+    evidence: [{ id: "e1", title: "Asset listing", status: "Open" }],
+    status: "Planning",
+    client: "Acme Corporation",
+  },
+  {
+    id: "accounts-receivable",
+    name: "Accounts Receivable",
+    risk: "Medium",
+    progress: 50,
+    assignedAuditor: { id: "u6", name: "Robert Lee", avatar: "RL" },
+    tasks: [{ id: "t1", title: "Test AR aging", status: "In Progress" }],
+    evidence: [{ id: "e1", title: "AR subledger", status: "In Progress" }],
+    status: "In Progress",
+    client: "Acme Corporation",
+  },
+  {
+    id: "accounts-payable",
+    name: "Accounts Payable",
+    risk: "Low",
+    progress: 75,
+    assignedAuditor: { id: "u7", name: "Jennifer Brown", avatar: "JB" },
+    tasks: [{ id: "t1", title: "Test AP controls", status: "Completed" }],
+    evidence: [{ id: "e1", title: "AP subledger", status: "Completed" }],
+    status: "Review",
+    client: "Acme Corporation",
+  },
+  {
+    id: "expenses",
+    name: "Expenses",
+    risk: "Low",
+    progress: 60,
+    assignedAuditor: { id: "u8", name: "Michael Chen", avatar: "MC" },
+    tasks: [
+      { id: "t1", title: "Test expense controls", status: "In Progress" },
+    ],
+    evidence: [{ id: "e1", title: "Expense reports", status: "In Progress" }],
+    status: "In Progress",
+    client: "Acme Corporation",
   },
 ];
 
@@ -388,6 +412,7 @@ const clientData: Record<
   string,
   { overview: AuditOverview; areas: AuditArea[] }
 > = {
+  "Acme Corporation": { overview: abcOverview, areas: abcAuditAreas },
   "ABC Manufacturing Ltd.": { overview: abcOverview, areas: abcAuditAreas },
   "Tech Innovations Inc": { overview: techOverview, areas: techAuditAreas },
   "Global Finance Ltd": { overview: globalOverview, areas: globalAuditAreas },
@@ -396,7 +421,7 @@ const clientData: Record<
 };
 
 // ============================================
-// Default Data (ABC Manufacturing Ltd.)
+// Default Data (Acme Corporation)
 // ============================================
 export const auditOverview = abcOverview;
 export const auditAreas = abcAuditAreas;
