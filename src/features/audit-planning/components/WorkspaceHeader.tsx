@@ -49,6 +49,7 @@ export default function WorkspaceHeader() {
           className="sm:size-md text-xs sm:text-sm"
           onClick={handleExport}
           disabled={isExporting}
+          style={{ backgroundColor: "#ffffff" }}
         >
           {isExporting ? (
             <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin" />
