@@ -5,7 +5,7 @@ import {
   highRiskAreas,
   deadlines,
   activityItems,
-} from "@/lib/mockData";
+} from "@/features/audit-planning/constants/mockData";
 
 describe("Mock Data", () => {
   describe("auditOverview", () => {

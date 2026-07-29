@@ -4,7 +4,7 @@ import {
   deadlines,
   activityItems,
   getClientData,
-} from "@/lib/mockData";
+} from "@/features/audit-planning/constants/mockData";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);

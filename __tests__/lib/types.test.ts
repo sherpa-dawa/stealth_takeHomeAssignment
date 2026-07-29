@@ -7,7 +7,7 @@ import {
   ProgressBreakdown,
   Deadline,
   ActivityItem,
-} from "@/lib/types";
+} from "@/features/audit-planning/types";
 
 describe("Type definitions", () => {
   describe("RiskLevel", () => {

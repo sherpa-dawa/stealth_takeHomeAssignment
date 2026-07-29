@@ -5,7 +5,7 @@ import {
   highRiskAreas,
   deadlines,
   activityItems,
-} from "@/lib/mockData";
+} from "@/features/audit-planning/constants/mockData";
 
 describe("/api/audit data contract", () => {
   describe("API response payload", () => {
