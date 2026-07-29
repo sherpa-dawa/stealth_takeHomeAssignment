@@ -117,7 +117,8 @@ export default function AuditAreaCard({
 
         {/* Tasks & Evidence - Compact */}
         <div
-          className={`grid grid-cols-2 gap-2 sm:gap-3 py-2 border-t border-b ${getColorClass("border", componentColors.border.light)}`}
+          className="grid grid-cols-2 gap-2 sm:gap-3 py-2 border-t border-b"
+          style={{ borderColor: "var(--border-color)" }}
         >
           <div>
             <div className="flex items-center gap-1 mb-1">
