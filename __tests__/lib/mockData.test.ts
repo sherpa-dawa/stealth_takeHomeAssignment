@@ -72,8 +72,12 @@ describe("Mock Data", () => {
 
     it("should track open tasks and evidence requests", () => {
       auditAreas.forEach((area) => {
-        expect(area.openTasks).toBeGreaterThanOrEqual(0);
-        expect(area.evidenceRequested).toBeGreaterThanOrEqual(0);
+        const openTasks = area.tasks.filter((t) => t.status === "Open").length;
+        const openEvidence = area.evidence.filter(
+          (e) => e.status === "Open"
+        ).length;
+        expect(openTasks).toBeGreaterThanOrEqual(0);
+        expect(openEvidence).toBeGreaterThanOrEqual(0);
       });
     });
   });

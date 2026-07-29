@@ -1,11 +1,9 @@
 "use client";
 
-import { Button } from "../ui/Button";
 import { Avatar } from "../ui/Avatar";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogClose,
@@ -27,9 +25,14 @@ export default function ViewDetailsDialog({
 }: ViewDetailsDialogProps) {
   if (!area) return null;
 
+  const openTasksCount = area.tasks.filter((t) => t.status === "Open").length;
+  const evidenceRequestedCount = area.evidence.filter(
+    (e) => e.status === "Open"
+  ).length;
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="w-[calc(100%-2rem)] sm:max-w-xl lg:max-w-2xl p-4 sm:p-6 max-h-[calc(100vh-2rem)] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{area.name}</DialogTitle>
           <DialogClose />
@@ -56,7 +59,7 @@ export default function ViewDetailsDialog({
             </div>
             <div className="w-full bg-neutral-300 rounded-full h-2 overflow-hidden">
               <div
-                className="bg-gradient-to-r from-primary-500 to-accent-500 h-full rounded-full transition-all duration-500"
+                className="bg-blue-500 h-full rounded-full transition-all duration-500"
                 style={{ width: `${area.progress}%` }}
               />
             </div>
@@ -90,7 +93,7 @@ export default function ViewDetailsDialog({
                 Open Tasks
               </p>
               <p className="text-2xl font-bold text-neutral-900">
-                {area.openTasks}
+                {openTasksCount}
               </p>
             </div>
             <div>
@@ -98,17 +101,11 @@ export default function ViewDetailsDialog({
                 Evidence Requested
               </p>
               <p className="text-2xl font-bold text-neutral-900">
-                {area.evidenceRequested}
+                {evidenceRequestedCount}
               </p>
             </div>
           </div>
         </div>
-
-        <DialogFooter>
-          <Button variant="primary" onClick={onClose}>
-            Close
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

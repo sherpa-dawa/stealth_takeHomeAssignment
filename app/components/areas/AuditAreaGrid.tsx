@@ -11,9 +11,14 @@ import ViewDetailsDialog from "./ViewDetailsDialog";
 interface AuditAreaGridProps {
   areas: AuditArea[];
   dispatch: React.Dispatch<WorkspaceAction>;
+  highlightedAreaId?: string | null;
 }
 
-export default function AuditAreaGrid({ areas, dispatch }: AuditAreaGridProps) {
+export default function AuditAreaGrid({
+  areas,
+  dispatch,
+  highlightedAreaId,
+}: AuditAreaGridProps) {
   const [selectedAreaForDetails, setSelectedAreaForDetails] =
     useState<AuditArea | null>(null);
   const [selectedAreaForAssign, setSelectedAreaForAssign] =
@@ -59,11 +64,12 @@ export default function AuditAreaGrid({ areas, dispatch }: AuditAreaGridProps) {
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         {areas.map((area) => (
           <AuditAreaCard
             key={area.id}
             area={area}
+            isHighlighted={highlightedAreaId === area.id}
             onViewDetails={(a: AuditArea) => setSelectedAreaForDetails(a)}
             onChangeStatus={(a: AuditArea, status) => {
               dispatch({

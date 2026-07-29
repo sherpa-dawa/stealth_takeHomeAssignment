@@ -2,13 +2,24 @@ import { WorkspaceState } from "@/lib/workspaceReducer";
 
 interface SidebarProps {
   state: WorkspaceState;
+  onHighlightArea?: (areaId: string) => void;
 }
 
-export default function Sidebar({ state }: SidebarProps) {
+function hashStringToNumber(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash;
+  }
+  return Math.abs(hash);
+}
+
+export default function Sidebar({ state, onHighlightArea }: SidebarProps) {
   const highRiskAreas = state.areas.filter((a) => a.risk === "High");
 
   return (
-    <div className="w-full space-y-6 p-6">
+    <div className="w-full space-y-4 sm:space-y-6 p-4 sm:p-6">
       {/* Overall Progress - Phase Breakdown */}
       <div>
         <h3 className="text-sm font-semibold text-neutral-900 mb-4">
@@ -72,7 +83,8 @@ export default function Sidebar({ state }: SidebarProps) {
             {highRiskAreas.map((area) => (
               <div
                 key={area.id}
-                className="text-xs font-medium text-red-700 hover:text-red-900 cursor-pointer"
+                onClick={() => onHighlightArea?.(area.id)}
+                className="text-xs font-medium text-red-700 hover:text-red-900 hover:bg-red-50 cursor-pointer px-2 py-1.5 rounded transition-colors"
               >
                 {area.name}
               </div>
@@ -93,7 +105,7 @@ export default function Sidebar({ state }: SidebarProps) {
                 {area.name} Review
               </span>
               <span className="text-xs text-neutral-500 whitespace-nowrap ml-2">
-                {(parseInt(area.id) % 5) + 1}d
+                {(hashStringToNumber(area.id) % 5) + 1}d
               </span>
             </div>
           ))}

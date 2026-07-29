@@ -17,6 +17,7 @@ import {
 
 interface AuditAreaCardProps {
   area: AuditArea;
+  isHighlighted?: boolean;
   onViewDetails: (area: AuditArea) => void;
   onChangeStatus: (area: AuditArea, status: AreaStatus) => void;
   onAssignAuditor: (area: AuditArea) => void;
@@ -32,47 +33,59 @@ const statuses: AreaStatus[] = [
 
 export default function AuditAreaCard({
   area,
+  isHighlighted,
   onViewDetails,
   onChangeStatus,
   onAssignAuditor,
   onMarkComplete,
 }: AuditAreaCardProps) {
+  const openTasksCount = area.tasks.filter((t) => t.status === "Open").length;
+  const evidenceRequestedCount = area.evidence.filter(
+    (e) => e.status === "Open"
+  ).length;
+
   const handleStatusChange = (newStatus: AreaStatus) => {
     onChangeStatus(area, newStatus);
   };
 
   return (
-    <Card className="hover:shadow-md transition-shadow duration-300 bg-white">
-      <CardContent className="p-5 space-y-4">
+    <Card
+      className={`hover:shadow-md transition-all duration-300 bg-white h-full ${
+        isHighlighted
+          ? "border-2 border-red-500 shadow-lg"
+          : "border border-neutral-200"
+      }`}
+    >
+      <CardContent className="p-3 sm:p-4 lg:p-5 space-y-3 sm:space-y-4 flex flex-col h-full">
         {/* Header: Name & Risk */}
-        <div className="flex items-start justify-between gap-3">
-          <h3 className="text-sm font-semibold text-neutral-900">
+        <div className="flex items-start justify-between gap-2 sm:gap-3">
+          <h3 className="text-xs sm:text-sm font-semibold text-neutral-900 flex-1 break-words">
             {area.name}
           </h3>
           <RiskChip risk={area.risk} size="sm" />
         </div>
 
         {/* Progress */}
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          <div className="flex items-center justify-between gap-2">
             <div className="flex-1 bg-neutral-200 rounded-full h-1.5 overflow-hidden">
               <div
                 className="bg-blue-500 h-full rounded-full transition-all duration-300"
                 style={{ width: `${area.progress}%` }}
               />
             </div>
-            <span className="text-xs font-semibold text-neutral-900 ml-2 min-w-fit">
+            <span className="text-xs font-semibold text-neutral-900 whitespace-nowrap">
               {area.progress}%
             </span>
           </div>
         </div>
 
         {/* Auditor */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 min-w-0">
           <Avatar
             initials={area.assignedAuditor?.avatar || "?"}
             size="sm"
-            className="w-7 h-7"
+            className="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0"
           />
           <div className="flex-1 min-w-0">
             <p className="text-xs font-medium text-neutral-900 truncate">
@@ -82,23 +95,23 @@ export default function AuditAreaCard({
         </div>
 
         {/* Tasks & Evidence - Compact */}
-        <div className="grid grid-cols-2 gap-3 py-2 border-t border-b border-neutral-100">
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 py-2 border-t border-b border-neutral-100">
           <div>
             <span className="text-xs text-neutral-600 block">Tasks</span>
-            <span className="text-sm font-semibold text-neutral-900">
-              {area.openTasks}
+            <span className="text-xs sm:text-sm font-semibold text-neutral-900">
+              {openTasksCount}
             </span>
           </div>
           <div>
             <span className="text-xs text-neutral-600 block">Evidence</span>
-            <span className="text-sm font-semibold text-neutral-900">
-              {area.evidenceRequested}
+            <span className="text-xs sm:text-sm font-semibold text-neutral-900">
+              {evidenceRequestedCount}
             </span>
           </div>
         </div>
 
         {/* Status with Dropdown */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <span className="text-xs font-medium text-neutral-600">Status</span>
           <Select
             value={area.status}
@@ -118,35 +131,36 @@ export default function AuditAreaCard({
         </div>
 
         {/* Action Buttons - Refined */}
-        <div className="flex gap-1.5 pt-2">
+        <div className="flex gap-1 sm:gap-1.5 pt-2 mt-auto flex-wrap">
           <Button
             variant="ghost"
             size="xs"
             onClick={() => onViewDetails(area)}
-            className="h-7 px-2 text-xs"
+            className="h-6 sm:h-7 px-1.5 sm:px-2 text-xs flex-1 sm:flex-none"
             title="View details"
           >
-            <Eye className="w-3.5 h-3.5 mr-1" />
-            View
+            <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1" />
+            <span className="hidden sm:inline">View</span>
           </Button>
           <Button
             variant="ghost"
             size="xs"
             onClick={() => onAssignAuditor(area)}
-            className="h-7 px-2 text-xs"
+            className="h-6 sm:h-7 px-1.5 sm:px-2 text-xs flex-1 sm:flex-none"
             title="Assign auditor"
           >
-            <UserPlus className="w-3.5 h-3.5 mr-1" />
-            Assign
+            <UserPlus className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1" />
+            <span className="hidden sm:inline">Assign</span>
           </Button>
           <Button
             variant="ghost"
             size="xs"
             onClick={() => onMarkComplete(area)}
-            className="h-7 px-2 text-xs text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800"
+            className="h-6 sm:h-7 px-1.5 sm:px-2 text-xs text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 flex-1 sm:flex-none"
             title="Mark complete"
           >
-            Complete
+            <span className="hidden sm:inline">Complete</span>
+            <span className="sm:hidden">✓</span>
           </Button>
         </div>
       </CardContent>

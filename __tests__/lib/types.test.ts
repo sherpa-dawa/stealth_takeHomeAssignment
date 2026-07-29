@@ -61,11 +61,18 @@ describe("Type definitions", () => {
       const area: AuditArea = {
         id: "revenue",
         name: "Revenue",
+        client: "Acme Corporation",
         risk: "High",
         progress: 45,
         assignedAuditor: { id: "a1", name: "Emma Wilson", avatar: "EW" },
-        openTasks: 8,
-        evidenceRequested: 12,
+        tasks: [
+          { id: "t1", title: "Review revenue transactions", status: "Open" },
+          { id: "t2", title: "Verify cutoff procedures", status: "Completed" },
+        ],
+        evidence: [
+          { id: "e1", title: "Revenue contracts", status: "Open" },
+          { id: "e2", title: "Customer agreements", status: "Completed" },
+        ],
         status: "In Progress",
       };
 
@@ -80,11 +87,12 @@ describe("Type definitions", () => {
       const area: AuditArea = {
         id: "test",
         name: "Test Area",
+        client: "Test Client",
         risk: "Low",
         progress: 0,
         assignedAuditor: null,
-        openTasks: 5,
-        evidenceRequested: 0,
+        tasks: [],
+        evidence: [],
         status: "Planning",
       };
 

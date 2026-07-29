@@ -1,10 +1,23 @@
 export type RiskLevel = "Low" | "Medium" | "High";
 export type AreaStatus = "Planning" | "In Progress" | "Review" | "Complete";
+export type TaskStatus = "Open" | "In Progress" | "Completed";
 
 export interface Auditor {
   id: string;
   name: string;
   avatar?: string;
+}
+
+export interface Task {
+  id: string;
+  title: string;
+  status: TaskStatus;
+}
+
+export interface Evidence {
+  id: string;
+  title: string;
+  status: TaskStatus;
 }
 
 export interface AuditArea {
@@ -13,9 +26,10 @@ export interface AuditArea {
   risk: RiskLevel;
   progress: number;
   assignedAuditor: Auditor | null;
-  openTasks: number;
-  evidenceRequested: number;
+  tasks: Task[];
+  evidence: Evidence[];
   status: AreaStatus;
+  client: string;
 }
 
 export interface AuditOverview {
