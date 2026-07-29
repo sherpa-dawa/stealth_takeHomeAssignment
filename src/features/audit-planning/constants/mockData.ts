@@ -15,12 +15,12 @@ export const clients = [
 ];
 
 // ============================================
-// Acme Corporation - Data (Default for tests)
+// ABC Manufacturing Ltd. - Data (Default for tests)
 // ============================================
 const abcOverview: AuditOverview = {
-  clientName: "Acme Corporation",
-  financialYear: "2024",
-  engagementStatus: "Active",
+  clientName: "ABC Manufacturing Ltd.",
+  financialYear: "2025",
+  engagementStatus: "Planning",
   engagementPartner: "Michael Scott",
   auditManager: "Sarah Johnson",
   overallProgress: 42,
@@ -45,7 +45,7 @@ const abcAuditAreas: AuditArea[] = [
       { id: "e2", title: "Sales journal entries", status: "Open" },
     ],
     status: "In Progress",
-    client: "Acme Corporation",
+    client: "ABC Manufacturing Ltd.",
   },
   {
     id: "cash",
@@ -62,7 +62,7 @@ const abcAuditAreas: AuditArea[] = [
       { id: "e2", title: "Reconciliations", status: "Open" },
     ],
     status: "Planning",
-    client: "Acme Corporation",
+    client: "ABC Manufacturing Ltd.",
   },
   {
     id: "inventory",
@@ -79,7 +79,7 @@ const abcAuditAreas: AuditArea[] = [
       { id: "e2", title: "Physical count sheets", status: "Open" },
     ],
     status: "Planning",
-    client: "Acme Corporation",
+    client: "ABC Manufacturing Ltd.",
   },
   {
     id: "payroll",
@@ -92,7 +92,7 @@ const abcAuditAreas: AuditArea[] = [
     ],
     evidence: [{ id: "e1", title: "Payroll registers", status: "Completed" }],
     status: "Review",
-    client: "Acme Corporation",
+    client: "ABC Manufacturing Ltd.",
   },
   {
     id: "fixed-assets",
@@ -103,7 +103,7 @@ const abcAuditAreas: AuditArea[] = [
     tasks: [{ id: "t1", title: "Review fixed asset register", status: "Open" }],
     evidence: [{ id: "e1", title: "Asset listing", status: "Open" }],
     status: "Planning",
-    client: "Acme Corporation",
+    client: "ABC Manufacturing Ltd.",
   },
   {
     id: "accounts-receivable",
@@ -114,7 +114,7 @@ const abcAuditAreas: AuditArea[] = [
     tasks: [{ id: "t1", title: "Test AR aging", status: "In Progress" }],
     evidence: [{ id: "e1", title: "AR subledger", status: "In Progress" }],
     status: "In Progress",
-    client: "Acme Corporation",
+    client: "ABC Manufacturing Ltd.",
   },
   {
     id: "accounts-payable",
@@ -125,7 +125,7 @@ const abcAuditAreas: AuditArea[] = [
     tasks: [{ id: "t1", title: "Test AP controls", status: "Completed" }],
     evidence: [{ id: "e1", title: "AP subledger", status: "Completed" }],
     status: "Review",
-    client: "Acme Corporation",
+    client: "ABC Manufacturing Ltd.",
   },
   {
     id: "expenses",
@@ -138,7 +138,7 @@ const abcAuditAreas: AuditArea[] = [
     ],
     evidence: [{ id: "e1", title: "Expense reports", status: "In Progress" }],
     status: "In Progress",
-    client: "Acme Corporation",
+    client: "ABC Manufacturing Ltd.",
   },
 ];
 
@@ -350,7 +350,7 @@ const retailAuditAreas: AuditArea[] = [
 const mfgOverview: AuditOverview = {
   clientName: "Manufacturing Plus",
   financialYear: "2025",
-  engagementStatus: "Active",
+  engagementStatus: "Planning",
   engagementPartner: "Elizabeth Clark",
   auditManager: "George Williams",
   overallProgress: 35,
@@ -412,7 +412,6 @@ const clientData: Record<
   string,
   { overview: AuditOverview; areas: AuditArea[] }
 > = {
-  "Acme Corporation": { overview: abcOverview, areas: abcAuditAreas },
   "ABC Manufacturing Ltd.": { overview: abcOverview, areas: abcAuditAreas },
   "Tech Innovations Inc": { overview: techOverview, areas: techAuditAreas },
   "Global Finance Ltd": { overview: globalOverview, areas: globalAuditAreas },
@@ -421,7 +420,7 @@ const clientData: Record<
 };
 
 // ============================================
-// Default Data (Acme Corporation)
+// Default Data (ABC Manufacturing Ltd.)
 // ============================================
 export const auditOverview = abcOverview;
 export const auditAreas = abcAuditAreas;
