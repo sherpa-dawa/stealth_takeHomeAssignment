@@ -5,7 +5,7 @@ import {
   highRiskAreas,
   deadlines,
   activityItems,
-} from "@/lib/mockData";
+} from "@/features/audit-planning/constants/mockData";
 
 describe("/api/audit data contract", () => {
   describe("API response payload", () => {
@@ -28,8 +28,8 @@ describe("/api/audit data contract", () => {
     });
 
     it("should return valid audit overview", () => {
-      expect(auditOverview.clientName).toBe("Acme Corporation");
-      expect(auditOverview.financialYear).toBe("2024");
+      expect(auditOverview.clientName).toBe("ABC Manufacturing Ltd.");
+      expect(auditOverview.financialYear).toBe("2025");
       expect(auditOverview.overallProgress).toBeGreaterThan(0);
     });
 

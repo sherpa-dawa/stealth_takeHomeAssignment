@@ -1,4 +1,7 @@
-import { workspaceReducer, initialState } from "@/lib/workspaceReducer";
+import {
+  workspaceReducer,
+  initialState,
+} from "@/features/audit-planning/state/reducer";
 import {
   auditAreas,
   auditOverview,
@@ -6,7 +9,7 @@ import {
   highRiskAreas,
   deadlines,
   activityItems,
-} from "@/lib/mockData";
+} from "@/features/audit-planning/constants/mockData";
 
 describe("workspaceReducer", () => {
   describe("FETCH_START", () => {

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { AuditArea, Auditor } from "@/lib/types";
-import { WorkspaceAction } from "@/lib/workspaceReducer";
-import AuditAreaCard from "./AuditAreaCard";
-import AssignAuditorDialog from "./AssignAuditorDialog";
-import ViewDetailsDialog from "./ViewDetailsDialog";
+import { AuditArea, Auditor } from "@/features/audit-planning/types";
+import { WorkspaceAction } from "@/features/audit-planning/state/reducer";
+import AuditAreaCard from "@/features/audit-planning/components/AuditAreaCard";
+import AssignAuditorDialog from "@/features/audit-planning/components/AssignAuditorDialog";
+import ViewDetailsDialog from "@/features/audit-planning/components/ViewDetailsDialog";
 
 interface AuditAreaGridProps {
   areas: AuditArea[];
@@ -36,16 +36,6 @@ export default function AuditAreaGrid({
     }
   };
 
-  const handleMarkComplete = (area: AuditArea) => {
-    dispatch({
-      type: "MARK_COMPLETE",
-      payload: {
-        areaId: area.id,
-        userName: "Current User",
-      },
-    });
-  };
-
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
@@ -66,7 +56,6 @@ export default function AuditAreaGrid({
               });
             }}
             onAssignAuditor={(a: AuditArea) => setSelectedAreaForAssign(a)}
-            onMarkComplete={handleMarkComplete}
           />
         ))}
       </div>

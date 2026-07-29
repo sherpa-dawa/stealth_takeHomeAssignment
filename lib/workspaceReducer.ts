@@ -122,16 +122,25 @@ export function workspaceReducer(
     }
 
     case "CHANGE_STATUS": {
-      const updatedAreas = state.areas.map((area) =>
-        area.id === action.payload.areaId
-          ? {
-              ...area,
-              status: action.payload.status,
-              progress:
-                action.payload.status === "Complete" ? 100 : area.progress,
-            }
-          : area
-      );
+      const updatedAreas = state.areas.map((area) => {
+        if (area.id !== action.payload.areaId) return area;
+
+        const isChangingToComplete = action.payload.status === "Complete";
+        const isChangingFromComplete = area.status === "Complete";
+
+        return {
+          ...area,
+          status: action.payload.status,
+          progress: isChangingToComplete
+            ? 100
+            : isChangingFromComplete
+              ? area.progressBeforeComplete || 0
+              : area.progress,
+          progressBeforeComplete: isChangingToComplete
+            ? area.progress
+            : undefined,
+        };
+      });
 
       const areaName =
         state.areas.find((a) => a.id === action.payload.areaId)?.name ||

@@ -5,7 +5,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Primary - Modern Blue
         primary: {
           50: "#f0f4ff",
           100: "#e0e9ff",
@@ -18,7 +17,6 @@ const config: Config = {
           800: "#362db5",
           900: "#2e2494",
         },
-        // Secondary - Modern Purple
         secondary: {
           50: "#f8f4ff",
           100: "#f0e9ff",
@@ -31,7 +29,6 @@ const config: Config = {
           800: "#6b2dc9",
           900: "#5a24aa",
         },
-        // Accent - Vibrant Teal
         accent: {
           50: "#f0fdfb",
           100: "#ccfbf1",
@@ -44,20 +41,17 @@ const config: Config = {
           800: "#115e59",
           900: "#134e4a",
         },
-        // Risk colors
         risk: {
           low: "#10b981",
           medium: "#f59e0b",
           high: "#ef4444",
         },
-        // Status colors
         status: {
           planning: "#8b5cf6",
           progress: "#5b6dff",
           review: "#f59e0b",
           complete: "#10b981",
         },
-        // Neutrals
         neutral: {
           50: "#fafaf9",
           100: "#f5f5f4",

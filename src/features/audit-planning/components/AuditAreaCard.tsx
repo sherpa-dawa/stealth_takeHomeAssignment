@@ -1,0 +1,216 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/common/Card";
+import { Button } from "@/components/common/Button";
+import { Avatar } from "@/components/common/Avatar";
+import { Eye, UserPlus, CheckSquare, FileText, Loader } from "lucide-react";
+import { AuditArea, AreaStatus } from "@/features/audit-planning/types";
+import RiskChip from "@/components/common/RiskChip";
+import StatusChip from "@/components/common/StatusChip";
+import { componentColors, getColorClass } from "@/lib/theme/colorTokens";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/common/Select";
+
+interface AuditAreaCardProps {
+  area: AuditArea;
+  isHighlighted?: boolean;
+  onViewDetails: (area: AuditArea) => void;
+  onChangeStatus: (area: AuditArea, status: AreaStatus) => void;
+  onAssignAuditor: (area: AuditArea) => void;
+}
+
+const statuses: AreaStatus[] = [
+  "Planning",
+  "In Progress",
+  "Review",
+  "Complete",
+];
+
+export default function AuditAreaCard({
+  area,
+  isHighlighted,
+  onViewDetails,
+  onChangeStatus,
+  onAssignAuditor,
+}: AuditAreaCardProps) {
+  const [updatingStatus, setUpdatingStatus] = useState(false);
+
+  const openTasksCount = area.tasks.filter((t) => t.status === "Open").length;
+  const evidenceRequestedCount = area.evidence.filter(
+    (e) => e.status === "Open"
+  ).length;
+
+  useEffect(() => {
+    if (updatingStatus) {
+      const timer = setTimeout(() => {
+        setUpdatingStatus(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [updatingStatus]);
+
+  const handleStatusChange = (newStatus: AreaStatus) => {
+    setUpdatingStatus(true);
+    onChangeStatus(area, newStatus);
+  };
+
+  return (
+    <Card
+      className={`hover:shadow-md transition-all duration-300 h-full ${
+        isHighlighted
+          ? `border-2 ${getColorClass("border", componentColors.highlight.border)} shadow-lg`
+          : `border ${getColorClass("border", componentColors.border.light)}`
+      }`}
+      style={{
+        backgroundColor: "var(--bg-paper)",
+        borderColor: "transparent",
+      }}
+    >
+      <CardContent className="p-3 sm:p-4 lg:p-5 space-y-3 sm:space-y-4 flex flex-col h-full">
+        {/* Header: Name & Risk */}
+        <div className="flex items-start justify-between gap-2 sm:gap-3">
+          <h3
+            className={`text-xs sm:text-sm font-semibold ${getColorClass("text", componentColors.text.primary)} flex-1 break-words`}
+          >
+            {area.name}
+          </h3>
+          <RiskChip risk={area.risk} size="sm" />
+        </div>
+
+        {/* Progress */}
+        <div className="space-y-1">
+          <div className="flex items-center justify-between gap-2">
+            <div
+              className={`flex-1 ${getColorClass("bg", componentColors.progress.background)} rounded-full h-1.5 overflow-hidden`}
+            >
+              <div
+                className={`${getColorClass("bg", componentColors.progress.bar)} h-full rounded-full transition-all duration-300`}
+                style={{ width: `${area.progress}%` }}
+              />
+            </div>
+            <span
+              className={`text-xs font-semibold ${getColorClass("text", componentColors.text.primary)} whitespace-nowrap`}
+            >
+              {area.progress}%
+            </span>
+          </div>
+        </div>
+
+        {/* Auditor */}
+        <div className="flex items-center gap-2 min-w-0">
+          <Avatar
+            name={area.assignedAuditor?.name || "Unknown"}
+            size="sm"
+            className="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0"
+          />
+          <div className="flex-1 min-w-0">
+            <p
+              className={`text-xs font-medium ${getColorClass("text", componentColors.text.primary)} truncate`}
+            >
+              {area.assignedAuditor?.name || "Unassigned"}
+            </p>
+          </div>
+        </div>
+
+        {/* Tasks & Evidence - Compact */}
+        <div
+          className="grid grid-cols-2 gap-2 sm:gap-3 py-2 border-t border-b"
+          style={{ borderColor: "var(--border-color)" }}
+        >
+          <div>
+            <div className="flex items-center gap-1 mb-1">
+              <CheckSquare className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <span
+                className={`text-xs ${getColorClass("text", componentColors.text.secondary)}`}
+              >
+                Tasks
+              </span>
+            </div>
+            <span
+              className={`text-xs sm:text-sm font-semibold ${getColorClass("text", componentColors.text.primary)}`}
+            >
+              {openTasksCount}
+            </span>
+          </div>
+          <div>
+            <div className="flex items-center gap-1 mb-1">
+              <FileText className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <span
+                className={`text-xs ${getColorClass("text", componentColors.text.secondary)}`}
+              >
+                Evidence
+              </span>
+            </div>
+            <span
+              className={`text-xs sm:text-sm font-semibold ${getColorClass("text", componentColors.text.primary)}`}
+            >
+              {evidenceRequestedCount}
+            </span>
+          </div>
+        </div>
+
+        {/* Status with Dropdown */}
+        <div className="flex items-center justify-between gap-2">
+          <span
+            className={`text-xs font-medium ${getColorClass("text", componentColors.text.secondary)}`}
+          >
+            Status
+          </span>
+          <div className="flex items-center gap-2">
+            <Select
+              value={area.status}
+              onValueChange={(value) => handleStatusChange(value as AreaStatus)}
+              disabled={updatingStatus}
+            >
+              <SelectTrigger
+                className={`w-auto border-0 bg-transparent p-0 h-auto text-xs font-medium hover:${getColorClass("bg", componentColors.background.tertiary)} ${updatingStatus ? "opacity-50 cursor-not-allowed" : ""}`}
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent align="end">
+                {statuses.map((status) => (
+                  <SelectItem key={status} value={status}>
+                    <StatusChip status={status} size="sm" />
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Loading spinner during update */}
+            {updatingStatus && <Loader className="w-3 h-3 animate-spin" />}
+          </div>
+        </div>
+
+        {/* Action Buttons - View & Assign Only */}
+        <div className="flex gap-1 sm:gap-1.5 pt-2 mt-auto flex-wrap">
+          <Button
+            variant="ghost"
+            size="xs"
+            onClick={() => onViewDetails(area)}
+            className="h-6 sm:h-7 px-1.5 sm:px-2 text-xs flex-1 sm:flex-none"
+            title="View details"
+          >
+            <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1" />
+            <span className="hidden sm:inline">View</span>
+          </Button>
+          <Button
+            variant="ghost"
+            size="xs"
+            onClick={() => onAssignAuditor(area)}
+            className="h-6 sm:h-7 px-1.5 sm:px-2 text-xs flex-1 sm:flex-none"
+            title="Assign auditor"
+          >
+            <UserPlus className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1" />
+            <span className="hidden sm:inline">Assign</span>
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

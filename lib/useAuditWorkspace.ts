@@ -3,7 +3,7 @@
 import { useReducer, useEffect, useCallback } from "react";
 import { workspaceReducer, initialState } from "./workspaceReducer";
 
-export function useAuditWorkspace() {
+export function useAuditWorkspace(client?: string) {
   const [state, dispatch] = useReducer(workspaceReducer, initialState);
 
   const fetchWorkspace = useCallback(async () => {
@@ -13,7 +13,12 @@ export function useAuditWorkspace() {
         typeof window !== "undefined" ? window.location.search : ""
       );
       const shouldFail = params.get("fail") === "true";
-      const url = `/api/audit${shouldFail ? "?fail=true" : ""}`;
+
+      let url = `/api/audit`;
+      if (shouldFail) url += "?fail=true";
+      if (client)
+        url += `${shouldFail ? "&" : "?"}client=${encodeURIComponent(client)}`;
+
       const response = await fetch(url);
       if (!response.ok)
         throw new Error(`Failed to fetch: ${response.statusText}`);
@@ -35,7 +40,7 @@ export function useAuditWorkspace() {
         payload: error instanceof Error ? error.message : "Unknown error",
       });
     }
-  }, []);
+  }, [client]);
 
   useEffect(() => {
     fetchWorkspace();

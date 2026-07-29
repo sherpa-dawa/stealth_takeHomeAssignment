@@ -5,14 +5,14 @@ import {
   highRiskAreas,
   deadlines,
   activityItems,
-} from "@/lib/mockData";
+} from "@/features/audit-planning/constants/mockData";
 
 describe("Mock Data", () => {
   describe("auditOverview", () => {
     it("should have required engagement properties", () => {
-      expect(auditOverview.clientName).toBe("Acme Corporation");
-      expect(auditOverview.financialYear).toBe("2024");
-      expect(auditOverview.engagementStatus).toBe("Active");
+      expect(auditOverview.clientName).toBe("ABC Manufacturing Ltd.");
+      expect(auditOverview.financialYear).toBe("2025");
+      expect(auditOverview.engagementStatus).toBe("Planning");
       expect(auditOverview.overallProgress).toBe(42);
     });
 

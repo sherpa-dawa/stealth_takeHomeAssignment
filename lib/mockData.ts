@@ -7,31 +7,34 @@ import {
 } from "./types";
 
 export const clients = [
-  "Acme Corporation",
+  "ABC Manufacturing Ltd.",
   "Tech Innovations Inc",
   "Global Finance Ltd",
   "Retail Solutions Co",
   "Manufacturing Plus",
 ];
 
-export const auditOverview: AuditOverview = {
-  clientName: "Acme Corporation",
-  financialYear: "2024",
-  engagementStatus: "Active",
-  engagementPartner: "Sarah Johnson",
-  auditManager: "Michael Chen",
+// ============================================
+// ABC Manufacturing Ltd. - Data
+// ============================================
+const abcOverview: AuditOverview = {
+  clientName: "ABC Manufacturing Ltd.",
+  financialYear: "2025",
+  engagementStatus: "Planning",
+  engagementPartner: "Michael Scott",
+  auditManager: "Sarah Johnson",
   overallProgress: 42,
   startDate: "2026-07-01",
   dueDate: "2026-08-15",
 };
 
-export const auditAreas: AuditArea[] = [
+const abcAuditAreas: AuditArea[] = [
   {
     id: "revenue",
     name: "Revenue",
     risk: "High",
-    progress: 45,
-    assignedAuditor: { id: "a1", name: "Emma Wilson", avatar: "EW" },
+    progress: 65,
+    assignedAuditor: { id: "u1", name: "Sarah Johnson", avatar: "SJ" },
     tasks: [
       { id: "t1", title: "Analyze revenue transactions", status: "Open" },
       { id: "t2", title: "Review sales agreements", status: "Open" },
@@ -51,41 +54,57 @@ export const auditAreas: AuditArea[] = [
       { id: "e6", title: "Cutoff tests", status: "Open" },
       { id: "e7", title: "Pricing schedules", status: "In Progress" },
       { id: "e8", title: "Accrual analysis", status: "Open" },
-      { id: "e9", title: "Incentives documentation", status: "Open" },
-      { id: "e10", title: "Revenue contracts", status: "Open" },
-      { id: "e11", title: "Invoice samples", status: "In Progress" },
-      { id: "e12", title: "Sales discounts", status: "Open" },
     ],
     status: "In Progress",
-    client: "Acme Corporation",
+    client: "ABC Manufacturing Ltd.",
   },
   {
-    id: "cash-bank",
+    id: "cash",
     name: "Cash & Bank",
-    risk: "High",
-    progress: 72,
-    assignedAuditor: { id: "a2", name: "David Martinez", avatar: "DM" },
+    risk: "Medium",
+    progress: 35,
+    assignedAuditor: { id: "u2", name: "John Smith", avatar: "JS" },
     tasks: [
-      { id: "t1", title: "Reconcile bank accounts", status: "Completed" },
+      { id: "t1", title: "Reconcile bank accounts", status: "Open" },
       { id: "t2", title: "Test cash controls", status: "Open" },
       { id: "t3", title: "Review bank confirmations", status: "Open" },
     ],
     evidence: [
-      { id: "e1", title: "Bank statements", status: "Completed" },
-      { id: "e2", title: "Reconciliations", status: "Completed" },
+      { id: "e1", title: "Bank statements", status: "Open" },
+      { id: "e2", title: "Reconciliations", status: "Open" },
       { id: "e3", title: "Bank confirmations", status: "Open" },
-      { id: "e4", title: "Deposit slips", status: "Open" },
-      { id: "e5", title: "Cash counts", status: "Open" },
     ],
-    status: "Review",
-    client: "Acme Corporation",
+    status: "Planning",
+    client: "ABC Manufacturing Ltd.",
+  },
+  {
+    id: "inventory",
+    name: "Inventory",
+    risk: "High",
+    progress: 20,
+    assignedAuditor: { id: "u3", name: "Emily Davis", avatar: "ED" },
+    tasks: [
+      { id: "t1", title: "Plan physical inventory", status: "Open" },
+      { id: "t2", title: "Test inventory valuation", status: "Open" },
+      { id: "t3", title: "Review purchase orders", status: "Open" },
+      { id: "t4", title: "Test inventory cutoff", status: "Open" },
+      { id: "t5", title: "Review obsolescence", status: "Open" },
+      { id: "t6", title: "Test perpetual records", status: "Open" },
+    ],
+    evidence: [
+      { id: "e1", title: "Inventory listing", status: "Open" },
+      { id: "e2", title: "Physical count sheets", status: "Open" },
+      { id: "e3", title: "Inventory policies", status: "Open" },
+    ],
+    status: "Planning",
+    client: "ABC Manufacturing Ltd.",
   },
   {
     id: "payroll",
     name: "Payroll",
-    risk: "Medium",
-    progress: 85,
-    assignedAuditor: { id: "a3", name: "Lisa Anderson", avatar: "LA" },
+    risk: "Low",
+    progress: 90,
+    assignedAuditor: { id: "u4", name: "David Wilson", avatar: "DW" },
     tasks: [
       { id: "t1", title: "Test payroll processing", status: "Completed" },
       { id: "t2", title: "Review tax withholdings", status: "Completed" },
@@ -95,136 +114,292 @@ export const auditAreas: AuditArea[] = [
       { id: "e2", title: "Tax filings", status: "Completed" },
     ],
     status: "Review",
-    client: "Acme Corporation",
+    client: "ABC Manufacturing Ltd.",
+  },
+];
+
+// ============================================
+// Tech Innovations Inc - Data
+// ============================================
+const techOverview: AuditOverview = {
+  clientName: "Tech Innovations Inc",
+  financialYear: "2025",
+  engagementStatus: "In Progress",
+  engagementPartner: "Jennifer Taylor",
+  auditManager: "Robert Chen",
+  overallProgress: 58,
+  startDate: "2026-06-15",
+  dueDate: "2026-09-30",
+};
+
+const techAuditAreas: AuditArea[] = [
+  {
+    id: "revenue",
+    name: "Revenue",
+    risk: "High",
+    progress: 80,
+    assignedAuditor: { id: "u5", name: "Rachel Moore", avatar: "RM" },
+    tasks: [
+      { id: "t1", title: "Analyze SaaS revenue", status: "Completed" },
+      { id: "t2", title: "Review license agreements", status: "In Progress" },
+    ],
+    evidence: [
+      { id: "e1", title: "Revenue GL details", status: "Completed" },
+      { id: "e2", title: "License agreements", status: "In Progress" },
+    ],
+    status: "Review",
+    client: "Tech Innovations Inc",
+  },
+  {
+    id: "it-systems",
+    name: "IT Systems & Security",
+    risk: "High",
+    progress: 45,
+    assignedAuditor: { id: "u6", name: "Kevin Brown", avatar: "KB" },
+    tasks: [
+      { id: "t1", title: "Test access controls", status: "Open" },
+      { id: "t2", title: "Review security patches", status: "In Progress" },
+      { id: "t3", title: "Assess data backups", status: "Open" },
+    ],
+    evidence: [
+      { id: "e1", title: "Access logs", status: "Open" },
+      { id: "e2", title: "Security policies", status: "In Progress" },
+    ],
+    status: "In Progress",
+    client: "Tech Innovations Inc",
+  },
+  {
+    id: "capitalized-software",
+    name: "Capitalized Software",
+    risk: "Medium",
+    progress: 70,
+    assignedAuditor: { id: "u7", name: "Lisa Wong", avatar: "LW" },
+    tasks: [
+      { id: "t1", title: "Review capitalization", status: "Completed" },
+      { id: "t2", title: "Test amortization", status: "Completed" },
+    ],
+    evidence: [
+      { id: "e1", title: "Dev costs register", status: "Completed" },
+      { id: "e2", title: "Amortization schedule", status: "Completed" },
+    ],
+    status: "Review",
+    client: "Tech Innovations Inc",
+  },
+];
+
+// ============================================
+// Global Finance Ltd - Data
+// ============================================
+const globalOverview: AuditOverview = {
+  clientName: "Global Finance Ltd",
+  financialYear: "2025",
+  engagementStatus: "In Progress",
+  engagementPartner: "Andrew Martinez",
+  auditManager: "Victoria Lee",
+  overallProgress: 72,
+  startDate: "2026-05-01",
+  dueDate: "2026-08-30",
+};
+
+const globalAuditAreas: AuditArea[] = [
+  {
+    id: "revenue",
+    name: "Revenue",
+    risk: "Medium",
+    progress: 95,
+    assignedAuditor: { id: "u8", name: "Marcus Thompson", avatar: "MT" },
+    tasks: [{ id: "t1", title: "Final revenue testing", status: "Completed" }],
+    evidence: [{ id: "e1", title: "Revenue analysis", status: "Completed" }],
+    status: "Complete",
+    client: "Global Finance Ltd",
+  },
+  {
+    id: "investments",
+    name: "Investments",
+    risk: "High",
+    progress: 55,
+    assignedAuditor: { id: "u9", name: "Patricia Garcia", avatar: "PG" },
+    tasks: [
+      { id: "t1", title: "Verify investments", status: "In Progress" },
+      { id: "t2", title: "Test fair value", status: "Open" },
+      { id: "t3", title: "Check impairment", status: "Open" },
+    ],
+    evidence: [
+      { id: "e1", title: "Investment statements", status: "In Progress" },
+      { id: "e2", title: "Fair value tests", status: "Open" },
+    ],
+    status: "In Progress",
+    client: "Global Finance Ltd",
+  },
+  {
+    id: "loans",
+    name: "Loans & Borrowings",
+    risk: "Medium",
+    progress: 85,
+    assignedAuditor: { id: "u10", name: "Christopher Lee", avatar: "CL" },
+    tasks: [
+      { id: "t1", title: "Reconcile loan balances", status: "Completed" },
+      { id: "t2", title: "Test interest expense", status: "In Progress" },
+    ],
+    evidence: [
+      { id: "e1", title: "Loan agreements", status: "Completed" },
+      { id: "e2", title: "Interest calculation", status: "In Progress" },
+    ],
+    status: "Review",
+    client: "Global Finance Ltd",
+  },
+  {
+    id: "deposits",
+    name: "Deposits",
+    risk: "Low",
+    progress: 100,
+    assignedAuditor: { id: "u11", name: "Susan Martinez", avatar: "SM" },
+    tasks: [],
+    evidence: [],
+    status: "Complete",
+    client: "Global Finance Ltd",
+  },
+];
+
+// ============================================
+// Retail Solutions Co - Data
+// ============================================
+const retailOverview: AuditOverview = {
+  clientName: "Retail Solutions Co",
+  financialYear: "2025",
+  engagementStatus: "Planning",
+  engagementPartner: "Thomas Anderson",
+  auditManager: "Nicole Johnson",
+  overallProgress: 25,
+  startDate: "2026-07-15",
+  dueDate: "2026-10-15",
+};
+
+const retailAuditAreas: AuditArea[] = [
+  {
+    id: "revenue",
+    name: "Revenue",
+    risk: "High",
+    progress: 10,
+    assignedAuditor: { id: "u12", name: "Brandon White", avatar: "BW" },
+    tasks: [
+      { id: "t1", title: "Plan revenue testing", status: "Open" },
+      { id: "t2", title: "Design test procedures", status: "Open" },
+    ],
+    evidence: [{ id: "e1", title: "POS system documentation", status: "Open" }],
+    status: "Planning",
+    client: "Retail Solutions Co",
   },
   {
     id: "inventory",
     name: "Inventory",
     risk: "High",
-    progress: 30,
-    assignedAuditor: { id: "a1", name: "Emma Wilson", avatar: "EW" },
+    progress: 15,
+    assignedAuditor: { id: "u13", name: "Megan Rodriguez", avatar: "MR" },
     tasks: [
-      { id: "t1", title: "Plan physical inventory", status: "Open" },
-      { id: "t2", title: "Test inventory valuation", status: "Open" },
-      { id: "t3", title: "Review purchase orders", status: "Open" },
-      { id: "t4", title: "Test inventory cutoff", status: "Open" },
-      { id: "t5", title: "Review obsolescence", status: "Open" },
-      { id: "t6", title: "Test perpetual records", status: "Open" },
-      { id: "t7", title: "Review inventory policies", status: "Open" },
-      { id: "t8", title: "Test pricing", status: "Open" },
-      { id: "t9", title: "Review COGS", status: "Open" },
-      { id: "t10", title: "Test adjustments", status: "Open" },
-      { id: "t11", title: "Review reserves", status: "Open" },
-      { id: "t12", title: "Test controls", status: "Open" },
-      { id: "t13", title: "Review aging", status: "Open" },
-      { id: "t14", title: "Test completeness", status: "Open" },
-      { id: "t15", title: "Review composition", status: "Open" },
+      { id: "t1", title: "Prepare for count", status: "Open" },
+      { id: "t2", title: "Design count procedures", status: "Open" },
     ],
-    evidence: [
-      { id: "e1", title: "Inventory listing", status: "Open" },
-      { id: "e2", title: "Physical count sheets", status: "Open" },
-      { id: "e3", title: "Inventory policies", status: "Open" },
-      { id: "e4", title: "PO samples", status: "Open" },
-      { id: "e5", title: "Cost calculations", status: "Open" },
-      { id: "e6", title: "Cutoff analysis", status: "Open" },
-      { id: "e7", title: "Obsolescence reserve", status: "Open" },
-      { id: "e8", title: "Perpetual records", status: "Open" },
-      { id: "e9", title: "Pricing schedules", status: "Open" },
-      { id: "e10", title: "COGS analysis", status: "Open" },
-      { id: "e11", title: "Reserve calculations", status: "Open" },
-      { id: "e12", title: "Control testing", status: "Open" },
-      { id: "e13", title: "Aging analysis", status: "Open" },
-      { id: "e14", title: "Completeness tests", status: "Open" },
-      { id: "e15", title: "Composition review", status: "Open" },
-      { id: "e16", title: "Valuation tests", status: "Open" },
-      { id: "e17", title: "Inventory samples", status: "Open" },
-      { id: "e18", title: "Count instructions", status: "Open" },
-    ],
+    evidence: [{ id: "e1", title: "Store location list", status: "Open" }],
     status: "Planning",
-    client: "Acme Corporation",
+    client: "Retail Solutions Co",
   },
   {
-    id: "fixed-assets",
-    name: "Fixed Assets",
+    id: "vendor-payables",
+    name: "Vendor Payables",
     risk: "Medium",
-    progress: 62,
-    assignedAuditor: { id: "a4", name: "James Rodriguez", avatar: "JR" },
+    progress: 40,
+    assignedAuditor: { id: "u14", name: "Daniel Harris", avatar: "DH" },
     tasks: [
-      { id: "t1", title: "Test additions", status: "In Progress" },
-      { id: "t2", title: "Test disposals", status: "Open" },
-      { id: "t3", title: "Test depreciation", status: "Open" },
-      { id: "t4", title: "Review impairment", status: "Open" },
-      { id: "t5", title: "Test allocation", status: "Open" },
+      { id: "t1", title: "Reconcile vendor statements", status: "In Progress" },
+      { id: "t2", title: "Test vendor payments", status: "Open" },
     ],
-    evidence: [
-      { id: "e1", title: "Fixed asset register", status: "In Progress" },
-      { id: "e2", title: "Additions documentation", status: "Open" },
-      { id: "e3", title: "Disposal records", status: "Open" },
-      { id: "e4", title: "Depreciation schedules", status: "Open" },
-      { id: "e5", title: "Impairment analysis", status: "Open" },
-      { id: "e6", title: "Allocation methodology", status: "Open" },
-      { id: "e7", title: "Capital policy", status: "Open" },
-      { id: "e8", title: "Asset verification", status: "Open" },
-    ],
+    evidence: [{ id: "e1", title: "Vendor statements", status: "In Progress" }],
     status: "In Progress",
-    client: "Acme Corporation",
+    client: "Retail Solutions Co",
+  },
+];
+
+// ============================================
+// Manufacturing Plus - Data
+// ============================================
+const mfgOverview: AuditOverview = {
+  clientName: "Manufacturing Plus",
+  financialYear: "2025",
+  engagementStatus: "Active",
+  engagementPartner: "Elizabeth Clark",
+  auditManager: "George Williams",
+  overallProgress: 35,
+  startDate: "2026-06-01",
+  dueDate: "2026-09-15",
+};
+
+const mfgAuditAreas: AuditArea[] = [
+  {
+    id: "revenue",
+    name: "Revenue",
+    risk: "High",
+    progress: 50,
+    assignedAuditor: { id: "u15", name: "Walter Lewis", avatar: "WL" },
+    tasks: [
+      { id: "t1", title: "Test revenue transactions", status: "In Progress" },
+      { id: "t2", title: "Review contracts", status: "In Progress" },
+    ],
+    evidence: [{ id: "e1", title: "Contract samples", status: "In Progress" }],
+    status: "In Progress",
+    client: "Manufacturing Plus",
   },
   {
-    id: "accounts-receivable",
-    name: "Accounts Receivable",
-    risk: "Medium",
-    progress: 78,
-    assignedAuditor: { id: "a2", name: "David Martinez", avatar: "DM" },
+    id: "inventory",
+    name: "Inventory",
+    risk: "High",
+    progress: 25,
+    assignedAuditor: { id: "u16", name: "Nancy Walker", avatar: "NW" },
     tasks: [
-      { id: "t1", title: "Test AR aging", status: "Completed" },
-      { id: "t2", title: "Review allowance", status: "Completed" },
+      { id: "t1", title: "Plan count procedures", status: "Open" },
+      { id: "t2", title: "Review valuation", status: "Open" },
     ],
-    evidence: [
-      { id: "e1", title: "AR aging report", status: "Completed" },
-      { id: "e2", title: "Allowance analysis", status: "Completed" },
-      { id: "e3", title: "Collection analysis", status: "Open" },
-    ],
-    status: "Review",
-    client: "Acme Corporation",
+    evidence: [{ id: "e1", title: "Inventory policies", status: "Open" }],
+    status: "Planning",
+    client: "Manufacturing Plus",
   },
   {
     id: "accounts-payable",
     name: "Accounts Payable",
     risk: "Low",
-    progress: 100,
-    assignedAuditor: { id: "a3", name: "Lisa Anderson", avatar: "LA" },
-    tasks: [],
-    evidence: [],
-    status: "Complete",
-    client: "Acme Corporation",
-  },
-  {
-    id: "expenses",
-    name: "Expenses",
-    risk: "Low",
-    progress: 55,
-    assignedAuditor: { id: "a5", name: "Jennifer Taylor", avatar: "JT" },
+    progress: 60,
+    assignedAuditor: { id: "u17", name: "Paul Hall", avatar: "PH" },
     tasks: [
-      { id: "t1", title: "Test expense accruals", status: "In Progress" },
-      { id: "t2", title: "Review prepaid expenses", status: "Open" },
-      { id: "t3", title: "Test allocation", status: "Open" },
-      { id: "t4", title: "Review expense policies", status: "Open" },
-      { id: "t5", title: "Test approvals", status: "Open" },
-      { id: "t6", title: "Review documentation", status: "Open" },
+      { id: "t1", title: "Test cutoff", status: "In Progress" },
+      { id: "t2", title: "Reconcile subledger", status: "In Progress" },
     ],
     evidence: [
-      { id: "e1", title: "Expense GL details", status: "In Progress" },
-      { id: "e2", title: "Accrual analysis", status: "Open" },
-      { id: "e3", title: "Prepaid schedules", status: "Open" },
-      { id: "e4", title: "Allocation methodology", status: "Open" },
-      { id: "e5", title: "Expense policies", status: "Open" },
-      { id: "e6", title: "Approval evidence", status: "Open" },
-      { id: "e7", title: "Sample invoices", status: "Open" },
+      { id: "e1", title: "Vendor reconciliations", status: "In Progress" },
     ],
     status: "In Progress",
-    client: "Acme Corporation",
+    client: "Manufacturing Plus",
   },
 ];
+
+// ============================================
+// Mapping Client Data
+// ============================================
+const clientData: Record<
+  string,
+  { overview: AuditOverview; areas: AuditArea[] }
+> = {
+  "ABC Manufacturing Ltd.": { overview: abcOverview, areas: abcAuditAreas },
+  "Tech Innovations Inc": { overview: techOverview, areas: techAuditAreas },
+  "Global Finance Ltd": { overview: globalOverview, areas: globalAuditAreas },
+  "Retail Solutions Co": { overview: retailOverview, areas: retailAuditAreas },
+  "Manufacturing Plus": { overview: mfgOverview, areas: mfgAuditAreas },
+};
+
+// ============================================
+// Default Data (ABC Manufacturing Ltd.)
+// ============================================
+export const auditOverview = abcOverview;
+export const auditAreas = abcAuditAreas;
 
 export const progressBreakdown: ProgressBreakdown = {
   planning: 15,
@@ -239,47 +414,51 @@ export const highRiskAreas: AuditArea[] = auditAreas.filter(
 export const deadlines: Deadline[] = [
   {
     id: 1,
-    title: "Revenue Testing Complete",
-    date: "2024-08-30",
-    daysRemaining: 33,
+    title: "Revenue Planning",
+    date: "2026-07-29",
+    daysRemaining: 2,
   },
   {
     id: 2,
-    title: "Inventory Count & Reconciliation",
-    date: "2024-09-15",
-    daysRemaining: 50,
+    title: "Inventory Review",
+    date: "2026-07-31",
+    daysRemaining: 4,
   },
   {
     id: 3,
-    title: "Final Audit Report Due",
-    date: "2024-12-31",
-    daysRemaining: 157,
+    title: "Cash Confirmation",
+    date: "2026-08-02",
+    daysRemaining: 6,
   },
 ];
 
 export const activityItems: ActivityItem[] = [
   {
     id: 1,
-    user: "Emma Wilson",
-    action: "Requested additional supporting documents for Revenue area",
-    time: "2 hours ago",
+    user: "Sarah Johnson",
+    action: "assigned Revenue audit area",
+    time: "10 minutes ago",
   },
   {
     id: 2,
-    user: "David Martinez",
-    action: "Completed Cash & Bank reconciliation testing",
-    time: "5 hours ago",
+    user: "John Smith",
+    action: "completed Payroll planning",
+    time: "1 hour ago",
   },
   {
     id: 3,
-    user: "Lisa Anderson",
-    action: "Marked Payroll area as ready for final review",
-    time: "1 day ago",
-  },
-  {
-    id: 4,
-    user: "Michael Chen",
-    action: "Updated engagement timeline and milestones",
-    time: "2 days ago",
+    user: "Emily Davis",
+    action: "updated Inventory risk assessment",
+    time: "Yesterday",
   },
 ];
+
+// ============================================
+// Helper to get data by client
+// ============================================
+export function getClientData(clientName: string): {
+  overview: AuditOverview;
+  areas: AuditArea[];
+} {
+  return clientData[clientName] || clientData["ABC Manufacturing Ltd."]!;
+}

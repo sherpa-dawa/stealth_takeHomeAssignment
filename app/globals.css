@@ -1,3 +1,4 @@
+@import './theme.css';
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -5,12 +6,17 @@
 @layer base {
   html,
   body {
-    @apply m-0 p-0 h-screen bg-neutral-50 text-neutral-900;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   * {
-    @apply transition-colors duration-200;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   }
 }
 
