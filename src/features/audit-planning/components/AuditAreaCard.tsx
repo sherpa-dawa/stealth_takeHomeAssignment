@@ -67,7 +67,10 @@ export default function AuditAreaCard({
           ? `border-2 ${getColorClass("border", componentColors.highlight.border)} shadow-lg`
           : `border ${getColorClass("border", componentColors.border.light)}`
       }`}
-      style={{ backgroundColor: "var(--bg-paper)" }}
+      style={{
+        backgroundColor: "var(--bg-paper)",
+        borderColor: "transparent",
+      }}
     >
       <CardContent className="p-3 sm:p-4 lg:p-5 space-y-3 sm:space-y-4 flex flex-col h-full">
         {/* Header: Name & Risk */}
