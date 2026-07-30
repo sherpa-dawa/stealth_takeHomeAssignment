@@ -61,6 +61,13 @@ export default function AuditAreaGrid({
                   userName: "Current User",
                 },
               });
+              setTimeout(() => {
+                addToast({
+                  message: `${a.name} status changed to ${status}`,
+                  type: "success",
+                  duration: 3000,
+                });
+              }, 1000);
             }}
             onAssignAuditor={(a: AuditArea) => setSelectedAreaForAssign(a)}
           />
