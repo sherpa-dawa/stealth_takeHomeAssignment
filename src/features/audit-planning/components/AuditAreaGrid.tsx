@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useToast } from "@/components/common/Toast";
 import { AuditArea, Auditor } from "@/features/audit-planning/types";
 import { WorkspaceAction } from "@/features/audit-planning/state/reducer";
 import AuditAreaCard from "./AuditAreaCard";
@@ -17,6 +18,7 @@ export default function AuditAreaGrid({
   dispatch,
   highlightedAreaId,
 }: AuditAreaGridProps) {
+  const { addToast } = useToast();
   const [selectedAreaForDetails, setSelectedAreaForDetails] =
     useState<AuditArea | null>(null);
   const [selectedAreaForAssign, setSelectedAreaForAssign] =
@@ -32,6 +34,12 @@ export default function AuditAreaGrid({
           userName: "Current User",
         },
       });
+      addToast({
+        message: `${auditor.name} assigned to ${selectedAreaForAssign.name}`,
+        type: "success",
+        duration: 3000,
+      });
+      setSelectedAreaForAssign(null);
     }
   };
 
@@ -53,6 +61,13 @@ export default function AuditAreaGrid({
                   userName: "Current User",
                 },
               });
+              setTimeout(() => {
+                addToast({
+                  message: `${a.name} status changed to ${status}`,
+                  type: "success",
+                  duration: 3000,
+                });
+              }, 1000);
             }}
             onAssignAuditor={(a: AuditArea) => setSelectedAreaForAssign(a)}
           />

@@ -31,6 +31,7 @@ export default function Home() {
   const [highlightedAreaId, setHighlightedAreaId] = useState<string | null>(
     null
   );
+  console.log("states", state);
   const highlightTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const handleHighlightArea = (areaId: string) => {
