@@ -1,11 +1,9 @@
 "use client";
 
-import { Button } from "@/components/common/Button";
 import { Avatar } from "@/components/common/Avatar";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogClose,
@@ -62,12 +60,6 @@ export default function AssignAuditorDialog({
             </button>
           ))}
         </div>
-
-        <DialogFooter>
-          <Button variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
